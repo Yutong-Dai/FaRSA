@@ -57,12 +57,13 @@ Vector::~Vector()
 } // end destructor
 
 // Print array with given name
-void Vector::print(std::string name) const
+void Vector::print(const Reporter* reporter,
+                   std::string name) const
 {
 
   // Print elements
   for (int i = 0; i < length_; i++) {
-    printf("%s[%6d]=%+23.16e\n", name.c_str(), i, values_[i]);
+    reporter->printf(R_SOLVER, R_BASIC, "%s[%6d]=%+23.16e\n", name.c_str(), i, values_[i]);
   }
 
 } // end print

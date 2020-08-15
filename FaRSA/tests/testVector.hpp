@@ -7,8 +7,9 @@
 #ifndef __TESTVECTOR_HPP__
 #define __TESTVECTOR_HPP__
 
-#include <cstdio>
+#include <iostream>
 
+#include "FaRSAReporter.hpp"
 #include "FaRSAVector.hpp"
 
 using namespace FaRSA;
@@ -19,6 +20,23 @@ int testVectorImplementation(int option)
 
   // Initialize output
   int result = 0;
+
+  // Declare reporter
+  Reporter reporter;
+
+  // Check option
+  if (option == 1) {
+
+    // Declare stream report
+    std::shared_ptr<StreamReport> s(new StreamReport("s", R_SOLVER, R_BASIC));
+
+    // Set stream report to standard output
+    s->setStream(&std::cout);
+
+    // Add stream report to reporter
+    reporter.addReport(s);
+
+  } // end if
 
   // Declare zero vector
   Vector u(5);
@@ -31,7 +49,7 @@ int testVectorImplementation(int option)
   } // end for
 
   // Print ones vector
-  u.print("Testing constructor... should be zero vector:");
+  u.print(&reporter, "Testing constructor... should be zero vector:");
 
   // Check length
   if (u.length() != 5) {
@@ -39,7 +57,7 @@ int testVectorImplementation(int option)
   }
 
   // Print length
-  printf("Testing length access... should be 5: %d\n", u.length());
+  reporter.printf(R_SOLVER,R_BASIC,"Testing length access... should be 5: %d\n", u.length());
 
   // Check first element
   if (u.values()[0] < -1e-12 || u.values()[0] > 1e-12) {
@@ -47,7 +65,7 @@ int testVectorImplementation(int option)
   }
 
   // Print first element
-  printf("Testing value access... should be 0.0: %+23.16e\n", u.values()[0]);
+  reporter.printf(R_SOLVER,R_BASIC,"Testing value access... should be 0.0: %+23.16e\n", u.values()[0]);
 
   // Set first element to 1.0
   u.set(0, 1.0);
@@ -58,7 +76,7 @@ int testVectorImplementation(int option)
   }
 
   // Print first element
-  u.print("Testing set method... now first element should be 1:");
+  u.print(&reporter, "Testing set method... now first element should be 1:");
 
   // Declare ones vector
   Vector v(5, 1.0);
@@ -71,7 +89,7 @@ int testVectorImplementation(int option)
   } // end for
 
   // Print ones vector
-  v.print("Testing constructor with default value... should be ones vector:");
+  v.print(&reporter, "Testing constructor with default value... should be ones vector:");
 
   // Declare copy of ones vector
   std::shared_ptr<Vector> w = v.makeNewCopy();
@@ -84,7 +102,7 @@ int testVectorImplementation(int option)
   } // end for
 
   // Print copy of ones vector
-  w->print("Testing copy method... should be copy of ones vector:");
+  w->print(&reporter, "Testing copy method... should be copy of ones vector:");
 
   // Declare linear combination
   std::shared_ptr<Vector> x = v.makeNewLinearCombination(2.0, 3.0, *w);
@@ -97,7 +115,7 @@ int testVectorImplementation(int option)
   } // end for
 
   // Print linear combination
-  x->print("Testing new linear combination method (multiple not 1)... should be vector of fives:");
+  x->print(&reporter, "Testing new linear combination method (multiple not 1)... should be vector of fives:");
 
   // Declare linear combination
   std::shared_ptr<Vector> y = v.makeNewLinearCombination(1.0, 7.0, u);
@@ -113,7 +131,7 @@ int testVectorImplementation(int option)
   } // end for
 
   // Print linear combination
-  y->print("Testing new linear combination method (multiple is 1)... should be [8,1,...,1]:");
+  y->print(&reporter, "Testing new linear combination method (multiple is 1)... should be [8,1,...,1]:");
 
   // Declare array
   double a[5] = {0.1, 0.2, 0.3, 0.4, 0.5};
@@ -151,7 +169,7 @@ int testVectorImplementation(int option)
   } // end for
 
   // Print array
-  y->print("Testing copy array method... should be [0.1,0.2,0.3,0.4,0.5]:");
+  y->print(&reporter, "Testing copy array method... should be [0.1,0.2,0.3,0.4,0.5]:");
 
   // Declare new vector
   Vector z(5, 0.1);
@@ -189,7 +207,7 @@ int testVectorImplementation(int option)
   } // end for
 
   // Print vector plus scaled vector
-  y->print("Testing add scaled vector... should be [0.3,0.4,0.5,0.6,0.7]:");
+  y->print(&reporter, "Testing add scaled vector... should be [0.3,0.4,0.5,0.6,0.7]:");
 
   // Declare scaled vector
   w->scale(4.0);
@@ -202,7 +220,7 @@ int testVectorImplementation(int option)
   } // end for
 
   // Print scaled vector
-  w->print("Testing scale method... should be vector of fours:");
+  w->print(&reporter, "Testing scale method... should be vector of fours:");
 
   // Compute inner product
   double wx = w->innerProduct(*x);
@@ -213,7 +231,7 @@ int testVectorImplementation(int option)
   }
 
   // Print inner product
-  printf("Testing inner product method... should be 100: %+23.16e\n", wx);
+  reporter.printf(R_SOLVER,R_BASIC,"Testing inner product method... should be 100: %+23.16e\n", wx);
 
   // Compute norms
   double w1 = w->norm1();
@@ -232,23 +250,23 @@ int testVectorImplementation(int option)
   }
 
   // Evaluate norms
-  printf("Testing norm methods... for preceding vector:\n"
-         "1-norm   (should be 20                 ) : %+23.16e\n"
-         "2-norm   (should be  8.9442719099991592) : %+23.16e\n"
-         "inf-norm (should be  4                 ) : %+23.16e\n",
-         w1,
-         w2,
-         wInf);
+  reporter.printf(R_SOLVER,R_BASIC,"Testing norm methods... for preceding vector:\n"
+                  "1-norm   (should be 20                 ) : %+23.16e\n"
+                  "2-norm   (should be  8.9442719099991592) : %+23.16e\n"
+                  "inf-norm (should be  4                 ) : %+23.16e\n",
+                  w1,
+                  w2,
+                  wInf);
 
   // Check option
   if (option == 1) {
 
     // Print final message
     if (result == 0) {
-      printf("TEST WAS SUCCESSFUL.\n");
+      reporter.printf(R_SOLVER,R_BASIC,"TEST WAS SUCCESSFUL.\n");
     }
     else {
-      printf("TEST FAILED.\n");
+      reporter.printf(R_SOLVER,R_BASIC,"TEST FAILED.\n");
     }
 
   } // end if

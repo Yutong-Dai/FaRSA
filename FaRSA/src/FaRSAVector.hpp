@@ -10,8 +10,15 @@
 #include <memory>
 #include <string>
 
+#include "FaRSAReporter.hpp"
+
 namespace FaRSA
 {
+
+/**
+ * Forward declarations
+ */
+class Reporter;
 
 /**
  * Vector class
@@ -54,9 +61,11 @@ public:
   //@{
   /**
    * Print array
+   * \param[in] reporter is pointer to Reporter object from FaRSA
    * \param[in] name is name of Vector to print
    */
-  void print(std::string name) const;
+  void print(const Reporter* reporter,
+             std::string name) const;
   //@}
 
   /** @name Make methods */
