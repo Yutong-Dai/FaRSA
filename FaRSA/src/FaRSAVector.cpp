@@ -60,7 +60,7 @@ Vector::Vector(int length,
 
   // Compute norms
   norm1_value_ = (double)length * fabs(value);
-  norm2_value_ = sqrt((double)length * pow(value,2.0));
+  norm2_value_ = sqrt((double)length * pow(value, 2.0));
   normInf_value_ = fabs(value);
 
 } // end constructor
@@ -233,7 +233,7 @@ void Vector::scale(double scalar)
 
     // Scale elements
     for (int i = 0; i < length_; i++) {
-      values_[i] = scalar*values_[i];
+      values_[i] = scalar * values_[i];
     }
 
   } // end else
@@ -241,11 +241,11 @@ void Vector::scale(double scalar)
   // Compute scalar values
   if (max_computed_) {
     if (scalar >= 0.0) {
-      max_value_ = scalar*max_value_;
+      max_value_ = scalar * max_value_;
     }
     else {
       if (min_computed_) {
-        max_value_ = scalar*min_value_;
+        max_value_ = scalar * min_value_;
       }
       else {
         max_computed_ = false;
@@ -254,11 +254,11 @@ void Vector::scale(double scalar)
   } // end if
   if (min_computed_) {
     if (scalar >= 0.0) {
-      min_value_ = scalar*min_value_;
+      min_value_ = scalar * min_value_;
     }
     else {
       if (max_computed_) {
-        min_value_ = scalar*max_value_;
+        min_value_ = scalar * max_value_;
       }
       else {
         min_computed_ = false;
@@ -266,13 +266,13 @@ void Vector::scale(double scalar)
     }
   } // end if
   if (norm1_computed_) {
-    norm1_value_ = fabs(scalar)*norm1_value_;
+    norm1_value_ = fabs(scalar) * norm1_value_;
   }
   if (norm2_computed_) {
-    norm2_value_ = fabs(scalar)*norm2_value_;
+    norm2_value_ = fabs(scalar) * norm2_value_;
   }
   if (normInf_computed_) {
-    normInf_value_ = fabs(scalar)*normInf_value_;
+    normInf_value_ = fabs(scalar) * normInf_value_;
   }
 
 } // end scale
@@ -287,7 +287,7 @@ void Vector::addScaledVector(double scalar,
 
   // Add scaled vector
   for (int i = 0; i < length_; i++) {
-    values_[i] += scalar*other_vector.values()[i];
+    values_[i] += scalar * other_vector.values()[i];
   }
 
   // Reset scalar value bools
@@ -315,7 +315,7 @@ void Vector::linearCombination(double scalar1,
 
     // Set elements
     for (int i = 0; i < length_; i++) {
-      values_[i] = scalar1*vector1.values()[i] + scalar2*vector2.values()[i];
+      values_[i] = scalar1 * vector1.values()[i] + scalar2 * vector2.values()[i];
     }
 
   } // end if
@@ -323,7 +323,7 @@ void Vector::linearCombination(double scalar1,
 
     // Set elements
     for (int i = 0; i < length_; i++) {
-      values_[i] = scalar1*vector1.values()[i];
+      values_[i] = scalar1 * vector1.values()[i];
     }
 
   } // end else if
@@ -331,7 +331,7 @@ void Vector::linearCombination(double scalar1,
 
     // Set elements
     for (int i = 0; i < length_; i++) {
-      values_[i] = scalar2*vector2.values()[i];
+      values_[i] = scalar2 * vector2.values()[i];
     }
 
   } // end else
@@ -460,11 +460,11 @@ double Vector::norm2()
   if (!norm2_computed_) {
 
     // Initialize 2-norm
-    norm2_value_ = pow(values_[0],2.0);
+    norm2_value_ = pow(values_[0], 2.0);
 
     // Determine 2-norm
     for (int i = 1; i < length_; i++) {
-      norm2_value_ += pow(values_[i],2.0);
+      norm2_value_ += pow(values_[i], 2.0);
     }
     norm2_value_ = sqrt(norm2_value_);
 
@@ -490,7 +490,7 @@ double Vector::normInf()
 
     // Determine inf-norm
     for (int i = 1; i < length_; i++) {
-      normInf_value_ = fmax(normInf_value_,fabs(values_[i]));
+      normInf_value_ = fmax(normInf_value_, fabs(values_[i]));
     }
 
     // Set to computed
@@ -503,4 +503,4 @@ double Vector::normInf()
 
 } // end normInf
 
-} // namespace NonOpt
+} // namespace FaRSA

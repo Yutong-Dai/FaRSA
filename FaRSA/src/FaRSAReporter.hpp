@@ -184,7 +184,7 @@ public:
     * Get name
     * \return is name of Report as string
     */
-    inline std::string name() { return name_; };
+  inline std::string name() { return name_; };
   //@}
 
   /** @name Set methods */
@@ -294,7 +294,7 @@ public:
              ReportType type,
              ReportLevel level)
     : Report(name, type, level),
-      file_(nullptr) {};
+      file_(nullptr){};
   //@}
 
   /** @name Destructor */
@@ -393,7 +393,7 @@ public:
                ReportType type,
                ReportLevel level)
     : Report(name, type, level),
-      os_(nullptr) {};
+      os_(nullptr){};
   //@}
 
   /** @name Destructor */
@@ -401,7 +401,7 @@ public:
   /**
     * Delete StreamReport
     */
-  ~StreamReport() {};
+  ~StreamReport(){};
   //@}
 
   /** @name Set methods */
@@ -441,7 +441,7 @@ public:
   /**
     * Close report
     */
-  void close() {};
+  void close(){};
   //@}
 
 private:
