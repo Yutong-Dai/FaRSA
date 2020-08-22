@@ -57,7 +57,7 @@ int testVectorImplementation(int option)
   }
 
   // Print length
-  reporter.printf(R_SOLVER,R_BASIC,"Testing length access... should be 5: %d\n", u.length());
+  reporter.printf(R_SOLVER, R_BASIC, "Testing length access... should be 5: %d\n", u.length());
 
   // Check first element
   if (u.values()[0] < -1e-12 || u.values()[0] > 1e-12) {
@@ -65,7 +65,7 @@ int testVectorImplementation(int option)
   }
 
   // Print first element
-  reporter.printf(R_SOLVER,R_BASIC,"Testing value access... should be 0.0: %+23.16e\n", u.values()[0]);
+  reporter.printf(R_SOLVER, R_BASIC, "Testing value access... should be 0.0: %+23.16e\n", u.values()[0]);
 
   // Set first element to 1.0
   u.set(0, 1.0);
@@ -231,7 +231,7 @@ int testVectorImplementation(int option)
   }
 
   // Print inner product
-  reporter.printf(R_SOLVER,R_BASIC,"Testing inner product method... should be 100: %+23.16e\n", wx);
+  reporter.printf(R_SOLVER, R_BASIC, "Testing inner product method... should be 100: %+23.16e\n", wx);
 
   // Compute norms
   double w1 = w->norm1();
@@ -250,10 +250,10 @@ int testVectorImplementation(int option)
   }
 
   // Evaluate norms
-  reporter.printf(R_SOLVER,R_BASIC,"Testing norm methods... for preceding vector:\n"
-                  "1-norm   (should be 20                 ) : %+23.16e\n"
-                  "2-norm   (should be  8.9442719099991592) : %+23.16e\n"
-                  "inf-norm (should be  4                 ) : %+23.16e\n",
+  reporter.printf(R_SOLVER, R_BASIC, "Testing norm methods... for preceding vector:\n"
+                                     "1-norm   (should be 20                 ) : %+23.16e\n"
+                                     "2-norm   (should be  8.9442719099991592) : %+23.16e\n"
+                                     "inf-norm (should be  4                 ) : %+23.16e\n",
                   w1,
                   w2,
                   wInf);
@@ -263,10 +263,10 @@ int testVectorImplementation(int option)
 
     // Print final message
     if (result == 0) {
-      reporter.printf(R_SOLVER,R_BASIC,"TEST WAS SUCCESSFUL.\n");
+      reporter.printf(R_SOLVER, R_BASIC, "TEST WAS SUCCESSFUL.\n");
     }
     else {
-      reporter.printf(R_SOLVER,R_BASIC,"TEST FAILED.\n");
+      reporter.printf(R_SOLVER, R_BASIC, "TEST FAILED.\n");
     }
 
   } // end if
