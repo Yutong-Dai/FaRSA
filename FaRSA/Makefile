@@ -1,4 +1,4 @@
-SUBDIRS = src tests
+SUBDIRS = src tests problems exes
 
 .PHONY: subdirs $(SUBDIRS)
 

@@ -4,16 +4,23 @@
 //
 // Author(s) : Frank E. Curtis, Daniel P. Robinson
 
-#ifndef __FARSAPROBLEM_HPP__
-#define __FARSAPROBLEM_HPP__
+// Description : Implementation for FaRSA of the objective
+//                 f(x) = sum_{i=1..n} i*x_i^2
+//               with initial point
+//                 x_i = 1 for all i = 1..n
+// Notes       : Optimal value: 0.0
 
-namespace FaRSA
-{
+#ifndef __SIMPLEQUADRATIC_HPP__
+#define __SIMPLEQUADRATIC_HPP__
+
+#include "FaRSAProblem.hpp"
+
+using namespace FaRSA;
 
 /**
- * Problem class
+ * SimpleQuadratic class
  */
-class Problem
+class SimpleQuadratic : public Problem
 {
 
 public:
@@ -22,7 +29,7 @@ public:
   /**
    * Constructor
    */
-  Problem(){};
+  SimpleQuadratic(int n);
   //@}
 
   /** @name Destructor */
@@ -30,22 +37,25 @@ public:
   /**
    * Destructor
    */
-  virtual ~Problem(){};
+  ~SimpleQuadratic();
+  //@}
 
   /** @name Get methods */
   //@{
   /**
-   * Returns number of variables
+   * Number of variables
    * \param[out] n is the number of variables, an integer (return value)
+   * \return indicator of success (true) or failure (false)
    */
-  virtual bool numberOfVariables(int& n) = 0;
+  bool numberOfVariables(int& n);
   /**
-   * Returns initial point
+   * Initial point
    * \param[in] n is the number of variables, the size of "x", a constant integer
    * \param[out] x is the initial point/iterate, a double array (return value)
+   * \return indicator of success (true) or failure (false)
    */
-  virtual bool initialPoint(int n,
-                            double* x) = 0;
+  bool initialPoint(int n,
+                    double* x);
   //@}
 
   /** @name Evaluate methods */
@@ -55,30 +65,33 @@ public:
    * \param[in] n is the number of variables, the size of "x", a constant integer
    * \param[in] x is a given point/iterate, a constant double array
    * \param[out] f is the objective value at "x", a double (return value)
+   * \return indicator of success (true) or failure (false)
    */
-  virtual bool evaluateObjective(int n,
-                                 const double* x,
-                                 double& f) = 0;
+  bool evaluateObjective(int n,
+                         const double* x,
+                         double& f);
   /**
    * Evaluates gradient
    * \param[in] n is the number of variables, the size of "x", a constant integer
    * \param[in] x is a given point/iterate, a constant double array
    * \param[out] g is the gradient value at "x", a double array (return value)
+   * \return indicator of success (true) or failure (false)
    */
-  virtual bool evaluateGradient(int n,
-                                const double* x,
-                                double* g) = 0;
+  bool evaluateGradient(int n,
+                        const double* x,
+                        double* g);
   /**
    * Evaluates Hessian-vector product
    * \param[in] n is the number of variables, the size of "x", a constant integer
    * \param[in] x is a given point/iterate, a constant double array
    * \param[in] v is a given vector, a constant double array
-   * \param[out] Hv is the Hessian value at "x" times "v", a double array (return value)
+   * \param[out] Hv is the product of the Hessian and "v", a double array (return value)
+   * \return indicator of success (true) or failure (false)
    */
-  virtual bool evaluateHessianVectorProduct(int n,
-                                            const double* x,
-                                            const double* v,
-                                            double* Hv) = 0;
+  bool evaluateHessianVectorProduct(int n,
+                                    const double* x,
+                                    const double* v,
+                                    double* Hv);
   //@}
 
   /** @name Finalize methods */
@@ -89,11 +102,12 @@ public:
    * \param[in] x is the final point/iterate, a constant double array
    * \param[in] f is the objective value at "x", a constant double
    * \param[in] g is the gradient value at "x", a constant double array
+   * \return indicator of success (true) or failure (false)
    */
-  virtual bool finalizeSolution(int n,
-                                const double* x,
-                                double f,
-                                const double* g) = 0;
+  bool finalizeSolution(int n,
+                        const double* x,
+                        double f,
+                        const double* g);
   //@}
 
 private:
@@ -104,15 +118,18 @@ private:
   /**
    * Copy constructor
    */
-  Problem(const Problem&);
+  SimpleQuadratic(const SimpleQuadratic&);
   /**
    * Overloaded equals operator
    */
-  void operator=(const Problem&);
+  void operator=(const SimpleQuadratic&);
   //@}
 
-}; // end Problem
+  /** @name Private members */
+  //@{
+  int number_of_variables_; /**< Number of variables */
+  //@}
 
-} // namespace FaRSA
+}; // end SimpleQuadratic
 
-#endif /* __FARSAPROBLEM_HPP__ */
+#endif /* __SIMPLEQUADRATIC_HPP__ */
