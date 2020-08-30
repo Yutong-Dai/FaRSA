@@ -1,0 +1,28 @@
+@startuml
+skinparam defaultFontName Courier
+skinparam class {
+  BackgroundColor white
+  BorderColor black
+}
+package "./FaRSA/Problem.hpp"{
+    abstract class Problem{
+        == methods ==
+        -- constructor and destructor --
+        + Problem()
+        + virtual ~Problem()
+        - Problem(const Problem&)
+        - void operator=(const Problem&)
+        
+        + virtual bool numberOfDataPoints(int& N) = 0
+        + virtual bool numberOfVariables(int& n) = 0
+        + virtual bool initialPoint(int n, double* x) = 0
+        -- evaluation method --
+        + virtual bool evaluateObjective(int n, int N, const double* x, double& f) = 0
+        + virtual bool evaluateGradient(int n, int N, const double* x, double* g) = 0
+        + virtual bool evaluateHessianVectorProduct(int n, int N, const double* x, const double* v, double* Hv) = 0
+        -- finalize method --
+        + virtual bool finalizeSolution(int n, int N, const double* x, double f, const double* g) = 0
+        
+    }
+}
+@enduml

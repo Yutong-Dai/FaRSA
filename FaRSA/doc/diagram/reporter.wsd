@@ -1,0 +1,115 @@
+@startuml
+skinparam defaultFontName Courier
+skinparam class {
+  BackgroundColor white
+  BorderColor black
+}
+package "./FaRSA/FaRSAReporter.hpp"{
+    class Reporter{
+        == members ==
+        - std::vector<std::shared_ptr<Report>> reports_
+        == methods ==
+        -- constructor and destructor --
+        + Reporter()
+        + ~Reporter()
+        - Reporter(const Reporter&)
+        - operator=(const Reporter&)
+        -- print method --
+        + void printf(ReportType type, ReportLevel level, const char* format, ...) const
+        - void printList(ReportType type, ReportLevel level, const char* format, va_list lst) const
+        -- add method --
+        + bool addReport(const std::shared_ptr<Report> report)
+        + bool addFileReport(std::string report_name, std::string file_name, ReportType type, ReportLevel level)
+        -- get method --
+        + std::shared_ptr<Report> report(std::string name)
+        -- flush buffer method --
+        + void flushBuffer() const
+        -- delete method  --
+        + void deleteReports()
+    }
+    abstract class Report{
+        == members ==
+        - std::string name_
+        - ReportType type_
+        - ReportLevel level_
+        == methods ==
+        -- constructor and destructor --
+        + Report(std::string name, ReportType type, ReportLevel level)
+        + virtual ~Report()
+        - Report()
+        - Report(const Report&)
+        - void operator=(const Report&)
+        -- get method --
+        + inline std::string name()
+        -- set method --
+        + inline void setTypeAndLevel(ReportType type, ReportLevel level)
+        -- acceptance method --
+        + bool isAccepted(ReportType type, ReportLevel level) const
+        -- print method --
+        + virtual void printList(ReportType type, ReportLevel level, const char* format, va_list lst) = 0
+        -- flush buffer method --
+        + virtual void flushBuffer() = 0
+        -- close report method --
+        + virtual void close() = 0
+    }
+
+    class FileReport{
+        == members ==
+        - FILE* file_
+        == methods ==
+        -- constructor and destructor --
+        + FileReport(std::string name, ReportType type, ReportLevel level)
+        + ~FileReport()
+        - FileReport()
+        - FileReport(const FileReport&)
+        - void operator=(const FileReport&)
+        -- print method --
+        + void printList(ReportType type, ReportLevel level, const char* format, va_list lst)
+        -- flush buffer method --
+        + void flushBuffer()
+        -- open method --
+        + bool open(const char* name)
+        -- close method --
+        + void close()
+    }
+
+    class StreamReport{
+        == members ==
+        - std::ostream* os_
+        - char buffer_[32768]
+        == methods ==
+        -- constructor and destructor --
+        + StreamReport(std::string name, ReportType type, ReportLevel level)
+        + ~StreamReport()
+        - StreamReport()
+        - StreamReport(const StreamReport&)
+        - void operator=(const StreamReport&)
+        -- set method --
+        + inline void setStream(std::ostream* os)
+        -- print method --
+        + void printList(ReportType type, ReportLevel level, const char* format, va_list lst)
+        -- flush buffer method --
+        + void flushBuffer()
+        -- close method --
+        + void close()
+    }
+    enum ReportType{
+        R_SOLVER
+        R_SUBSOLVER
+    }
+
+    enum ReportLevel{
+        R_BASIC
+        R_PER_INTERATION
+        R_PER_INNER_ITERATION
+    }
+
+    FileReport <|-- Report : inherit
+    StreamReport <|-- Report : inherit
+    Report --> Reporter : dependence
+    ReportType --> Reporter : dependence
+    ReportLevel --> Reporter : dependence
+    ReportType --> Report : dependence
+    ReportLevel --> Report : dependence
+}
+@enduml
