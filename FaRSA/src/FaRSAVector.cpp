@@ -4,29 +4,26 @@
 //
 // Author(s) : Frank E. Curtis, Daniel P. Robinson
 
+#include "FaRSAVector.hpp"
+
 #include <cassert>
 #include <cmath>
 
-#include "FaRSAVector.hpp"
-
-namespace FaRSA
-{
+namespace FaRSA {
 
 // Constructor with given length; values initialized to zero
 Vector::Vector(int length)
-  : length_(length),
-    max_computed_(true),
-    min_computed_(true),
-    norm1_computed_(true),
-    norm2_computed_(true),
-    normInf_computed_(true),
-    max_value_(0.0),
-    min_value_(0.0),
-    norm1_value_(0.0),
-    norm2_value_(0.0),
-    normInf_value_(0.0)
-{
-
+    : length_(length),
+      max_computed_(true),
+      min_computed_(true),
+      norm1_computed_(true),
+      norm2_computed_(true),
+      normInf_computed_(true),
+      max_value_(0.0),
+      min_value_(0.0),
+      norm1_value_(0.0),
+      norm2_value_(0.0),
+      normInf_value_(0.0) {
   // Allocate array
   values_ = new double[length];
 
@@ -35,21 +32,19 @@ Vector::Vector(int length)
     values_[i] = 0.0;
   }
 
-} // end constructor
+}  // end constructor
 
 // Constructor with given length; values initialized to given value
 Vector::Vector(int length,
                double value)
-  : length_(length),
-    max_computed_(true),
-    min_computed_(true),
-    norm1_computed_(true),
-    norm2_computed_(true),
-    normInf_computed_(true),
-    max_value_(value),
-    min_value_(value)
-{
-
+    : length_(length),
+      max_computed_(true),
+      min_computed_(true),
+      norm1_computed_(true),
+      norm2_computed_(true),
+      normInf_computed_(true),
+      max_value_(value),
+      min_value_(value) {
   // Allocate array
   values_ = new double[length];
 
@@ -63,36 +58,30 @@ Vector::Vector(int length,
   norm2_value_ = sqrt((double)length * pow(value, 2.0));
   normInf_value_ = fabs(value);
 
-} // end constructor
+}  // end constructor
 
 // Destructor; values array deleted
-Vector::~Vector()
-{
-
+Vector::~Vector() {
   // Delete array
   if (values_ != nullptr) {
     delete[] values_;
     values_ = nullptr;
-  } // end if
+  }  // end if
 
-} // end destructor
+}  // end destructor
 
 // Print array with given name
 void Vector::print(const Reporter* reporter,
-                   std::string name) const
-{
-
+                   std::string name) const {
   // Print elements
   for (int i = 0; i < length_; i++) {
     reporter->printf(R_SOLVER, R_BASIC, "%s[%6d]=%+23.16e\n", name.c_str(), i, values_[i]);
   }
 
-} // end print
+}  // end print
 
 // Make new Vector as a copy
-std::shared_ptr<Vector> Vector::makeNewCopy() const
-{
-
+std::shared_ptr<Vector> Vector::makeNewCopy() const {
   // Create new vector
   std::shared_ptr<Vector> vector(new Vector(length_));
 
@@ -102,14 +91,12 @@ std::shared_ptr<Vector> Vector::makeNewCopy() const
   // Return
   return vector;
 
-} // end makeNewCopy
+}  // end makeNewCopy
 
 // Make new Vector by adding "scalar1" times this Vector to "scalar2" times other_vector
 std::shared_ptr<Vector> Vector::makeNewLinearCombination(double scalar1,
                                                          double scalar2,
-                                                         const Vector& other_vector) const
-{
-
+                                                         const Vector& other_vector) const {
   // Create new vector
   std::shared_ptr<Vector> vector(new Vector(length_));
 
@@ -119,12 +106,10 @@ std::shared_ptr<Vector> Vector::makeNewLinearCombination(double scalar1,
   // Return
   return vector;
 
-} // end makeNewLinearCombination
+}  // end makeNewLinearCombination
 
 // Set length and initialize values to zero
-void Vector::setLength(int length)
-{
-
+void Vector::setLength(int length) {
   // Store length
   length_ = length;
 
@@ -132,7 +117,7 @@ void Vector::setLength(int length)
   if (values_ != nullptr) {
     delete[] values_;
     values_ = nullptr;
-  } // end if
+  }  // end if
 
   // Allocate array
   values_ = new double[length];
@@ -154,13 +139,11 @@ void Vector::setLength(int length)
   norm2_value_ = 0.0;
   normInf_value_ = 0.0;
 
-} // end setLength
+}  // end setLength
 
 // Set element with given index to given value
 void Vector::set(int index,
-                 double value)
-{
-
+                 double value) {
   // Asserts
   assert(index >= 0);
   assert(index < length_);
@@ -175,12 +158,10 @@ void Vector::set(int index,
   norm2_computed_ = false;
   normInf_computed_ = false;
 
-} // end set
+}  // end set
 
 // Copy elements of other_vector
-void Vector::copy(const Vector& other_vector)
-{
-
+void Vector::copy(const Vector& other_vector) {
   // Assert
   assert(length_ == other_vector.length());
 
@@ -196,12 +177,10 @@ void Vector::copy(const Vector& other_vector)
   norm2_computed_ = false;
   normInf_computed_ = false;
 
-} // end copy
+}  // end copy
 
 // Copy elements of double array
-void Vector::copyArray(double* array)
-{
-
+void Vector::copyArray(double* array) {
   // Copy elements
   for (int i = 0; i < length_; i++) {
     values_[i] = array[i];
@@ -214,57 +193,49 @@ void Vector::copyArray(double* array)
   norm2_computed_ = false;
   normInf_computed_ = false;
 
-} // end copyArray
+}  // end copyArray
 
 // Scale elements by given scalar
-void Vector::scale(double scalar)
-{
-
+void Vector::scale(double scalar) {
   // Check for zero scalar
   if (scalar == 0.0) {
-
     // Scale elements
     for (int i = 0; i < length_; i++) {
       values_[i] = 0.0;
     }
 
-  } // end if
+  }  // end if
   else if (scalar != 1.0) {
-
     // Scale elements
     for (int i = 0; i < length_; i++) {
       values_[i] = scalar * values_[i];
     }
 
-  } // end else
+  }  // end else
 
   // Compute scalar values
   if (max_computed_) {
     if (scalar >= 0.0) {
       max_value_ = scalar * max_value_;
-    }
-    else {
+    } else {
       if (min_computed_) {
         max_value_ = scalar * min_value_;
-      }
-      else {
+      } else {
         max_computed_ = false;
       }
     }
-  } // end if
+  }  // end if
   if (min_computed_) {
     if (scalar >= 0.0) {
       min_value_ = scalar * min_value_;
-    }
-    else {
+    } else {
       if (max_computed_) {
         min_value_ = scalar * max_value_;
-      }
-      else {
+      } else {
         min_computed_ = false;
       }
     }
-  } // end if
+  }  // end if
   if (norm1_computed_) {
     norm1_value_ = fabs(scalar) * norm1_value_;
   }
@@ -275,13 +246,11 @@ void Vector::scale(double scalar)
     normInf_value_ = fabs(scalar) * normInf_value_;
   }
 
-} // end scale
+}  // end scale
 
 // Add to this Vector "scalar" times other_vector
 void Vector::addScaledVector(double scalar,
-                             const Vector& other_vector)
-{
-
+                             const Vector& other_vector) {
   // Assert
   assert(length_ == other_vector.length());
 
@@ -297,44 +266,39 @@ void Vector::addScaledVector(double scalar,
   norm2_computed_ = false;
   normInf_computed_ = false;
 
-} // end addScaledVector
+}  // end addScaledVector
 
 // Set values as linear combination (scalar1*vector1 + scalar2*vector2)
 void Vector::linearCombination(double scalar1,
                                const Vector& vector1,
                                double scalar2,
-                               const Vector& vector2)
-{
-
+                               const Vector& vector2) {
   // Asserts
   assert(length_ == vector1.length());
   assert(length_ == vector2.length());
 
   // Check for nonzero scalars
   if (scalar1 != 0.0 && scalar2 != 0.0) {
-
     // Set elements
     for (int i = 0; i < length_; i++) {
       values_[i] = scalar1 * vector1.values()[i] + scalar2 * vector2.values()[i];
     }
 
-  } // end if
+  }  // end if
   else if (scalar1 != 0.0) {
-
     // Set elements
     for (int i = 0; i < length_; i++) {
       values_[i] = scalar1 * vector1.values()[i];
     }
 
-  } // end else if
+  }  // end else if
   else {
-
     // Set elements
     for (int i = 0; i < length_; i++) {
       values_[i] = scalar2 * vector2.values()[i];
     }
 
-  } // end else
+  }  // end else
 
   // Reset scalar value bools
   if (scalar1 == 0.0 && scalar2 == 0.0) {
@@ -348,8 +312,7 @@ void Vector::linearCombination(double scalar1,
     norm1_value_ = 0.0;
     norm2_value_ = 0.0;
     normInf_value_ = 0.0;
-  }
-  else {
+  } else {
     max_computed_ = false;
     min_computed_ = false;
     norm1_computed_ = false;
@@ -357,12 +320,10 @@ void Vector::linearCombination(double scalar1,
     normInf_computed_ = false;
   }
 
-} // end linearCombination
+}  // end linearCombination
 
 // Inner product with other_vector
-double Vector::innerProduct(const Vector& other_vector) const
-{
-
+double Vector::innerProduct(const Vector& other_vector) const {
   // Assert
   assert(length_ == other_vector.length());
 
@@ -375,15 +336,12 @@ double Vector::innerProduct(const Vector& other_vector) const
   // Return inner product
   return inner_product;
 
-} // end innerProduct
+}  // end innerProduct
 
 // Maximum element
-double Vector::max()
-{
-
+double Vector::max() {
   // Check if computed
   if (!max_computed_) {
-
     // Initialize maximum
     max_value_ = values_[0];
 
@@ -395,20 +353,17 @@ double Vector::max()
     // Set to computed
     max_computed_ = true;
 
-  } // end if
+  }  // end if
 
   // Return maximum
   return max_value_;
 
-} // end max
+}  // end max
 
 // Minimum element
-double Vector::min()
-{
-
+double Vector::min() {
   // Check if computed
   if (!min_computed_) {
-
     // Initialize minimum
     min_value_ = values_[0];
 
@@ -420,20 +375,17 @@ double Vector::min()
     // Set to computed
     min_computed_ = true;
 
-  } // end if
+  }  // end if
 
   // Return minimum
   return min_value_;
 
-} // end max
+}  // end max
 
 // 1-norm
-double Vector::norm1()
-{
-
+double Vector::norm1() {
   // Check if computed
   if (!norm1_computed_) {
-
     // Initialize 1-norm
     norm1_value_ = fabs(values_[0]);
 
@@ -445,20 +397,17 @@ double Vector::norm1()
     // Set to computed
     norm1_computed_ = true;
 
-  } // end if
+  }  // end if
 
   // Return 1-norm
   return norm1_value_;
 
-} // end norm1
+}  // end norm1
 
 // 2-norm
-double Vector::norm2()
-{
-
+double Vector::norm2() {
   // Check if computed
   if (!norm2_computed_) {
-
     // Initialize 2-norm
     norm2_value_ = pow(values_[0], 2.0);
 
@@ -471,20 +420,17 @@ double Vector::norm2()
     // Set to computed
     norm2_computed_ = true;
 
-  } // end if
+  }  // end if
 
   // Return 2-norm
   return norm2_value_;
 
-} // end norm2
+}  // end norm2
 
 // inf-norm
-double Vector::normInf()
-{
-
+double Vector::normInf() {
   // Check if computed
   if (!normInf_computed_) {
-
     // Initialize inf-norm
     normInf_value_ = fabs(values_[0]);
 
@@ -496,11 +442,11 @@ double Vector::normInf()
     // Set to computed
     normInf_computed_ = true;
 
-  } // end if
+  }  // end if
 
   // Return inf-norm
   return normInf_value_;
 
-} // end normInf
+}  // end normInf
 
-} // namespace FaRSA
+}  // namespace FaRSA

@@ -1,0 +1,45 @@
+@startuml
+skinparam defaultFontName Courier
+skinparam class {
+  BackgroundColor white
+  BorderColor black
+}
+package "./FaRSA/FaRSASparseMat.hpp"{
+    abstract class SparseMat{
+        == members ==
+        - unsigned int nrows_
+        - unsigned int ncols_
+        - std::valarray<double> val_
+        - std::vector<int> rowidx_
+        - std::vector<int> colidx_
+        - float sparsity_
+        == methods ==
+        -- constructor and destructor --
+        + SparseMat()
+        + SparseMat(unsigned int nrows, unsigned int ncols, std::valarray<double> val, std::vector<int> rowidx, std::vector<int> colidx)
+        + SparseMat(const SparseMat& other)
+        + ~SparseMat()
+        -- print method --
+        + virtual void print(const Reporter* reporter, std::string name = "ans") const
+        -- get method --
+        + inline float sparsity() const
+        -- scalar method --
+        + SparseMat operator*(const double scalar)
+    }
+     class csrMat{
+        == methods ==
+        -- constructor and destructor --
+        + csrMat(unsigned int nrows, unsigned int ncols, std::valarray<double> val, std::vector<int> rowidx, std::vector<int> colidx)
+        + inline csrMat(const SparseMat& mat)
+        -- print method --
+        + void print(const Reporter* reporter, std::string name = "ans") const;
+        -- vector method --
+        + std::shared_ptr<Vector> dot(const Vector& v)
+    }
+
+    
+
+    csrMat <|-- SparseMat : inherit
+    
+}
+@enduml

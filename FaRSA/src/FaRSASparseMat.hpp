@@ -2,7 +2,7 @@
  * File: FaRSASparseMat.h
  * Author: Yutong Dai (rothdyt@gmail.com)
  * File Created: 2020-08-26 15:38
- * Last Modified: 2020-08-26 20:55
+ * Last Modified: 2020-08-30 18:57
  * --------------------------------------------
  * Description:
  */
@@ -15,6 +15,7 @@
 #include <valarray>
 
 #include "FaRSAReporter.hpp"
+#include "FaRSAVector.hpp"
 namespace FaRSA {
 
 /**
@@ -35,9 +36,9 @@ class SparseMat {
   SparseMat()
       : nrows_(0),
         ncols_(0),
-        val_(nullptr),
-        rowidx_(nullptr),
-        colidx_(nullptr),
+        val_({}),
+        rowidx_(0),
+        colidx_(0),
         sparsity_(-1.0){};
   /**
    * Constructor with given val, rowidx, colidx
@@ -48,9 +49,16 @@ class SparseMat {
   SparseMat(
       unsigned int nrows,
       unsigned int ncols,
-      std::valarray<double>* val,
-      std::vector<int>* rowidx,
-      std::vector<int>* colidx);
+      std::valarray<double> val,
+      std::vector<int> rowidx,
+      std::vector<int> colidx);
+  SparseMat(const SparseMat& other)
+      : nrows_(other.nrows_),
+        ncols_(other.ncols_),
+        val_(other.val_),
+        rowidx_(other.rowidx_),
+        colidx_(other.colidx_),
+        sparsity_(other.sparsity_){};
   //@}
   /**@name Destructor*/
   //@{
@@ -71,11 +79,13 @@ class SparseMat {
   /**@name get method*/
   //@{
   /**
-     * get the sparsity of a matrix
-     * \return is the sparsity of the given matrix
-     */
+   * get the sparsity of a matrix
+   * \return is the sparsity of the given matrix
+   */
   inline float sparsity() const { return sparsity_; };
   //@}
+  /**@name scalar method*/
+  SparseMat operator*(const double scalar);
 
  protected:
   /**
@@ -84,9 +94,9 @@ class SparseMat {
   //@{
   unsigned int nrows_; /**number of rows*/
   unsigned int ncols_; /**number of cols*/
-  std::valarray<double>* val_;
-  std::vector<int>* rowidx_;
-  std::vector<int>* colidx_;
+  std::valarray<double> val_;
+  std::vector<int> rowidx_;
+  std::vector<int> colidx_;
   float sparsity_;
   //@}
 };  // end SparseMat
@@ -95,13 +105,15 @@ class csrMat : public SparseMat {
  public:
   csrMat(unsigned int nrows,
          unsigned int ncols,
-         std::valarray<double>* val,
-         std::vector<int>* rowidx,
-         std::vector<int>* colidx)
+         std::valarray<double> val,
+         std::vector<int> rowidx,
+         std::vector<int> colidx)
       : SparseMat(nrows, ncols, val, rowidx, colidx){};
-
+  inline csrMat(const SparseMat& mat) : SparseMat(mat){}; /** type conversion */
   void print(const Reporter* reporter,
              std::string name = "ans") const;
+  std::shared_ptr<Vector> dot(const Vector& v);
+  // Vector dot(const Vector& v);
 };
 
 }  // namespace FaRSA
