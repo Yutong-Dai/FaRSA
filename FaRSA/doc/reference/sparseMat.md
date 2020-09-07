@@ -1,4 +1,4 @@
-# Sparse Matrix representation
+ # Sparse Matrix representation
 
 1. compressed sparse row (CSR)
 2. compressed sparse column (CSC)
@@ -111,4 +111,51 @@ git pull origin yutong
 # Questions
 
 * Should I use `std::valarray<double>`  as the container for `val_`. 
-  * Would envison my `val_` is not only a vector of `double` but also a vector of any `numerics` and `bool`. Should I use template
+  * Would envison my `val_` is not only a vector of `double` but also a vector of any `numerics` and `bool`. Should I use the template scheme?
+  * Provide the `indexing(slicing)` functionality, i.e., `M[1:2, :]`. Both return by copy and return by view.
+
+* Interaction with `FaRSA::Vector`
+
+```cpp
+# hpp
+Vector dot(const Vector& v);
+
+# cpp
+Vector csrMat::dot(const Vector& v) {
+  Vector ans(v.length());
+  for (int row = 0; row < nrows_; row++) {
+    unsigned int row_start = rowidx_[row];
+    unsigned int row_end = rowidx_[row + 1];
+    if (row_end == row_start) {
+      ans.set(row, 0.0);
+    } else {
+      double temp = 0;
+      for (int i = row_start; i < row_end; i++) {
+        int colId = colidx_[i];
+        temp += val_[i] * v.values()[colId];
+      }
+      ans.set(row, temp);
+    }
+  }
+  return ans;
+}
+
+"FaRSA::Vector::Vector(const FaRSA::Vector &)" (declared at line 208 of "/Users/ym/Documents/Optimization_Software/FaRSA/FaRSA/src/FaRSAVector.hpp") is inaccessible
+```
+
+Why return the object will invoke the copy constructor?
+
+* Inherentance and type conversion.
+
+```cpp
+SparseMat SparseMat::operator*(double scalar) {
+  std::valarray<double> newval_ = scalar * val_;
+  return SparseMat(nrows_, ncols_, newval_, rowidx_, colidx_);
+}
+
+std::valarray<double> val = {5.0, 8.0, 3.0, 6.0};
+std::vector<int> rowidx = {0, 0, 2, 3, 4};
+std::vector<int> colidx = {1, 3, 0, 2};
+csrMat m(4, 4, val, rowidx, colidx);
+csrMat mnew = m * 3.0;  // be careful of type conversion
+```
