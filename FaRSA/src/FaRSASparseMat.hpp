@@ -2,7 +2,7 @@
  * File: FaRSASparseMat.h
  * Author: Yutong Dai (rothdyt@gmail.com)
  * File Created: 2020-08-26 15:38
- * Last Modified: 2020-09-06 17:21
+ * Last Modified: 2020-09-28 00:30
  * --------------------------------------------
  * Description:
  */
@@ -25,10 +25,9 @@ class Reporter;
 class SparseMat {
  public:
   virtual void print(const Reporter* reporter,
-                     std::string name) const {};
-  virtual std::shared_ptr<Vector> dot(const Vector& v){};
-  virtual SparseMat* transpose(){};
-  virtual ~SparseMat();
+                     std::string name) const = 0;
+  virtual std::shared_ptr<Vector> dot(const Vector& v) = 0;
+  virtual std::shared_ptr<SparseMat> transpose() = 0;
 };
 
 class csrMat : public SparseMat {
@@ -43,12 +42,12 @@ class csrMat : public SparseMat {
         val_(val),
         rowPtr_(rowPtr),
         colidx_(colidx){};
-  csrMat(const std::string& file_path);
-  virtual ~csrMat();
+  csrMat(const std::string& file_path){};
+  ~csrMat();
   void print(const Reporter* reporter,
              std::string name) const override;
   virtual std::shared_ptr<Vector> dot(const Vector& v) override;
-  virtual csrMat* transpose() override;  // if I allocate new memory inside it should I mannually delete it? Where should I delete it? // introduct the notion of axes? Ax and yA might be diiferent.
+  virtual std::shared_ptr<SparseMat> transpose() override;  // if I allocate new memory inside it should I mannually delete it? Where should I delete it? // introduct the notion of axes? Ax and yA might be diiferent.
 
  private:
   int nrows_;
@@ -56,6 +55,33 @@ class csrMat : public SparseMat {
   double* val_;
   int* rowPtr_;
   int* colidx_;
+};
+
+class cscMat : public SparseMat {
+ public:
+  cscMat(int nrows,
+         int ncols,
+         double* val,
+         int* rowidx,
+         int* colPtr)
+      : nrows_(nrows),
+        ncols_(ncols),
+        val_(val),
+        rowidx_(rowidx),
+        colPtr_(colPtr){};
+  cscMat(const std::string& file_path){};
+  ~cscMat();
+  void print(const Reporter* reporter,
+             std::string name) const override;
+  virtual std::shared_ptr<Vector> dot(const Vector& v) override;
+  virtual std::shared_ptr<SparseMat> transpose() override;  // if I allocate new memory inside it should I mannually delete it? Where should I delete it? // introduct the notion of axes? Ax and yA might be diiferent.
+
+ private:
+  int nrows_;
+  int ncols_;
+  double* val_;
+  int* rowidx_;
+  int* colPtr_;
 };
 
 }  // namespace FaRSA
