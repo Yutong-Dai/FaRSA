@@ -119,6 +119,14 @@ public:
   };
   //@}
 
+  /** @name Set methods */
+  //@{
+  /**
+   * Set vector from file
+   */
+  void setFromFile(char* file_name);
+  //@}
+
   /** @name Modify methods */
   //@{
   /**

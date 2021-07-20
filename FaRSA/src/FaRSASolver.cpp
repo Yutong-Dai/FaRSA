@@ -246,6 +246,14 @@ void FaRSASolver::optimize(const std::shared_ptr<Problem> problem)
     setStatus(FARSA_FUNCTION_EVALUATION_ASSERT);
   } catch (FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION& exec) {
     setStatus(FARSA_GRADIENT_EVALUATION_ASSERT);
+  } catch (FARSA_MATRIX_EXCEPTION& exec) {
+    setStatus(FARSA_MATRIX);
+  } catch (FARSA_MATRIX_ASSERT_EXCEPTION& exec) {
+    setStatus(FARSA_MATRIX_ASSERT);
+  } catch (FARSA_VECTOR_EXCEPTION& exec) {
+    setStatus(FARSA_VECTOR);
+  } catch (FARSA_VECTOR_ASSERT_EXCEPTION& exec) {
+    setStatus(FARSA_VECTOR_ASSERT);
   } catch (FARSA_DIRECTION_COMPUTATION_FAILURE_EXCEPTION& exec) {
     setStatus(FARSA_DIRECTION_COMPUTATION_FAILURE);
   } catch (FARSA_LINE_SEARCH_FAILURE_EXCEPTION& exec) {
@@ -261,8 +269,7 @@ void FaRSASolver::optimize(const std::shared_ptr<Problem> problem)
       status() != FARSA_GRADIENT_EVALUATION_FAILURE) {
 
     // Finalize problem solution
-    problem->finalizeSolution(quantities_.numberOfVariables(),
-                              quantities_.currentIterate()->vector()->values(),
+    problem->finalizeSolution(quantities_.currentIterate()->vector()->values(),
                               quantities_.currentIterate()->objective(),
                               quantities_.currentIterate()->gradient()->values());
   }

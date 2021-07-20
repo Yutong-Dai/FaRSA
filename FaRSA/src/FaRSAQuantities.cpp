@@ -132,7 +132,7 @@ bool Quantities::initialize(const std::shared_ptr<Problem> problem)
   std::shared_ptr<Vector> v(new Vector(number_of_variables_));
 
   // Get initial point
-  success = problem->initialPoint(number_of_variables_, v->valuesModifiable());
+  success = problem->initialPoint(v->valuesModifiable());
 
   // Check for success
   if (!success) {

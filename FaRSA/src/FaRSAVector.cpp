@@ -7,6 +7,8 @@
 #include <cassert>
 #include <cmath>
 
+#include "FaRSABLASLAPACK.hpp"
+#include "FaRSADeclarations.hpp"
 #include "FaRSAVector.hpp"
 
 namespace FaRSA
@@ -120,6 +122,47 @@ std::shared_ptr<Vector> Vector::makeNewLinearCombination(double scalar1,
   return vector;
 
 } // end makeNewLinearCombination
+
+// Set from file
+void Vector::setFromFile(char* file_name)
+{
+
+  // Open file
+  FILE* f_in = fopen(file_name, "r");
+
+  // Check for failed opening
+  if (f_in == NULL) {
+    THROW_EXCEPTION(FARSA_VECTOR_EXCEPTION, "Failed to open input file.");
+  }
+
+  // Read length (assumed first entry in file)
+  int scan_value = fscanf(f_in, "%d", &length_);
+  if (scan_value == 0 || scan_value == EOF) {
+    THROW_EXCEPTION(FARSA_VECTOR_EXCEPTION, "Length not read.");
+  }
+
+  // Allocate memory
+  values_ = new double[length_];
+
+  // Read file (assumes (index, value) format)
+  int counter = 0;
+  while (true) {
+    int scan_value = fscanf(f_in, "%lf", &values_[counter]);
+    if (scan_value == 0 || scan_value == EOF || counter >= length_-1) {
+      break;
+    }
+    counter++;
+  } // end while
+
+  // Check if full vector has been read
+  if (counter < length_ - 1) {
+    THROW_EXCEPTION(FARSA_VECTOR_EXCEPTION, "Not all vector elements have been read.");
+  }
+
+  // Close file
+  fclose(f_in);
+
+} // end setFromFile
 
 // Set length and initialize values to zero
 void Vector::setLength(int length)

@@ -84,7 +84,7 @@ bool Point::evaluateObjective(Quantities& quantities)
     clock_t start_time = clock();
 
     // Evaluate objective value for problem
-    objective_evaluated_ = problem_->evaluateObjective(vector_->length(), vector_->values(), objective_);
+    objective_evaluated_ = problem_->evaluateObjective(vector_->values(), objective_);
 
     // Increment evaluation time
     quantities.incrementEvaluationTime(clock() - start_time);
@@ -132,7 +132,7 @@ bool Point::evaluateGradient(Quantities& quantities)
     clock_t start_time = clock();
 
     // Evaluate gradient value
-    gradient_evaluated_ = problem_->evaluateGradient(vector_->length(), vector_->values(), g);
+    gradient_evaluated_ = problem_->evaluateGradient(vector_->values(), g);
 
     // Increment evaluation time
     quantities.incrementEvaluationTime(clock() - start_time);

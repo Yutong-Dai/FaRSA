@@ -5,24 +5,23 @@
 // Author(s) : Frank E. Curtis, Daniel P. Robinson
 
 // Description : Implementation for FaRSA of the objective
-//                 f(x) = sum_{i=1..n} i*x_i^2
-//               with initial point
-//                 x_i = 1 for all i = 1..n
-// Notes       : Optimal value: 0.0
+//                 f(x) = logistic regression + group regularizer
 
-#ifndef __SIMPLEQUADRATIC_HPP__
-#define __SIMPLEQUADRATIC_HPP__
+#ifndef __LOGISTICREGRESSION_HPP__
+#define __LOGISTICREGRESSION_HPP__
 
 #include <vector>
 
+#include "FaRSAMatrix.hpp"
 #include "FaRSAProblem.hpp"
+#include "FaRSAVector.hpp"
 
 using namespace FaRSA;
 
 /**
- * SimpleQuadratic class
+ * LogisticRegression class
  */
-class SimpleQuadratic : public Problem
+class LogisticRegression : public Problem
 {
 
 public:
@@ -31,7 +30,10 @@ public:
   /**
    * Constructor
    */
-  SimpleQuadratic(int n);
+  LogisticRegression(char* features_file,
+                     char* labels_file,
+                     char* groups_file,
+                     char* initial_point_file);
   //@}
 
   /** @name Destructor */
@@ -39,11 +41,17 @@ public:
   /**
    * Destructor
    */
-  ~SimpleQuadratic();
+  ~LogisticRegression();
   //@}
 
   /** @name Get methods */
   //@{
+  /**
+   * Number of data points
+   * \param[out] N is the number of data points, an integer (return value)
+   * \return indicator of success (true) or failure (false)
+   */
+  inline bool numberOfDataPoints(int& N) { N = number_of_data_points_; return true; };
   /**
    * Initial point
    * \param[out] x is the initial point/iterate, a double array (return value)
@@ -106,13 +114,26 @@ private:
   /**
    * Copy constructor
    */
-  SimpleQuadratic(const SimpleQuadratic&);
+  LogisticRegression(const LogisticRegression&);
   /**
    * Overloaded equals operator
    */
-  void operator=(const SimpleQuadratic&);
+  void operator=(const LogisticRegression&);
   //@}
 
-}; // end SimpleQuadratic
+  /** @name Private members */
+  //@{
+  int number_of_data_points_; /**< Number of data points */
+  Vector initial_point_;      /**< Initial point         */
+  Matrix features_;           /**< Feature data          */
+  Vector labels_;             /**< Label data            */
+  //@}
 
-#endif /* __SIMPLEQUADRATIC_HPP__ */
+  /** @name Private members */
+  //@{
+  void setGroupsFromFile(char* groups_file);
+  //@}
+
+}; // end LogisticRegression
+
+#endif /* __LOGISTICREGRESSION_HPP__ */

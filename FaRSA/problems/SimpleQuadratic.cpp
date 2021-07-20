@@ -10,30 +10,27 @@
 
 // Constructor
 SimpleQuadratic::SimpleQuadratic(int n)
-  : number_of_variables_(n) {}
+{
+
+  // Set number of variables
+  number_of_variables_ = n;
+
+  // Set groups
+  for (int i = 0; i < number_of_variables_; i++) {
+    groups_[i].push_back(i);
+  }
+
+} // end constructor
 
 // Destructor
 SimpleQuadratic::~SimpleQuadratic() {}
 
-// Number of variables
-bool SimpleQuadratic::numberOfVariables(int& n)
-{
-
-  // Set number of variables
-  n = number_of_variables_;
-
-  // Return
-  return true;
-
-} // end numberOfVariables
-
 // Initial point
-bool SimpleQuadratic::initialPoint(int n,
-                                   double* x)
+bool SimpleQuadratic::initialPoint(double* x)
 {
 
   // Set initial point
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < number_of_variables_; i++) {
     x[i] = 1.0;
   }
 
@@ -43,14 +40,13 @@ bool SimpleQuadratic::initialPoint(int n,
 } // end initialPoint
 
 // Objective value
-bool SimpleQuadratic::evaluateObjective(int n,
-                                        const double* x,
+bool SimpleQuadratic::evaluateObjective(const double* x,
                                         double& f)
 {
 
   // Evaluate function
   f = 0.0;
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < number_of_variables_; i++) {
     f += (double)(i+1) * pow(x[i],2.0);
   }
 
@@ -60,13 +56,12 @@ bool SimpleQuadratic::evaluateObjective(int n,
 } // end evaluateObjective
 
 // Gradient value
-bool SimpleQuadratic::evaluateGradient(int n,
-                                       const double* x,
+bool SimpleQuadratic::evaluateGradient(const double* x,
                                        double* g)
 {
 
   // Evaluate gradient
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < number_of_variables_; i++) {
     g[i] = (double)(i+1) * 2.0 * x[i];
   } // end for
 
@@ -76,14 +71,14 @@ bool SimpleQuadratic::evaluateGradient(int n,
 } // end evaluateGradient
 
 // Hessian-vector product
-bool SimpleQuadratic::evaluateHessianVectorProduct(int n,
-                                                   const double* x,
+bool SimpleQuadratic::evaluateHessianVectorProduct(const double* x,
+                                                   const std::vector<int> groups,
                                                    const double* v,
                                                    double* Hv)
 {
 
   // Evaluate product
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < number_of_variables_; i++) {
     Hv[i] = (double)(i+1) * 2.0;
   }
 
@@ -93,8 +88,7 @@ bool SimpleQuadratic::evaluateHessianVectorProduct(int n,
 } // end evaluateHessianVectorProduct
 
 // Finalize solution
-bool SimpleQuadratic::finalizeSolution(int n,
-                                       const double* x,
+bool SimpleQuadratic::finalizeSolution(const double* x,
                                        double f,
                                        const double* g)
 {

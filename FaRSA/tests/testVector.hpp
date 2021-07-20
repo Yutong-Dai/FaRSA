@@ -258,6 +258,38 @@ int testVectorImplementation(int option)
                   w2,
                   wInf);
 
+  // Declare vector
+  Vector b;
+
+  // Set file name
+  char* file_name = (char*)"vector.txt";
+
+  // Read from file
+  b.setFromFile(file_name);
+
+  // Check values
+  if (b.values()[0] < 1.6 - 1e-12 || b.values()[0] > 1.6 + 1e-12) {
+    result = 1;
+  }
+  if (b.values()[1] < 2.5 - 1e-12 || b.values()[1] > 2.5 + 1e-12) {
+    result = 1;
+  }
+  if (b.values()[2] < 3.4 - 1e-12 || b.values()[2] > 3.4 + 1e-12) {
+    result = 1;
+  }
+  if (b.values()[3] < 4.3 - 1e-12 || b.values()[3] > 4.3 + 1e-12) {
+    result = 1;
+  }
+  if (b.values()[4] < 5.2 - 1e-12 || b.values()[4] > 5.2 + 1e-12) {
+    result = 1;
+  }
+  if (b.values()[5] < 6.1 - 1e-12 || b.values()[5] > 6.1 + 1e-12) {
+    result = 1;
+  }
+
+  // Print matrix
+  b.print(&reporter,"Testing read from file:");
+
   // Check option
   if (option == 1) {
 

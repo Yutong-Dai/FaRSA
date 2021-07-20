@@ -11,6 +11,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "FaRSAOptions.hpp"
 #include "FaRSAPoint.hpp"
@@ -272,6 +273,8 @@ private:
   std::shared_ptr<Point> current_iterate_;
   std::shared_ptr<Point> trial_iterate_;
   std::shared_ptr<Vector> direction_;
+  std::vector<int> groups_free_;
+  std::vector<int> groups_zero_;
   //@}
 
   /** @name Private members (options) */

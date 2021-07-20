@@ -81,7 +81,7 @@ public:
    * Get name of strategy
    * \return string with name of strategy
    */
-  std::string name() { return "Gradient"; };
+  std::string name() { return "Proximal Gradient"; };
   //@}
 
   /** @name Direction computation method */
