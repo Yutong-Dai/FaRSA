@@ -8,6 +8,7 @@
 #define __TESTMATRIX_HPP__
 
 #include <iostream>
+#include <vector>
 
 #include "FaRSAEnumerations.hpp"
 #include "FaRSAReporter.hpp"
@@ -112,6 +113,11 @@ int testMatrixImplementation(int option)
   // Print product
   c.print(&reporter,"Testing matrix-transpose-vector product:");
 
+  // check col method
+  std::vector<int>  col_idx = {0,2};
+  Matrix Asub(A.numberOfRows(), col_idx.size(), col_idx.size() * A.numberOfRows());
+  A.col(col_idx, Asub);
+  Asub.print(&reporter,"Submatrix of A:");
   // Check option
   if (option == 1) {
 
@@ -124,7 +130,7 @@ int testMatrixImplementation(int option)
     }
 
   } // end if
-
+  reporter.printf(R_SOLVER, R_BASIC, "End of the file about to call destructors.");
   // Return
   return result;
 

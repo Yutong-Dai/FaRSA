@@ -7,6 +7,8 @@
 #ifndef __FARSAMATRIX_HPP__
 #define __FARSAMATRIX_HPP__
 
+#include <vector>
+
 #include "FaRSAReporter.hpp"
 #include "FaRSAVector.hpp"
 
@@ -38,6 +40,18 @@ public:
       column_indices_(nullptr),
       row_indices_(nullptr),
       values_(nullptr){};
+  /**
+    * Constructor
+    */
+  Matrix(int number_of_rows,
+         int number_of_columns, 
+         int number_of_nonzeros)
+    : number_of_columns_(number_of_columns),
+      number_of_nonzeros_(number_of_nonzeros),
+      number_of_rows_(number_of_rows),
+      column_indices_(new int[number_of_nonzeros]),
+      row_indices_(new int[number_of_nonzeros]),
+      values_(new double[number_of_nonzeros]){};
   //@}
 
   /** @name Destructor */
@@ -90,6 +104,24 @@ public:
     * \return number of rows of the matrix
     */
   inline int const numberOfRows() const { return number_of_rows_; };
+  /**
+   * @brief return values_ for modification
+   * 
+   * \return double* 
+   */
+  inline double* valuesModifiable() { return  values_;};
+  /**
+   * @brief return row_indices_ for modification
+   * 
+   * \return int* 
+   */
+  inline int* rowIndiciesModifiable() { return  row_indices_;};
+  /**
+   * @brief return column_indices_ for modification
+   * 
+   * \return int* 
+   */
+  inline int* columnIndiciesModifiable() { return  column_indices_;}
   //@}
 
   /** @name Set methods */
@@ -98,8 +130,26 @@ public:
    * Set matrix from file, compressed sparse column format
    */
   void setFromFile(char* file_name, SparseFormatType sparse_format);
+  /**
+   * @brief Set the sparse_format_
+   * 
+   * \param sparse_format 
+   */
+  inline void setSparseFormat(SparseFormatType sparse_format) {sparse_format_=sparse_format;};
+  /**
+   * @brief Set the number_of_nonzeros_
+   * 
+   * \param number_of_nonzeros 
+   */
+  inline void setNumberOfNonzeros(int number_of_nonzeros) {number_of_nonzeros_=number_of_nonzeros;};
+  
   //@}
-
+  
+  /** @name Subsetting methods*/
+  //@{
+  
+  void col(const std::vector<int>& col_indicies, Matrix& submatrix);
+  //@}
 private:
   /** @name Default compiler generated methods
     * (Hidden to avoid implicit creation/calling.)

@@ -17,7 +17,6 @@ namespace FaRSA
 // Destructor
 Matrix::~Matrix()
 {
-
   // Delete arrays
   if (column_indices_ != nullptr) {
     delete[] column_indices_;
@@ -169,5 +168,36 @@ void Matrix::print(const Reporter* reporter,
   } // end for
 
 } // end print
+
+// col
+void Matrix::col(const std::vector<int>& col_indicies, Matrix& submatrix){
+  int counter = 0;
+  if (sparse_format_ == M_COORDINATE_LIST) {
+    for (int i=0; i < col_indicies.size(); i++){
+      for (int j = 0; j < number_of_nonzeros_; j++) {
+        // find desired colidx
+        if (column_indices_[j] == i){
+          // store the row index, column index, and values
+          submatrix.rowIndiciesModifiable()[counter] = row_indices_[j];
+          submatrix.columnIndiciesModifiable()[counter] = column_indices_[j];
+          submatrix.valuesModifiable()[counter] = values_[j];
+          counter += 1;
+        }
+      }
+    }// end for
+    submatrix.setSparseFormat(sparse_format_);
+    submatrix.setNumberOfNonzeros(counter);
+  }
+  else if (sparse_format_ == M_COMPRESSED_SPARSE_ROW) {
+    THROW_EXCEPTION(FARSA_MATRIX_EXCEPTION, "Compressed sparse row not implemented yet!");
+  } // end if
+  else if (sparse_format_ == M_COMPRESSED_SPARSE_COLUMN) {
+    THROW_EXCEPTION(FARSA_MATRIX_EXCEPTION, "Compressed sparse column not implemented yet!");
+  }
+  else {
+    THROW_EXCEPTION(FARSA_MATRIX_EXCEPTION, "Sparse format type error.");
+  }
+
+}// end col
 
 } // namespace FaRSA
