@@ -112,6 +112,34 @@ int testMatrixImplementation(int option)
   // Print product
   c.print(&reporter,"Testing matrix-transpose-vector product:");
 
+  // check col method
+  std::vector<int>  col_idx = {0,2};
+  Matrix Asub;
+  A.col(col_idx, Asub);
+  Asub.print(&reporter,"Submatrix of A:");
+  if (Asub.values()[0] < +1.1000000000000001e+00 - 1e-12 || Asub.values()[0] > +1.1000000000000001e+00 + 1e-12 ){
+    reporter.printf(R_SOLVER, R_BASIC, "values[0]: %3.12e. | should be 1.1\n", Asub.values()[0]);
+    reporter.printf(R_SOLVER, R_BASIC, "values[0] wrong.\n");
+    result = 1;
+  }
+  if (Asub.values()[1] < +2.2000000000000002e+00 - 1e-12 || Asub.values()[1] > +2.2000000000000002e+00 + 1e-12 ){
+    reporter.printf(R_SOLVER, R_BASIC, "values[1]: %3.12e. | should be 2.2\n", Asub.values()[1]);
+    reporter.printf(R_SOLVER, R_BASIC, "values[1] wrong.\n");
+    result = 1;
+  }
+  if (Asub.columnIndicies()[0] != 0 || Asub.columnIndicies()[1] != 1){
+    reporter.printf(R_SOLVER, R_BASIC, "columnIndicies[0]: %d. | should be 0\n", Asub.columnIndicies()[0]);
+    reporter.printf(R_SOLVER, R_BASIC, "columnIndicies[1]: %d. | should be 1\n", Asub.columnIndicies()[1]);
+    reporter.printf(R_SOLVER, R_BASIC, "col wrong.\n");
+    result = 1;
+  }
+  if (Asub.rowIndicies()[0] != 0 || Asub.rowIndicies()[1] != 1){
+    reporter.printf(R_SOLVER, R_BASIC, "rowIndicies[0]: %d. | should be 0\n", Asub.rowIndicies()[0]);    
+    reporter.printf(R_SOLVER, R_BASIC, "rowIndicies[1]: %d. | should be 1\n", Asub.rowIndicies()[1]);
+    reporter.printf(R_SOLVER, R_BASIC, "row wrong.\n");
+    result = 1;
+  }
+
   // Check option
   if (option == 1) {
 
@@ -124,6 +152,8 @@ int testMatrixImplementation(int option)
     }
 
   } // end if
+
+
 
   // Return
   return result;

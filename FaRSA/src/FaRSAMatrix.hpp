@@ -7,6 +7,8 @@
 #ifndef __FARSAMATRIX_HPP__
 #define __FARSAMATRIX_HPP__
 
+#include <vector>
+
 #include "FaRSAReporter.hpp"
 #include "FaRSAVector.hpp"
 
@@ -90,6 +92,44 @@ public:
     * \return number of rows of the matrix
     */
   inline int const numberOfRows() const { return number_of_rows_; };
+
+  /**
+   * @brief Get values (const)
+   * 
+   * \return is pointer to array of Matrix values
+   */
+  inline double* values() const { return  values_;};
+  /**
+   * @brief Get values_ (modifiable)
+   * 
+   * \return is pointer to array of Matrix values_ (to allow modification of array)
+   */  
+  inline double* valuesModifiable() { return  values_;};
+  /**
+   * @brief Get row_indices_ (const)
+   * 
+   * \return is pointer to array of Matrix row_indices_
+   */
+  inline int* rowIndicies() const { return  row_indices_;};
+  /**
+   * @brief Get row_indices_ (modifiable)
+   * 
+   * \return is pointer to array of Matrix row_indices_ (to allow modification of array)
+   */  
+  inline int* rowIndiciesModifiable() { return  row_indices_;};
+
+  /**
+   * @brief Get column_indices_ (const)
+   * 
+   * \return is pointer to array of Matrix column_indices_
+   */  
+  inline int* columnIndicies() const { return  column_indices_;}
+  /**
+   * @brief Get column_indices_ (modifiable)
+   * 
+   * \return is pointer to array of Matrix column_indices_ (to allow modification of array)
+   */ 
+  inline int* columnIndiciesModifiable() { return  column_indices_;}
   //@}
 
   /** @name Set methods */
@@ -100,6 +140,17 @@ public:
   void setFromFile(char* file_name, SparseFormatType sparse_format);
   //@}
 
+  /** @name Subsetting methods */
+  //@{
+  /**
+   * @brief Subset from this matrix with columns selecting col_indicies
+   * 
+   * \param[in] col_indicies is an std::vector<int> holding column indices
+   * \param[out] submatrix is the Matrix to store the sub-matrix with the selected columns
+   */
+  void col(const std::vector<int>& col_indicies, Matrix& submatrix);
+  //@}  
+  
 private:
   /** @name Default compiler generated methods
     * (Hidden to avoid implicit creation/calling.)

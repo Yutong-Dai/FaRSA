@@ -147,6 +147,45 @@ void Matrix::setFromFile(char* file_name,
 
 } // end setFromFile
 
+// col
+void Matrix::col(const std::vector<int>& col_indicies, Matrix& submatrix){
+  int counter = 0;
+  if (sparse_format_ == M_COORDINATE_LIST) {
+    int nnz = col_indicies.size() * number_of_rows_;
+    int* submatrix_column_indices = new int[nnz];
+    int* submatrix_row_indices = new int[nnz];
+    double* submatrix_values = new double[nnz];
+    for (int i=0; i < col_indicies.size(); i++){
+      for (int j = 0; j < number_of_nonzeros_; j++) {
+        // find desired colidx
+        if (column_indices_[j] == i){
+          // store the row index, column index, and values
+          submatrix_row_indices[counter] = row_indices_[j];
+          submatrix_column_indices[counter] = column_indices_[j];
+          submatrix_values[counter] = values_[j];
+          counter += 1;
+        }
+      }
+    }// end for
+    submatrix.row_indices_ = submatrix_row_indices;
+    submatrix.column_indices_ = submatrix_column_indices;
+    submatrix.values_ = submatrix_values;
+    submatrix.number_of_nonzeros_ = counter;
+    submatrix.number_of_columns_ = col_indicies.size();
+    submatrix.number_of_rows_ = number_of_rows_;
+  }
+  else if (sparse_format_ == M_COMPRESSED_SPARSE_ROW) {
+    THROW_EXCEPTION(FARSA_MATRIX_EXCEPTION, "Compressed sparse row not implemented yet!");
+  } // end if
+  else if (sparse_format_ == M_COMPRESSED_SPARSE_COLUMN) {
+    THROW_EXCEPTION(FARSA_MATRIX_EXCEPTION, "Compressed sparse column not implemented yet!");
+  }
+  else {
+    THROW_EXCEPTION(FARSA_MATRIX_EXCEPTION, "Sparse format type error.");
+  }
+
+}// end col
+
 // Print
 void Matrix::print(const Reporter* reporter,
                    std::string name) const
