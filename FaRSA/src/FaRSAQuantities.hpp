@@ -157,6 +157,24 @@ public:
    * \return pointer to Vector representing search direction
    */
   inline std::shared_ptr<Vector> direction() { return direction_; };
+
+  /**
+   * @brief Get stationarity tolerance
+   * \return double const stationarity_tolerance_
+   */
+  inline double const stationarityTolerance() const { return stationarity_tolerance_; };
+  /**
+   * @brief Get stationarity iteration limit
+   * 
+   * \return double const iteration_limit_
+   */
+  inline double const iterationLimit() const{ return iteration_limit_;} ;
+  /**
+   * @brief Get iterate norm tolerance
+   * 
+   * \return double const iterate_norm_tolerance_
+   */
+  inline double const iterateNormTolerance() const{ return iterate_norm_tolerance_;} ;
   //@}
 
   /** @name Set methods */
@@ -264,7 +282,6 @@ private:
   clock_t end_time_;
   clock_t evaluation_time_;
   clock_t start_time_;
-  double cpu_time_limit_;
   double stepsize_;
   int function_counter_;
   int gradient_counter_;
@@ -280,8 +297,12 @@ private:
   /** @name Private members (options) */
   //@{
   double scaling_threshold_;
+  double cpu_time_limit_;
+  double iterate_norm_tolerance_;
+  double stationarity_tolerance_;
   int function_evaluation_limit_;
   int gradient_evaluation_limit_;
+  int iteration_limit_;
   //@}
 
 }; // end Quantities

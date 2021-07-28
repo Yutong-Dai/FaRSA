@@ -15,13 +15,13 @@ namespace FaRSA
 // Constructor
 Quantities::Quantities()
   : evaluation_time_(0),
-    cpu_time_limit_(FARSA_DOUBLE_INFINITY),
     stepsize_(0.0),
     function_counter_(0),
     gradient_counter_(0),
     iteration_counter_(0),
     number_of_variables_(0),
     scaling_threshold_(1.0),
+    cpu_time_limit_(FARSA_DOUBLE_INFINITY),
     function_evaluation_limit_(1),
     gradient_evaluation_limit_(1)
 {
@@ -61,6 +61,25 @@ void Quantities::addOptions(Options* options,
                            "              at the initial point is greater than this value, then the objective\n"
                            "              is scaled so that the initial gradient norm is at this value.\n"
                            "Default     : 1e+02.");
+  options->addDoubleOption(reporter,
+                           "iterate_norm_tolerance",
+                           1e+20,
+                           0.0,
+                           FARSA_DOUBLE_INFINITY,
+                           "Tolerance for determining divergence of the algorithm iterates.\n"
+                           "              If the norm of an iterate is larger than this tolerance times\n"
+                           "              the maximum of 1.0 and the norm of the initial iterate, then\n"
+                           "              the algorithm terminates with a message of divergence.\n"
+                           "Default     : 1e+20.");
+  options->addDoubleOption(reporter,
+                           "stationarity_tolerance",
+                           1e-04,
+                           0.0,
+                           FARSA_DOUBLE_INFINITY,
+                           "Tolerance for determining stationarity.  If the stationarity\n"
+                           "              measure falls below this tolerance, then the algorithm\n"
+                           "              terminates with a message of stationarity.\n"
+                           "Default     : 1e-04.");
 
   // Add integer options
   options->addIntegerOption(reporter,
@@ -77,6 +96,15 @@ void Quantities::addOptions(Options* options,
                             FARSA_INT_INFINITY,
                             "Limit on the number of gradient evaluations performed.\n"
                             "Default     : 1e+05.");
+  
+  options->addIntegerOption(reporter,
+                            "iteration_limit",
+                            1e+04,
+                            0,
+                            FARSA_INT_INFINITY,
+                            "Limit on the number of iterations that will be performed.\n"
+                            "              Note that each iteration might involve inner iterations.\n"
+                            "Default     : 1e+04.");
 
 } // end addOptions
 
@@ -84,16 +112,18 @@ void Quantities::addOptions(Options* options,
 void Quantities::getOptions(const Options* options,
                             const Reporter* reporter)
 {
-
-  // Read bool options
-
-  // Read double options
+  // set bool options
+  
+  // Set double options
+  options->valueAsDouble(reporter, "iterate_norm_tolerance", iterate_norm_tolerance_);
+  options->valueAsDouble(reporter, "stationarity_tolerance", stationarity_tolerance_);
   options->valueAsDouble(reporter, "cpu_time_limit", cpu_time_limit_);
   options->valueAsDouble(reporter, "scaling_threshold", scaling_threshold_);
 
-  // Read integer options
+  // Set integer options
   options->valueAsInteger(reporter, "function_evaluation_limit", function_evaluation_limit_);
   options->valueAsInteger(reporter, "gradient_evaluation_limit", gradient_evaluation_limit_);
+  options->valueAsInteger(reporter, "iteration_limit", iteration_limit_);
 
 } // end getOptions
 

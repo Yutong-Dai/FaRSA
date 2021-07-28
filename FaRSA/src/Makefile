@@ -18,7 +18,7 @@ headers = $(wildcard *.hpp)
 sources = $(wildcard *.cpp)
 objects = $(sources:.cpp=.o)
 depends = $(sources:.cpp=.d)
-
+ofiles = $(wildcard *.o)
 # Library
 LIB = libFaRSA.a
 
@@ -44,3 +44,12 @@ clean:
 # Very clean
 veryclean: clean
 	rm -f $(LIB)
+
+# for build efficiency
+# single:
+# 	@read -p "Filename : " Filename \
+# 	&& $(CXX) $(CXXFLAGS) -c $${Filename}.cpp -o $${Filename}.o
+single:
+	$(CXX) $(CXXFLAGS) -c $(ARGS).cpp -o $(ARGS).o
+rebuild:
+	ar rv $(LIB) $(ofiles)

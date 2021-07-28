@@ -150,9 +150,6 @@ private:
 
   /** @name Private members */
   //@{
-  double iterate_norm_tolerance_;
-  double stationarity_tolerance_;
-  int iteration_limit_;
   FaRSA_Status status_;
   //@}
 

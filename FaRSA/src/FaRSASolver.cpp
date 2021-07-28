@@ -46,60 +46,16 @@ FaRSASolver::~FaRSASolver()
 // Add options
 void FaRSASolver::addOptions()
 {
-
-  // Add bool options
-
-  // Add double options
-  options_.addDoubleOption(&reporter_,
-                           "iterate_norm_tolerance",
-                           1e+20,
-                           0.0,
-                           FARSA_DOUBLE_INFINITY,
-                           "Tolerance for determining divergence of the algorithm iterates.\n"
-                           "              If the norm of an iterate is larger than this tolerance times\n"
-                           "              the maximum of 1.0 and the norm of the initial iterate, then\n"
-                           "              the algorithm terminates with a message of divergence.\n"
-                           "Default     : 1e+20.");
-  options_.addDoubleOption(&reporter_,
-                           "stationarity_tolerance",
-                           1e-04,
-                           0.0,
-                           FARSA_DOUBLE_INFINITY,
-                           "Tolerance for determining stationarity.  If the stationarity\n"
-                           "              measure falls below this tolerance, then the algorithm\n"
-                           "              terminates with a message of stationarity.\n"
-                           "Default     : 1e-04.");
-
-  // Add integer options
-  options_.addIntegerOption(&reporter_,
-                            "iteration_limit",
-                            1e+04,
-                            0,
-                            FARSA_INT_INFINITY,
-                            "Limit on the number of iterations that will be performed.\n"
-                            "              Note that each iteration might involve inner iterations.\n"
-                            "Default     : 1e+04.");
-
   // Add options for quantities
   quantities_.addOptions(&options_, &reporter_);
 
   // Add options for strategies
   strategies_.addOptions(&options_, &reporter_);
-
 } // end addOptions
 
 // Set options
 void FaRSASolver::getOptions()
 {
-
-  // Set bool options
-
-  // Set double options
-  options_.valueAsDouble(&reporter_, "iterate_norm_tolerance", iterate_norm_tolerance_);
-  options_.valueAsDouble(&reporter_, "stationarity_tolerance", stationarity_tolerance_);
-
-  // Set integer options
-  options_.valueAsInteger(&reporter_, "iteration_limit", iteration_limit_);
 
   // Set quantities options
   quantities_.getOptions(&options_, &reporter_);
@@ -178,16 +134,16 @@ void FaRSASolver::optimize(const std::shared_ptr<Problem> problem)
       reporter_.flushBuffer();
 
       // Check termination conditions
-      if (quantities_.currentIterate()->vector()->normInf() <= stationarity_tolerance_) {
+      if (quantities_.currentIterate()->vector()->normInf() <= quantities_.stationarityTolerance()) {
         THROW_EXCEPTION(FARSA_SUCCESS_EXCEPTION, "Stationary point found.");
       }
-      if (quantities_.iterationCounter() >= iteration_limit_) {
+      if (quantities_.iterationCounter() >= quantities_.iterationLimit()) {
         THROW_EXCEPTION(FARSA_ITERATION_LIMIT_EXCEPTION, "Iteration limit has been reached.");
       }
       if ((clock() - quantities_.startTime()) / (double)CLOCKS_PER_SEC >= quantities_.cpuTimeLimit()) {
         THROW_EXCEPTION(FARSA_CPU_TIME_LIMIT_EXCEPTION, "CPU time limit has been reached.");
       }
-      if (quantities_.currentIterate()->vector()->norm2() >= iterate_norm_tolerance_ * fmax(1.0, initial_iterate_norm)) {
+      if (quantities_.currentIterate()->vector()->norm2() >= quantities_.iterateNormTolerance() * fmax(1.0, initial_iterate_norm)) {
         THROW_EXCEPTION(FARSA_ITERATE_NORM_LIMIT_EXCEPTION, "Iterates appear to be diverging.");
       }
 
