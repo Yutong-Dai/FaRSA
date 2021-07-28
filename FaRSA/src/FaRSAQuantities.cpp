@@ -81,6 +81,66 @@ void Quantities::addOptions(Options* options,
                            "              terminates with a message of stationarity.\n"
                            "Default     : 1e-04.");
 
+  options->addDoubleOption(reporter,
+                           "linesearch_armijo_eta",
+                           1e-04,
+                           0.0,
+                           1.0,
+                           "Constant used in the Armijo backtrack-linesearch.\n"
+                           "              Specifically, it reduce the directional derivative\n"
+                           "              by a factor of eta: \eta * <gradient, d>.\n"
+                           "Default     : 1e-04.");      
+  options->addDoubleOption(reporter,
+                           "linesearch_stepsize_decrease_factor",
+                           0.8,
+                           0.0,
+                           1.0,
+                           "Constant used to decrease the stepsize during the linesearch.\n"
+                           "Default     : 0.8.");                                                
+  options->addDoubleOption(reporter,
+                           "kappa1_max",
+                           1e+06,
+                           0.0,
+                           FARSA_DOUBLE_INFINITY,
+                           "kappa1_max.\n"
+                           "Default     : 1e+06.");
+  options->addDoubleOption(reporter,
+                           "kappa1_min",
+                           1e-05,
+                           0.0,
+                           FARSA_DOUBLE_INFINITY,
+                           "kappa1_min.\n"
+                           "Default     : 1e-05."); 
+  options->addDoubleOption(reporter,
+                           "kappa2_max",
+                           1e+05,
+                           0.0,
+                           FARSA_DOUBLE_INFINITY,
+                           "kappa2_max.\n"
+                           "Default     : 1e+05.");
+  options->addDoubleOption(reporter,
+                           "kappa2_min",
+                           1e-06,
+                           0.0,
+                           FARSA_DOUBLE_INFINITY,
+                           "kappa2_min.\n"
+                           "Default     : 1e-06.");       
+  options->addDoubleOption(reporter,
+                            "kappa_increase_factor",
+                            10.0,
+                            1.0,
+                            FARSA_DOUBLE_INFINITY,
+                            "Factor to increase the kappa1 and kappa2.\n"
+                            "Default     : 10.");
+  options->addDoubleOption(reporter,
+                            "kappa_decrease_factor",
+                            0.1,
+                            0.0,
+                            1.0,
+                            "Factor to decrease the kappa1 and kappa2.\n"
+                            "Default     : 0.1.");                               
+                                                                    
+
   // Add integer options
   options->addIntegerOption(reporter,
                             "function_evaluation_limit",
@@ -105,6 +165,13 @@ void Quantities::addOptions(Options* options,
                             "Limit on the number of iterations that will be performed.\n"
                             "              Note that each iteration might involve inner iterations.\n"
                             "Default     : 1e+04.");
+  options->addIntegerOption(reporter,
+                            "linesearch_max_backtrack",
+                            100,
+                            0,
+                            FARSA_INT_INFINITY,
+                            "Limit on the number of backtrack-linesearch will be performed.\n"
+                            "Default     : 100.");                                                                              
 
 } // end addOptions
 
@@ -119,11 +186,20 @@ void Quantities::getOptions(const Options* options,
   options->valueAsDouble(reporter, "stationarity_tolerance", stationarity_tolerance_);
   options->valueAsDouble(reporter, "cpu_time_limit", cpu_time_limit_);
   options->valueAsDouble(reporter, "scaling_threshold", scaling_threshold_);
+  options->valueAsDouble(reporter, "linesearch_armijo_eta", linesearch_armijo_eta_);
+  options->valueAsDouble(reporter, "linesearch_stepsize_decrease_factor", linesearch_stepsize_decrease_factor_);
+  options->valueAsDouble(reporter, "kappa1_max", kappa1_max_);
+  options->valueAsDouble(reporter, "kappa1_min", kappa1_min_);
+  options->valueAsDouble(reporter, "kappa2_max", kappa2_max_);
+  options->valueAsDouble(reporter, "kappa2_min", kappa2_min_);
+  options->valueAsDouble(reporter, "kappa_increase_factor", kappa_increase_factor_);
+  options->valueAsDouble(reporter, "kappa_decrease_factor", kappa_decrease_factor_);          
 
   // Set integer options
   options->valueAsInteger(reporter, "function_evaluation_limit", function_evaluation_limit_);
   options->valueAsInteger(reporter, "gradient_evaluation_limit", gradient_evaluation_limit_);
   options->valueAsInteger(reporter, "iteration_limit", iteration_limit_);
+  options->valueAsInteger(reporter, "linesearch_max_backtrack", linesearch_max_backtrack_);
 
 } // end getOptions
 
@@ -197,6 +273,29 @@ std::string Quantities::iterationNullValues()
 {
   return " ------ -----------";
 }
+
+// Print all values of private memebers set by the Option class
+void Quantities::print(const Reporter* reporter){
+  reporter->printf(R_SOLVER, R_BASIC, "---------------------- Termination Conditions -----------------\n");
+  reporter->printf(R_SOLVER, R_BASIC, "cpu time limit (seconds)...................... : %+.4e\n", cpu_time_limit_);
+  reporter->printf(R_SOLVER, R_BASIC, "iterate norm tolerance........................ : %+.4e\n", iterate_norm_tolerance_);
+  reporter->printf(R_SOLVER, R_BASIC, "stationarity tolerance........................ : %+.4e\n", stationarity_tolerance_);
+  reporter->printf(R_SOLVER, R_BASIC, "function evaluation limit_.................... : %+.4e\n", function_evaluation_limit_);
+  reporter->printf(R_SOLVER, R_BASIC, "gradient evaluation limit..................... : %+.4e\n", gradient_evaluation_limit_);
+  reporter->printf(R_SOLVER, R_BASIC, "iteration limit............................... : %+.4e\n", iteration_limit_);
+  reporter->printf(R_SOLVER, R_BASIC, "---------------------- Algorithmic Choices ---------------------\n");
+  reporter->printf(R_SOLVER, R_BASIC, "scaling threshold............................. : %+.4e\n", scaling_threshold_);
+  reporter->printf(R_SOLVER, R_BASIC, "linesearch armijo eta......................... : %+.4e\n", linesearch_armijo_eta_);
+  reporter->printf(R_SOLVER, R_BASIC, "linesearch stepsize decrease factor........... : %+.4e\n", linesearch_stepsize_decrease_factor_);
+  reporter->printf(R_SOLVER, R_BASIC, "linesearch max backtrack...................... : %+.4e\n", linesearch_max_backtrack_);
+  reporter->printf(R_SOLVER, R_BASIC, "kappa1 max.................................... : %+.4e\n", kappa1_max_);
+  reporter->printf(R_SOLVER, R_BASIC, "kappa1 min.................................... : %+.4e\n", kappa1_min_);
+  reporter->printf(R_SOLVER, R_BASIC, "kappa2 max.................................... : %+.4e\n", kappa2_max_);
+  reporter->printf(R_SOLVER, R_BASIC, "kappa2 min.................................... : %+.4e\n", kappa2_min_);
+  reporter->printf(R_SOLVER, R_BASIC, "kappa increase factor......................... : %+.4e\n", kappa_increase_factor_);
+  reporter->printf(R_SOLVER, R_BASIC, "kappa decrease factor......................... : %+.4e\n", kappa_decrease_factor_);
+
+}// end print
 
 // Print header
 void Quantities::printHeader(const Reporter* reporter)

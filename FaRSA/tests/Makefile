@@ -57,3 +57,8 @@ clean:
 # Very clean
 veryclean: clean
 	rm -f $(EXES)
+
+# rebuild single test
+single:
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $(ARGS).cpp -o $(ARGS).o
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(ARGS) $(ARGS).o $(FaRSALIB) -L $(LAPACKDIR) -ldl -lblas -llapack

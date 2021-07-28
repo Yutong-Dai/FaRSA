@@ -175,6 +175,22 @@ public:
    * \return double const iterate_norm_tolerance_
    */
   inline double const iterateNormTolerance() const{ return iterate_norm_tolerance_;} ;
+
+  inline double const linesearchArmijoEta() const{ return linesearch_armijo_eta_;} ;
+
+  inline double const linesearchStepsizeDecreaseFactor() const{ return linesearch_stepsize_decrease_factor_;} ;
+
+  inline int const linesearchMaxBacktrack() const{ return linesearch_max_backtrack_;} ;
+
+  inline double const kappa1Max() const{ return kappa1_max_;} ;
+  inline double const kappa1min() const{ return kappa1_min_;} ;
+  inline double const kappa2Max() const{ return kappa2_max_;} ;
+  inline double const kappa2min() const{ return kappa2_min_;} ;
+  inline double const kappaIncreaseFactor() const{ return kappa_increase_factor_;} ;
+  inline double const kappaDecreaseFactor() const{ return kappa_decrease_factor_;} ;
+
+
+
   //@}
 
   /** @name Set methods */
@@ -223,6 +239,12 @@ public:
 
   /** @name Print methods */
   //@{
+  /**
+   * @brief print values of private members that are loaded from the Option instance.
+   * 
+   * \param[in] reporter is pointer to Reporter object from FaRSA
+   */
+  void print(const Reporter* reporter);
   /**
    * Get iteration header string
    * \return string of header values
@@ -294,15 +316,27 @@ private:
   std::vector<int> groups_zero_;
   //@}
 
-  /** @name Private members (options) */
+  /** @name Private members (set by options) */
   //@{
   double scaling_threshold_;
+  // for termination
   double cpu_time_limit_;
   double iterate_norm_tolerance_;
   double stationarity_tolerance_;
   int function_evaluation_limit_;
   int gradient_evaluation_limit_;
   int iteration_limit_;
+  // for backtrack-linesearch
+  double linesearch_armijo_eta_;
+  double linesearch_stepsize_decrease_factor_;
+  int linesearch_max_backtrack_;
+  // for space partition using (FaRSAGroup)
+  double kappa1_max_;
+  double kappa1_min_;
+  double kappa2_max_;
+  double kappa2_min_;
+  double kappa_increase_factor_;
+  double kappa_decrease_factor_;
   //@}
 
 }; // end Quantities
