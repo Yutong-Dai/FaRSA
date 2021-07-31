@@ -15,7 +15,6 @@
 
 namespace FaRSA
 {
-
 /**
  * Forward declarations
  */
@@ -26,223 +25,216 @@ class Reporter;
  */
 class Vector
 {
+   public:
+    /** @name Constructors */
+    //@{
+    /**
+     * Constructor; length and values not initialized
+     */
+    Vector()
+        : values_(nullptr),
+          length_(-1),
+          max_computed_(false),
+          min_computed_(false),
+          norm1_computed_(false),
+          norm2_computed_(false),
+          normInf_computed_(false){};
+    /**
+     * Constructor with given length; values initialized to zero
+     * \param[in] length is length of Vector to construct
+     */
+    Vector(int length);
+    /**
+     * Constructor with given length; values initialized to given value
+     * \param[in] length is length of Vector to construct
+     * \param[in] value is value at which to set all elements
+     */
+    Vector(int length, double value);
+    //@}
 
-public:
-  /** @name Constructors */
-  //@{
-  /**
-   * Constructor; length and values not initialized
-   */
-  Vector()
-    : values_(nullptr),
-      length_(-1),
-      max_computed_(false),
-      min_computed_(false),
-      norm1_computed_(false),
-      norm2_computed_(false),
-      normInf_computed_(false){};
-  /**
-   * Constructor with given length; values initialized to zero
-   * \param[in] length is length of Vector to construct
-   */
-  Vector(int length);
-  /**
-   * Constructor with given length; values initialized to given value
-   * \param[in] length is length of Vector to construct
-   * \param[in] value is value at which to set all elements
-   */
-  Vector(int length,
-         double value);
-  //@}
+    /** @name Destructor */
+    //@{
+    /**
+     * Destructor; values array deleted
+     */
+    ~Vector();
+    //@}
 
-  /** @name Destructor */
-  //@{
-  /**
-   * Destructor; values array deleted
-   */
-  ~Vector();
-  //@}
+    /** @name Print methods */
+    //@{
+    /**
+     * Print array
+     * \param[in] reporter is pointer to Reporter object from FaRSA
+     * \param[in] name is name of Vector to print
+     */
+    void print(const Reporter* reporter, std::string name) const;
+    //@}
 
-  /** @name Print methods */
-  //@{
-  /**
-   * Print array
-   * \param[in] reporter is pointer to Reporter object from FaRSA
-   * \param[in] name is name of Vector to print
-   */
-  void print(const Reporter* reporter,
-             std::string name) const;
-  //@}
+    /** @name Make methods */
+    //@{
+    /**
+     * Make new Vector as a copy
+     * \return is pointer to new Vector
+     */
+    std::shared_ptr<Vector> makeNewCopy() const;
+    /**
+     * Make new Vector by adding "scalar1" times this Vector to "scalar2" times
+     * other_vector \param[in] scalar1 is scalar value for linear combination
+     * \param[in] scalar2 is scalar value for linear combination
+     * \param[in] other_vector is reference to other Vector
+     * \return pointer to new Vector
+     */
+    std::shared_ptr<Vector> makeNewLinearCombination(
+        double scalar1, double scalar2, const Vector& other_vector) const;
+    //@}
 
-  /** @name Make methods */
-  //@{
-  /**
-   * Make new Vector as a copy
-   * \return is pointer to new Vector
-   */
-  std::shared_ptr<Vector> makeNewCopy() const;
-  /**
-   * Make new Vector by adding "scalar1" times this Vector to "scalar2" times other_vector
-   * \param[in] scalar1 is scalar value for linear combination
-   * \param[in] scalar2 is scalar value for linear combination
-   * \param[in] other_vector is reference to other Vector
-   * \return pointer to new Vector
-   */
-  std::shared_ptr<Vector> makeNewLinearCombination(double scalar1,
-                                                   double scalar2,
-                                                   const Vector& other_vector) const;
-  //@}
+    /** @name Get methods */
+    //@{
+    /**
+     * Get length
+     * \return is length of Vector
+     */
+    inline int length() const { return length_; };
+    /**
+     * Get values (const)
+     * \return is pointer to array of Vector values
+     */
+    inline double* values() const { return values_; };
+    /**
+     * Get values (modifiable)
+     * \return is pointer to array of Vector values (to allow modification of
+     * array)
+     */
+    inline double* valuesModifiable()
+    {
+        max_computed_ = false;
+        min_computed_ = false;
+        norm1_computed_ = false;
+        norm2_computed_ = false;
+        normInf_computed_ = false;
+        return values_;
+    };
+    //@}
 
-  /** @name Get methods */
-  //@{
-  /**
-   * Get length
-   * \return is length of Vector
-   */
-  inline int length() const { return length_; };
-  /**
-   * Get values (const)
-   * \return is pointer to array of Vector values
-   */
-  inline double* values() const { return values_; };
-  /**
-   * Get values (modifiable)
-   * \return is pointer to array of Vector values (to allow modification of array)
-   */
-  inline double* valuesModifiable()
-  {
-    max_computed_ = false;
-    min_computed_ = false;
-    norm1_computed_ = false;
-    norm2_computed_ = false;
-    normInf_computed_ = false;
-    return values_;
-  };
-  //@}
+    /** @name Set methods */
+    //@{
+    /**
+     * Set vector from file
+     */
+    void setFromFile(char* file_name);
+    //@}
 
-  /** @name Set methods */
-  //@{
-  /**
-   * Set vector from file
-   */
-  void setFromFile(char* file_name);
-  //@}
+    /** @name Modify methods */
+    //@{
+    /**
+     * Set length and initialize values to zero
+     * \param[in] length is length of Vector to set
+     */
+    void setLength(int length);
+    /**
+     * Set element with given index to given value
+     * \param[in] index is index of value to set
+     * \param[in] value is value to set
+     */
+    void set(int index, double value);
+    /**
+     * Copy elements of other Vector
+     * \param[in] other_vector is reference to other Vector to copy
+     */
+    void copy(const Vector& other_vector);
+    /**
+     * Copy elements of double array
+     * \param[in] array is array of double values to copy
+     */
+    void copyArray(const double* array);
+    /**
+     * Scale elements by given scalar
+     * \param[in] scalar is scalar for scaling
+     */
+    void scale(double scalar);
+    /**
+     * Add to this Vector "scalar" times given vector
+     * \param[in] scalar is scalar for value for linear combination
+     * \param[in] other_vector is reference to other Vector
+     */
+    void addScaledVector(double scalar, const Vector& other_vector);
+    /**
+     * Set values as linear combination (scalar1*vector1 + scalar2*vector2)
+     * \param[in] scalar1 is scalar value for linear combination
+     * \param[in] scalar2 is scalar value for linear combination
+     * \param[in] vector1 is reference to other Vector
+     * \param[in] vector2 is reference to other Vector
+     */
+    void linearCombination(double scalar1, const Vector& vector1,
+                           double scalar2, const Vector& vector2);
+    //@}
 
-  /** @name Modify methods */
-  //@{
-  /**
-   * Set length and initialize values to zero
-   * \param[in] length is length of Vector to set
-   */
-  void setLength(int length);
-  /**
-   * Set element with given index to given value
-   * \param[in] index is index of value to set
-   * \param[in] value is value to set
-   */
-  void set(int index,
-           double value);
-  /**
-   * Copy elements of other Vector
-   * \param[in] other_vector is reference to other Vector to copy
-   */
-  void copy(const Vector& other_vector);
-  /**
-   * Copy elements of double array
-   * \param[in] array is array of double values to copy
-   */
-  void copyArray(double* array);
-  /**
-   * Scale elements by given scalar
-   * \param[in] scalar is scalar for scaling
-   */
-  void scale(double scalar);
-  /**
-   * Add to this Vector "scalar" times given vector
-   * \param[in] scalar is scalar for value for linear combination
-   * \param[in] other_vector is reference to other Vector
-   */
-  void addScaledVector(double scalar,
-                       const Vector& other_vector);
-  /**
-   * Set values as linear combination (scalar1*vector1 + scalar2*vector2)
-   * \param[in] scalar1 is scalar value for linear combination
-   * \param[in] scalar2 is scalar value for linear combination
-   * \param[in] vector1 is reference to other Vector
-   * \param[in] vector2 is reference to other Vector
-   */
-  void linearCombination(double scalar1,
-                         const Vector& vector1,
-                         double scalar2,
-                         const Vector& vector2);
-  //@}
+    /** @name Scalar functions */
+    //@{
+    /**
+     * Inner product with given vector
+     * \param[in] vector is reference to other Vector
+     */
+    double innerProduct(const Vector& vector) const;
+    /**
+     * maximum value
+     */
+    double max();
+    /**
+     * minimum value
+     */
+    double min();
+    /**
+     * 1-norm
+     */
+    double norm1();
+    /**
+     * 2-norm
+     */
+    double norm2();
+    /**
+     * inf-norm
+     */
+    double normInf();
+    //@}
 
-  /** @name Scalar functions */
-  //@{
-  /**
-   * Inner product with given vector
-   * \param[in] vector is reference to other Vector
-   */
-  double innerProduct(const Vector& vector) const;
-  /**
-   * maximum value
-   */
-  double max();
-  /**
-   * minimum value
-   */
-  double min();
-  /**
-   * 1-norm
-   */
-  double norm1();
-  /**
-   * 2-norm
-   */
-  double norm2();
-  /**
-   * inf-norm
-   */
-  double normInf();
-  //@}
+   private:
+    /** @name Default compiler generated methods
+     * (Hidden to avoid implicit creation/calling.)
+     */
+    //@{
+    /**
+     * Copy constructor
+     */
+    Vector(const Vector&);
+    /**
+     * Overloaded equals operator
+     */
+    void operator=(const Vector&);
+    //@}
 
-private:
-  /** @name Default compiler generated methods
-   * (Hidden to avoid implicit creation/calling.)
-   */
-  //@{
-  /**
-   * Copy constructor
-   */
-  Vector(const Vector&);
-  /**
-   * Overloaded equals operator
-   */
-  void operator=(const Vector&);
-  //@}
+    /** @name Private members */
+    //@{
+    double* values_; /**< Double array */
+    int     length_; /**< Length of array */
+    //@}
 
-  /** @name Private members */
-  //@{
-  double* values_; /**< Double array */
-  int length_;     /**< Length of array */
-  //@}
+    /** @name Private computed members */
+    //@{
+    bool   max_computed_;
+    bool   min_computed_;
+    bool   norm1_computed_;
+    bool   norm2_computed_;
+    bool   normInf_computed_;
+    double max_value_;
+    double min_value_;
+    double norm1_value_;
+    double norm2_value_;
+    double normInf_value_;
+    //@}
 
-  /** @name Private computed members */
-  //@{
-  bool max_computed_;
-  bool min_computed_;
-  bool norm1_computed_;
-  bool norm2_computed_;
-  bool normInf_computed_;
-  double max_value_;
-  double min_value_;
-  double norm1_value_;
-  double norm2_value_;
-  double normInf_value_;
-  //@}
+};  // end Vector
 
-}; // end Vector
-
-} // namespace FaRSA
+}  // namespace FaRSA
 
 #endif /* __FARSAVECTOR_HPP__ */

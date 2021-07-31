@@ -49,7 +49,9 @@ veryclean: clean
 # single:
 # 	@read -p "Filename : " Filename \
 # 	&& $(CXX) $(CXXFLAGS) -c $${Filename}.cpp -o $${Filename}.o
-single:
-	$(CXX) $(CXXFLAGS) -c $(ARGS).cpp -o $(ARGS).o
-rebuild:
-	ar rv $(LIB) $(ofiles)
+# single:
+# 	$(CXX) $(CXXFLAGS) -c $(ARGS).cpp -o $(ARGS).o
+# rebuild:
+# 	ar rv $(LIB) $(ofiles)
+update:
+	$(CXX) $(CXXFLAGS) -c $(ARGS).cpp -o $(ARGS).o && ar rv $(LIB) $(ofiles)

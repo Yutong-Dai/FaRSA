@@ -82,7 +82,7 @@ public:
    * Get pointer to DirectionComputation
    * \return pointer to DirectionComputation object
    */
-  inline std::shared_ptr<DirectionComputation> directionComputation() { return direction_computation_; }
+  inline std::shared_ptr<DirectionComputation> directionComputationFirstOrder() { return direction_computation_first_order_; }
   /**
    * Get pointer to LineSearch
    * \return pointer to LineSearch object
@@ -134,7 +134,8 @@ private:
 
   /** @name * Private members */
   //@{
-  std::shared_ptr<DirectionComputation> direction_computation_;
+  std::shared_ptr<DirectionComputation> direction_computation_first_order_;
+  std::shared_ptr<DirectionComputation> direction_computation_second_order_;
   std::shared_ptr<LineSearch> line_search_;
   std::string iteration_header_;
   //@}

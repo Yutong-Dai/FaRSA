@@ -18,20 +18,30 @@ void Strategies::addOptions(Options* options,
 
   // Add string options
   options->addStringOption(reporter,
-                           "direction_computation",
-                           "CuttingPlane",
-                           "Direction computation strategy to use.\n"
-                           "Default     : CuttingPlane.");
+                           "direction_computation_first_order",
+                           "ProximalGradient",
+                           "Direction strategy used to optimize the first order variables.\n"
+                           "Default     : ProximalGradient.");
+  options->addStringOption(reporter,
+                           "direction_computation_second_order",
+                           "TruncatedNewton",
+                           "Direction strategy used to optimize the second order variables.\n"
+                           "Default     : TruncatedNewton.");  
   options->addStringOption(reporter,
                            "line_search",
-                           "WeakWolfe",
+                           "Backtracking",
                            "Line search strategy to use.\n"
-                           "Default     : WeakWolfe.");
+                           "Default     : Backtracking.");
+
+  // Add options for space partition strategies
+
+  // ADD NEW DIRECTION COMPUTATION STRATEGIES HERE AND IN SWITCH BELOW //
+
 
   // Add options for direction computation strategies
-  std::shared_ptr<DirectionComputation> direction_computation;
-  direction_computation = std::make_shared<DirectionComputationProximalGradient>();
-  direction_computation->addOptions(options, reporter);
+  std::shared_ptr<DirectionComputation> direction_computation_first_order;
+  direction_computation_first_order = std::make_shared<DirectionComputationProximalGradient>();
+  direction_computation_first_order->addOptions(options, reporter);
   // ADD NEW DIRECTION COMPUTATION STRATEGIES HERE AND IN SWITCH BELOW //
 
   // Add options for line search strategies
@@ -48,19 +58,19 @@ void Strategies::getOptions(const Options* options,
 {
 
   // Declare strategy names
-  std::string direction_computation_name;
+  std::string direction_computation_first_order_name;
   std::string line_search_name;
 
   // Read integer options
-  options->valueAsString(reporter, "direction_computation", direction_computation_name);
+  options->valueAsString(reporter, "direction_computation_first_order", direction_computation_first_order_name);
   options->valueAsString(reporter, "line_search", line_search_name);
 
   // Set direction computation strategy
-  if (direction_computation_name.compare("ProximalGradient") == 0) {
-    direction_computation_ = std::make_shared<DirectionComputationProximalGradient>();
+  if (direction_computation_first_order_name.compare("ProximalGradient") == 0) {
+    direction_computation_first_order_ = std::make_shared<DirectionComputationProximalGradient>();
   }
   else {
-    direction_computation_ = std::make_shared<DirectionComputationProximalGradient>();
+    direction_computation_first_order_ = std::make_shared<DirectionComputationProximalGradient>();
   }
 
   // Set line search strategy
@@ -72,7 +82,7 @@ void Strategies::getOptions(const Options* options,
   }
 
   // Set direction computation options
-  direction_computation_->getOptions(options, reporter);
+  direction_computation_first_order_->getOptions(options, reporter);
 
   // Set line search options
   line_search_->getOptions(options, reporter);
@@ -86,7 +96,7 @@ void Strategies::initialize(const Options* options,
 {
 
   // Initialize direction computation
-  direction_computation_->initialize(options, quantities, reporter);
+  direction_computation_first_order_->initialize(options, quantities, reporter);
 
   // Initialize line search
   line_search_->initialize(options, quantities, reporter);
@@ -99,9 +109,9 @@ void Strategies::setIterationHeader()
 
   // Set iteration header string based on strategy objects
   iteration_header_ = "";
-  if (direction_computation_->iterationHeader().length() > 0) {
+  if (direction_computation_first_order_->iterationHeader().length() > 0) {
     iteration_header_ += " ";
-    iteration_header_ += direction_computation_->iterationHeader();
+    iteration_header_ += direction_computation_first_order_->iterationHeader();
   } // end if
   if (line_search_->iterationHeader().length() > 0) {
     iteration_header_ += " ";
@@ -115,9 +125,9 @@ void Strategies::printHeader(const Reporter* reporter)
 {
 
   // Print header
-  reporter->printf(R_SOLVER, R_BASIC, "Direction computation strategy..... : %s\n"
-                                      "Line search strategy............... : %s\n",
-                   direction_computation_->name().c_str(),
+  reporter->printf(R_SOLVER, R_BASIC, "Direction computation strategy (1st order)..... : %s\n"
+                                      "Line search strategy........................... : %s\n",
+                   direction_computation_first_order_->name().c_str(),
                    line_search_->name().c_str());
 
 } // end printHeader

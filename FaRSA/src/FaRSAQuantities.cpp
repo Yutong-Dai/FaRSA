@@ -182,9 +182,9 @@ void Quantities::getOptions(const Options* options,
   // set bool options
   
   // Set double options
+  options->valueAsDouble(reporter, "cpu_time_limit", cpu_time_limit_);
   options->valueAsDouble(reporter, "iterate_norm_tolerance", iterate_norm_tolerance_);
   options->valueAsDouble(reporter, "stationarity_tolerance", stationarity_tolerance_);
-  options->valueAsDouble(reporter, "cpu_time_limit", cpu_time_limit_);
   options->valueAsDouble(reporter, "scaling_threshold", scaling_threshold_);
   options->valueAsDouble(reporter, "linesearch_armijo_eta", linesearch_armijo_eta_);
   options->valueAsDouble(reporter, "linesearch_stepsize_decrease_factor", linesearch_stepsize_decrease_factor_);
@@ -200,7 +200,6 @@ void Quantities::getOptions(const Options* options,
   options->valueAsInteger(reporter, "gradient_evaluation_limit", gradient_evaluation_limit_);
   options->valueAsInteger(reporter, "iteration_limit", iteration_limit_);
   options->valueAsInteger(reporter, "linesearch_max_backtrack", linesearch_max_backtrack_);
-
 } // end getOptions
 
 // Initialization
@@ -280,14 +279,14 @@ void Quantities::print(const Reporter* reporter){
   reporter->printf(R_SOLVER, R_BASIC, "cpu time limit (seconds)...................... : %+.4e\n", cpu_time_limit_);
   reporter->printf(R_SOLVER, R_BASIC, "iterate norm tolerance........................ : %+.4e\n", iterate_norm_tolerance_);
   reporter->printf(R_SOLVER, R_BASIC, "stationarity tolerance........................ : %+.4e\n", stationarity_tolerance_);
-  reporter->printf(R_SOLVER, R_BASIC, "function evaluation limit_.................... : %+.4e\n", function_evaluation_limit_);
-  reporter->printf(R_SOLVER, R_BASIC, "gradient evaluation limit..................... : %+.4e\n", gradient_evaluation_limit_);
-  reporter->printf(R_SOLVER, R_BASIC, "iteration limit............................... : %+.4e\n", iteration_limit_);
+  reporter->printf(R_SOLVER, R_BASIC, "function evaluation limit_.................... : %d\n", function_evaluation_limit_);
+  reporter->printf(R_SOLVER, R_BASIC, "gradient evaluation limit..................... : %d\n", gradient_evaluation_limit_);
+  reporter->printf(R_SOLVER, R_BASIC, "iteration limit............................... : %d\n", iteration_limit_);
   reporter->printf(R_SOLVER, R_BASIC, "---------------------- Algorithmic Choices ---------------------\n");
   reporter->printf(R_SOLVER, R_BASIC, "scaling threshold............................. : %+.4e\n", scaling_threshold_);
   reporter->printf(R_SOLVER, R_BASIC, "linesearch armijo eta......................... : %+.4e\n", linesearch_armijo_eta_);
   reporter->printf(R_SOLVER, R_BASIC, "linesearch stepsize decrease factor........... : %+.4e\n", linesearch_stepsize_decrease_factor_);
-  reporter->printf(R_SOLVER, R_BASIC, "linesearch max backtrack...................... : %+.4e\n", linesearch_max_backtrack_);
+  reporter->printf(R_SOLVER, R_BASIC, "linesearch max backtrack...................... : %d\n", linesearch_max_backtrack_);
   reporter->printf(R_SOLVER, R_BASIC, "kappa1 max.................................... : %+.4e\n", kappa1_max_);
   reporter->printf(R_SOLVER, R_BASIC, "kappa1 min.................................... : %+.4e\n", kappa1_min_);
   reporter->printf(R_SOLVER, R_BASIC, "kappa2 max.................................... : %+.4e\n", kappa2_max_);

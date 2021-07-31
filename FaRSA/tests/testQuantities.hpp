@@ -49,6 +49,7 @@ int testQuantitiesImplementation(int option)
   quantities.addOptions(&o, &reporter);
   // Print option list
   reporter.printf(R_SOLVER, R_BASIC, "Printing options list... should not be empty:\n");
+  o.print(&reporter);
   // load values from options
   quantities.getOptions(&o, &reporter);
   quantities.print(&reporter);

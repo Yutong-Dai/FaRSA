@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['sparse_5fformat_5f_373',['sparse_format_',['../class_fa_r_s_a_1_1_matrix.html#a773c43cfd52051133ea4bab68dd288e6',1,'FaRSA::Matrix']]],
-  ['status_5f_374',['status_',['../class_fa_r_s_a_1_1_direction_computation.html#a8b797bc7725a88ee7785fd0d2377da04',1,'FaRSA::DirectionComputation::status_()'],['../class_fa_r_s_a_1_1_line_search.html#a4639009f9be0fa8626aff5e4653cecd3',1,'FaRSA::LineSearch::status_()']]]
+  ['reports_5f_420',['reports_',['../class_fa_r_s_a_1_1_reporter.html#a58d9d5d3963ca3d5e52d1bb69a9bc3ba',1,'FaRSA::Reporter']]],
+  ['residual_421',['residual',['../class_linear_regression_loss.html#aacc51298c0247db7416a108b1ca72f93',1,'LinearRegressionLoss']]],
+  ['row_5findices_5f_422',['row_indices_',['../class_fa_r_s_a_1_1_matrix.html#a056e6f903d1da66d8cdbc74781f59951',1,'FaRSA::Matrix']]]
 ];

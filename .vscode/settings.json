@@ -60,6 +60,28 @@
         "mutex": "cpp",
         "ratio": "cpp",
         "string": "cpp",
-        "system_error": "cpp"
-    }
+        "system_error": "cpp",
+        "condition_variable": "cpp",
+        "deque": "cpp",
+        "optional": "cpp",
+        "forward_list": "cpp",
+        "numeric": "cpp",
+        "queue": "cpp",
+        "random": "cpp",
+        "thread": "cpp",
+        "typeindex": "cpp",
+        "unordered_set": "cpp",
+        "cinttypes": "cpp",
+        "bit": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "memory_resource": "cpp",
+        "ranges": "cpp",
+        "stop_token": "cpp"
+    },
+    "C_Cpp.default.includePath": [
+        "/Users/ym/Documents/Optimization_Software/FaRSA/FaRSA/src/**",
+        "${workspaceFolder}/**"
+    ],
+    "C_Cpp.default.cppStandard": "c++11"
 }

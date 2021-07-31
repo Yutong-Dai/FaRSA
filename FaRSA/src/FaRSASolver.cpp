@@ -148,10 +148,10 @@ void FaRSASolver::optimize(const std::shared_ptr<Problem> problem)
       }
 
       // Compute direction
-      strategies_.directionComputation()->computeDirection(&options_, &quantities_, &reporter_, &strategies_);
+      strategies_.directionComputationFirstOrder()->computeDirection(&options_, &quantities_, &reporter_, &strategies_);
 
       // Check status
-      if (strategies_.directionComputation()->status() != DC_SUCCESS) {
+      if (strategies_.directionComputationFirstOrder()->status() != DC_SUCCESS) {
         THROW_EXCEPTION(FARSA_DIRECTION_COMPUTATION_FAILURE_EXCEPTION, "Direction computation failed.");
       }
 

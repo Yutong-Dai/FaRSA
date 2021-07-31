@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">FaRSA
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">0.1.0</span>
    </div>
   </td>
  </tr>
@@ -73,9 +73,11 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#aee5f9b2285a4b7d7e372c0bc50dbc212">col</a>(int *col_indicies, SparseFormatType sparse_format)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>col</b>(const std::vector&lt; int &gt; &amp;col_indicies, Matrix &amp;submatrix) (defined in <a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a>)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#acb4cd1e5b65875bdde7184cf90568492">column_indices_</a></td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a2b11f12e4babbd92fc7a9a04ec05bd7e">Matrix</a>()</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a88915ee413b7843c6b8a96b678209a57">columnIndiciesModifiable</a>()</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a2b11f12e4babbd92fc7a9a04ec05bd7e">Matrix</a>()</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#ad1fdc6a5bc4ab1cbc8aade0eef6cde60">Matrix</a>(int number_of_rows, int number_of_columns, int number_of_nonzeros)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a773b6dcba5eb45ffcdfdcb404f1f0628">Matrix</a>(const Matrix &amp;)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#ad8bf7bc59d061c9a31ea0a2c452746b2">matrixTransposeVectorProduct</a>(const Vector &amp;vector, Vector &amp;product)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#afa1a7ca7a252131269032e42f7720c5e">matrixVectorProduct</a>(const Vector &amp;vector, Vector &amp;product)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"></td></tr>
@@ -88,10 +90,15 @@ $(function() {
   <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a1f9e63a4e9086b2f33cb4ee09111b1c2">operator=</a>(const Matrix &amp;)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a41781dc8059f8e91b919aa1c023a093d">print</a>(const Reporter *reporter, std::string name) const</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a056e6f903d1da66d8cdbc74781f59951">row_indices_</a></td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a2b28e21a7c4149b3a2bf66cbd0b02a69">setFromFile</a>(char *file_name, SparseFormatType sparse_format)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a773c43cfd52051133ea4bab68dd288e6">sparse_format_</a></td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#ad4ee904c0f9a331ea476b860e0e3308e">rowIndiciesModifiable</a>()</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a2b28e21a7c4149b3a2bf66cbd0b02a69">setFromFile</a>(char *file_name, SparseFormatType sparse_format)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a8282df950dbce274eec204c2c3945175">setNumberOfNonzeros</a>(int number_of_nonzeros)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a32efceea2521ae2d9d07cfa29836b26c">setSparseFormat</a>(SparseFormatType sparse_format)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a773c43cfd52051133ea4bab68dd288e6">sparse_format_</a></td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>sparseFormatType</b>() (defined in <a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a>)</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a928c8c884a5e6a33e6a4f51532204583">values_</a></td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a5637839a10a549485636d8ca8fe45673">~Matrix</a>()</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a2ead8fffbc19de35994c33286e4d7614">valuesModifiable</a>()</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a5637839a10a549485636d8ca8fe45673">~Matrix</a>()</td><td class="entry"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">FaRSA::Matrix</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

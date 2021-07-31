@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">FaRSA
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">0.1.0</span>
    </div>
   </td>
  </tr>
@@ -80,6 +80,8 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
 <tr class="memitem:a2b11f12e4babbd92fc7a9a04ec05bd7e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a2b11f12e4babbd92fc7a9a04ec05bd7e">Matrix</a> ()</td></tr>
 <tr class="separator:a2b11f12e4babbd92fc7a9a04ec05bd7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1fdc6a5bc4ab1cbc8aade0eef6cde60"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#ad1fdc6a5bc4ab1cbc8aade0eef6cde60">Matrix</a> (int number_of_rows, int number_of_columns, int number_of_nonzeros)</td></tr>
+<tr class="separator:ad1fdc6a5bc4ab1cbc8aade0eef6cde60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Destructor</div></td></tr>
 <tr class="memitem:a5637839a10a549485636d8ca8fe45673"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a5637839a10a549485636d8ca8fe45673">~Matrix</a> ()</td></tr>
 <tr class="separator:a5637839a10a549485636d8ca8fe45673"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -97,12 +99,31 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad91740da25807221e11a247f092a1797"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adad939b5954c9bad3a478748e71ac2e1"><td class="memItemLeft" align="right" valign="top">int const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#adad939b5954c9bad3a478748e71ac2e1">numberOfRows</a> () const</td></tr>
 <tr class="separator:adad939b5954c9bad3a478748e71ac2e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ead8fffbc19de35994c33286e4d7614"><td class="memItemLeft" align="right" valign="top">double *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a2ead8fffbc19de35994c33286e4d7614">valuesModifiable</a> ()</td></tr>
+<tr class="memdesc:a2ead8fffbc19de35994c33286e4d7614"><td class="mdescLeft">&#160;</td><td class="mdescRight">return values_ for modification  <a href="class_fa_r_s_a_1_1_matrix.html#a2ead8fffbc19de35994c33286e4d7614">More...</a><br /></td></tr>
+<tr class="separator:a2ead8fffbc19de35994c33286e4d7614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4ee904c0f9a331ea476b860e0e3308e"><td class="memItemLeft" align="right" valign="top">int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#ad4ee904c0f9a331ea476b860e0e3308e">rowIndiciesModifiable</a> ()</td></tr>
+<tr class="memdesc:ad4ee904c0f9a331ea476b860e0e3308e"><td class="mdescLeft">&#160;</td><td class="mdescRight">return row_indices_ for modification  <a href="class_fa_r_s_a_1_1_matrix.html#ad4ee904c0f9a331ea476b860e0e3308e">More...</a><br /></td></tr>
+<tr class="separator:ad4ee904c0f9a331ea476b860e0e3308e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88915ee413b7843c6b8a96b678209a57"><td class="memItemLeft" align="right" valign="top">int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a88915ee413b7843c6b8a96b678209a57">columnIndiciesModifiable</a> ()</td></tr>
+<tr class="memdesc:a88915ee413b7843c6b8a96b678209a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">return column_indices_ for modification  <a href="class_fa_r_s_a_1_1_matrix.html#a88915ee413b7843c6b8a96b678209a57">More...</a><br /></td></tr>
+<tr class="separator:a88915ee413b7843c6b8a96b678209a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7095eb4d02708ed94fc31ec2c9b5a211"><td class="memItemLeft" align="right" valign="top"><a id="a7095eb4d02708ed94fc31ec2c9b5a211"></a>
+SparseFormatType&#160;</td><td class="memItemRight" valign="bottom"><b>sparseFormatType</b> ()</td></tr>
+<tr class="separator:a7095eb4d02708ed94fc31ec2c9b5a211"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Set methods</div></td></tr>
 <tr class="memitem:a2b28e21a7c4149b3a2bf66cbd0b02a69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a2b28e21a7c4149b3a2bf66cbd0b02a69">setFromFile</a> (char *file_name, SparseFormatType sparse_format)</td></tr>
 <tr class="separator:a2b28e21a7c4149b3a2bf66cbd0b02a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32efceea2521ae2d9d07cfa29836b26c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a32efceea2521ae2d9d07cfa29836b26c">setSparseFormat</a> (SparseFormatType sparse_format)</td></tr>
+<tr class="memdesc:a32efceea2521ae2d9d07cfa29836b26c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the sparse_format_.  <a href="class_fa_r_s_a_1_1_matrix.html#a32efceea2521ae2d9d07cfa29836b26c">More...</a><br /></td></tr>
+<tr class="separator:a32efceea2521ae2d9d07cfa29836b26c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8282df950dbce274eec204c2c3945175"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#a8282df950dbce274eec204c2c3945175">setNumberOfNonzeros</a> (int number_of_nonzeros)</td></tr>
+<tr class="memdesc:a8282df950dbce274eec204c2c3945175"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number_of_nonzeros_.  <a href="class_fa_r_s_a_1_1_matrix.html#a8282df950dbce274eec204c2c3945175">More...</a><br /></td></tr>
+<tr class="separator:a8282df950dbce274eec204c2c3945175"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Subsetting methods</div></td></tr>
-<tr class="memitem:aee5f9b2285a4b7d7e372c0bc50dbc212"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_matrix.html#aee5f9b2285a4b7d7e372c0bc50dbc212">col</a> (int *col_indicies, SparseFormatType sparse_format)</td></tr>
-<tr class="separator:aee5f9b2285a4b7d7e372c0bc50dbc212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a371d6cb8fab587f240ca316b3594326e"><td class="memItemLeft" align="right" valign="top"><a id="a371d6cb8fab587f240ca316b3594326e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>col</b> (const std::vector&lt; int &gt; &amp;col_indicies, <a class="el" href="class_fa_r_s_a_1_1_matrix.html">Matrix</a> &amp;submatrix)</td></tr>
+<tr class="separator:a371d6cb8fab587f240ca316b3594326e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -136,7 +157,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p><a class="el" href="class_fa_r_s_a_1_1_matrix.html">Matrix</a> class </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2b11f12e4babbd92fc7a9a04ec05bd7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b11f12e4babbd92fc7a9a04ec05bd7e">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b11f12e4babbd92fc7a9a04ec05bd7e">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -149,6 +170,49 @@ Private Attributes</h2></td></tr>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Constructor </p>
+
+</div>
+</div>
+<a id="ad1fdc6a5bc4ab1cbc8aade0eef6cde60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1fdc6a5bc4ab1cbc8aade0eef6cde60">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">FaRSA::Matrix::Matrix </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>number_of_rows</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>number_of_columns</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>number_of_nonzeros</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -180,7 +244,7 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <a id="a773b6dcba5eb45ffcdfdcb404f1f0628"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a773b6dcba5eb45ffcdfdcb404f1f0628">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a773b6dcba5eb45ffcdfdcb404f1f0628">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -207,39 +271,31 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aee5f9b2285a4b7d7e372c0bc50dbc212"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee5f9b2285a4b7d7e372c0bc50dbc212">&#9670;&nbsp;</a></span>col()</h2>
+<a id="a88915ee413b7843c6b8a96b678209a57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88915ee413b7843c6b8a96b678209a57">&#9670;&nbsp;</a></span>columnIndiciesModifiable()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_fa_r_s_a_1_1_matrix.html">Matrix</a> FaRSA::Matrix::col </td>
+          <td class="memname">int* FaRSA::Matrix::columnIndiciesModifiable </td>
           <td>(</td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>col_indicies</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">SparseFormatType&#160;</td>
-          <td class="paramname"><em>sparse_format</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">col_indicies</td><td></td></tr>
-    <tr><td class="paramname">sparse_format</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_fa_r_s_a_1_1_matrix.html">Matrix</a> </dd></dl>
+
+<p>return column_indices_ for modification </p>
+<dl class="section return"><dt>Returns</dt><dd>int* </dd></dl>
 
 </div>
 </div>
@@ -453,6 +509,34 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ad4ee904c0f9a331ea476b860e0e3308e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4ee904c0f9a331ea476b860e0e3308e">&#9670;&nbsp;</a></span>rowIndiciesModifiable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int* FaRSA::Matrix::rowIndiciesModifiable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>return row_indices_ for modification </p>
+<dl class="section return"><dt>Returns</dt><dd>int* </dd></dl>
+
+</div>
+</div>
 <a id="a2b28e21a7c4149b3a2bf66cbd0b02a69"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b28e21a7c4149b3a2bf66cbd0b02a69">&#9670;&nbsp;</a></span>setFromFile()</h2>
 
@@ -479,6 +563,102 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Set matrix from file, compressed sparse column format </p>
+
+</div>
+</div>
+<a id="a8282df950dbce274eec204c2c3945175"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8282df950dbce274eec204c2c3945175">&#9670;&nbsp;</a></span>setNumberOfNonzeros()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaRSA::Matrix::setNumberOfNonzeros </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>number_of_nonzeros</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the number_of_nonzeros_. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">number_of_nonzeros</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a32efceea2521ae2d9d07cfa29836b26c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32efceea2521ae2d9d07cfa29836b26c">&#9670;&nbsp;</a></span>setSparseFormat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FaRSA::Matrix::setSparseFormat </td>
+          <td>(</td>
+          <td class="paramtype">SparseFormatType&#160;</td>
+          <td class="paramname"><em>sparse_format</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the sparse_format_. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sparse_format</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2ead8fffbc19de35994c33286e4d7614"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ead8fffbc19de35994c33286e4d7614">&#9670;&nbsp;</a></span>valuesModifiable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double* FaRSA::Matrix::valuesModifiable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>return values_ for modification </p>
+<dl class="section return"><dt>Returns</dt><dd>double* </dd></dl>
 
 </div>
 </div>
