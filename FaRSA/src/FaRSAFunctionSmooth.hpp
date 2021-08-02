@@ -40,16 +40,17 @@ class FunctionSmooth : public Function
 
     /** @name Evaluate methods */
     //@{
-    /**
-     * Evaluates objective
-     * \param[in] x is a given point/iterate, a constant double array
-     * \param[out] f is the objective value at "x", a double (return value)
-     */
-    virtual bool evaluateObjective(const Vector& x, double& f) = 0;
+    // /**
+    //  * Evaluates objective
+    //  * \param[in] x is a given point/iterate, a constant double array
+    //  * \param[out] f is the objective value at "x", a double (return value)
+    //  */
+    // virtual bool evaluateObjective(const Vector& x, double& f) = 0;
     /**
      * Evaluates gradient
      * \param[in] x is a given point/iterate, a constant double array
-     * \param[out] g is the gradient value at "x", a double array (return value)
+     * \param[out] g is the gradient value at "x", a double array (return
+     value)
      */
     virtual bool evaluateGradient(const Vector& x, Vector& g) = 0;
     /**
@@ -64,18 +65,19 @@ class FunctionSmooth : public Function
     {
         return false;
     };
-    /**
-     * Evaluates Hessian-vector product in subspace defined by variables
-     * in cols.
-     * \param[in] x is a given point/iterate, a constant double array
-     * \param[in] cols is a vector of group indices
-     * \param[in] v is a given vector, a constant double array
-     * \param[out] Hv is the Hessian value at "x" times "v", a double array
-     * (return value)
-     */
-    virtual bool evaluateHessianVectorProduct(const Vector&           x,
-                                              const std::vector<int>& cols,
-                                              const Vector& v, Vector& Hv) = 0;
+    // /**
+    //  * Evaluates Hessian-vector product in subspace defined by variables
+    //  * in cols.
+    //  * \param[in] x is a given point/iterate, a constant double array
+    //  * \param[in] cols is a vector of group indices
+    //  * \param[in] v is a given vector, a constant double array
+    //  * \param[out] Hv is the Hessian value at "x" times "v", a double array
+    //  * (return value)
+    //  */
+    // virtual bool evaluateHessianVectorProduct(const Vector&           x,
+    //                                           const std::vector<int>& cols,
+    //                                           const Vector& v, Vector& Hv) =
+    //                                           0;
     //@}
 
    protected:

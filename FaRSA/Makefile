@@ -1,5 +1,5 @@
 # SUBDIRS = src tests problems exes
-SUBDIRS = src tests
+SUBDIRS = src tests functions ftests
 
 .PHONY: subdirs $(SUBDIRS)
 

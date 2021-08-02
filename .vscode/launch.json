@@ -8,7 +8,7 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/Users/ym/Documents/Optimization_Software/FaRSA/FaRSA/ftests/testLinearRegressionLoss",
+            "program": "/Users/ym/Documents/Optimization_Software/FaRSA/FaRSA/ftests/testGroupL1",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${fileDirname}",

@@ -77,7 +77,9 @@
         "concepts": "cpp",
         "memory_resource": "cpp",
         "ranges": "cpp",
-        "stop_token": "cpp"
+        "stop_token": "cpp",
+        "__tree": "cpp",
+        "map": "cpp"
     },
     "C_Cpp.default.includePath": [
         "/Users/ym/Documents/Optimization_Software/FaRSA/FaRSA/src/**",

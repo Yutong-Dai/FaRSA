@@ -64,4 +64,4 @@ veryclean: clean
 # rebuild single test
 single:
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $(ARGS).cpp -o $(ARGS).o
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(ARGS) $(ARGS).o $(FaRSALIB) -L $(LAPACKDIR) -ldl -lblas -llapack
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(ARGS) $(ARGS).o $(FaRSALIB) $(FaRSAFUNCTIONLIB) -L $(LAPACKDIR) -ldl -lblas -llapack
