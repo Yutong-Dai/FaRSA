@@ -13,9 +13,10 @@
 #include <string>
 #include <vector>
 
+#include "FaRSAFunctionNonsmooth.hpp"
+#include "FaRSAFunctionSmooth.hpp"
 #include "FaRSAOptions.hpp"
 #include "FaRSAPoint.hpp"
-#include "FaRSAProblem.hpp"
 #include "FaRSAReporter.hpp"
 #include "FaRSAVector.hpp"
 
@@ -26,10 +27,10 @@ namespace FaRSA
  */
 class Options;
 class Point;
-class Problem;
 class Reporter;
 class Vector;
-
+class FunctionSmooth;
+class FunctionNonsmooth;
 /**
  * Quantities class
  */
@@ -74,7 +75,9 @@ class Quantities
      * Initialize quantities
      * \param[in] problem is pointer to Problem object
      */
-    bool initialize(const std::shared_ptr<Problem> problem);
+    bool initialize(const std::shared_ptr<FunctionSmooth>    function_smooth,
+                    const std::shared_ptr<FunctionNonsmooth> function_nonsmooth,
+                    const Vector&                            initail_point);
     //@}
 
     /** @name Get methods */
@@ -220,6 +223,15 @@ class Quantities
     inline std::shared_ptr<std::vector<int>> const groupsSecondOrder() const
     {
         return groups_second_order_;
+    };
+
+    inline std::shared_ptr<std::vector<int>> const groupsWorking() const
+    {
+        return groups_working_;
+    };
+    inline std::shared_ptr<std::vector<int>> const indiciesWorking() const
+    {
+        return indicies_working_;
     };
 
     inline int const numberOfGroups() const { return number_of_groups_; };
@@ -385,6 +397,8 @@ class Quantities
     std::shared_ptr<Vector>           direction_;
     std::shared_ptr<std::vector<int>> groups_first_order_;
     std::shared_ptr<std::vector<int>> groups_second_order_;
+    std::shared_ptr<std::vector<int>> groups_working_;
+    std::shared_ptr<std::vector<int>> indicies_working_;
     //@}
 
     /** @name Private members (set by options) */

@@ -12,6 +12,8 @@
 
 #include <vector>
 
+#include "FaRSADeclarations.hpp"
+#include "FaRSADefinitions.hpp"
 #include "FaRSAFunctionSmooth.hpp"
 using namespace FaRSA;
 
@@ -33,7 +35,7 @@ class LinearRegressionLoss : public FunctionSmooth
         number_of_data_points_ = data_matrix_.numberOfRows();
         number_of_variables_ = data_matrix_.numberOfColumns();
         name_ = "LinearRegressionLoss";
-        residual.setLength(data_matrix_.numberOfRows());
+        residual_.setLength(data_matrix_.numberOfRows());
     };
     //@}
 
@@ -63,7 +65,8 @@ class LinearRegressionLoss : public FunctionSmooth
      * \param[out] g is the gradient value at "x", a double array (return value)
      * \return indicator of success (true) or failure (false)
      */
-    bool evaluateGradient(const Vector& x, Vector& g);
+    bool evaluateGradient(const Vector& x, const std::vector<int>& indicies,
+                          Vector& g);
     /**
      * Evaluates gradient in subspace defined by variables
      * in subgroups.
@@ -74,7 +77,7 @@ class LinearRegressionLoss : public FunctionSmooth
      * (return value) \return indicator of success (true) or failure (false)
      */
     bool evaluateHessianVectorProduct(const Vector&           x,
-                                      const std::vector<int>& cols,
+                                      const std::vector<int>& indicies,
                                       const Vector& v, Vector& Hv);
     //@}
 
@@ -96,7 +99,7 @@ class LinearRegressionLoss : public FunctionSmooth
      * Private members
      */
     //@{
-    Vector residual; /* Ax-b */
+    Vector residual_; /* Ax-b */
     //@}
 
 };  // end LinearRegressionLoss

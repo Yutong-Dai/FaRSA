@@ -72,18 +72,16 @@ $(function() {
 <div class="title">FaRSA::Function Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="_fa_r_s_a_function_8hpp_source.html">FaRSAFunction.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for FaRSA::Function:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_fa_r_s_a_1_1_function.png" usemap="#FaRSA::Function_map" alt=""/>
   <map id="FaRSA::Function_map" name="FaRSA::Function_map">
-<area href="class_fa_r_s_a_1_1_function_non_smooth.html" alt="FaRSA::FunctionNonSmooth" shape="rect" coords="0,56,171,80"/>
-<area href="class_fa_r_s_a_1_1_function_smooth.html" alt="FaRSA::FunctionSmooth" shape="rect" coords="181,56,352,80"/>
-<area href="class_group_l1.html" alt="GroupL1" shape="rect" coords="0,112,171,136"/>
-<area href="class_linear_regression_loss.html" alt="LinearRegressionLoss" shape="rect" coords="181,112,352,136"/>
+<area href="class_fa_r_s_a_1_1_function_nonsmooth.html" alt="FaRSA::FunctionNonsmooth" shape="rect" coords="0,56,169,80"/>
+<area href="class_fa_r_s_a_1_1_function_smooth.html" alt="FaRSA::FunctionSmooth" shape="rect" coords="179,56,348,80"/>
+<area href="class_group_l1.html" alt="GroupL1" shape="rect" coords="0,112,169,136"/>
+<area href="class_linear_regression_loss.html" alt="LinearRegressionLoss" shape="rect" coords="179,112,348,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -96,21 +94,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aada7e9b1c9a055138902bd6709036bd2"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function.html#aada7e9b1c9a055138902bd6709036bd2">~Function</a> ()</td></tr>
 <tr class="separator:aada7e9b1c9a055138902bd6709036bd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Get methods</div></td></tr>
-<tr class="memitem:a028ed5979b9b0cfd5f0e65fbc2b72d3d"><td class="memItemLeft" align="right" valign="top"><a id="a028ed5979b9b0cfd5f0e65fbc2b72d3d"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getNumberOfVariables</b> ()</td></tr>
-<tr class="separator:a028ed5979b9b0cfd5f0e65fbc2b72d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa70bf847b2dcb54e5ff0af41e8a8620e"><td class="memItemLeft" align="right" valign="top"><a id="aa70bf847b2dcb54e5ff0af41e8a8620e"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> ()</td></tr>
-<tr class="separator:aa70bf847b2dcb54e5ff0af41e8a8620e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af09a459b41976952966cb4906ad860ea"><td class="memItemLeft" align="right" valign="top"><a id="af09a459b41976952966cb4906ad860ea"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>numberOfVariables</b> ()</td></tr>
+<tr class="separator:af09a459b41976952966cb4906ad860ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c6757fef8e7312462030a99f38a1c07"><td class="memItemLeft" align="right" valign="top"><a id="a2c6757fef8e7312462030a99f38a1c07"></a>
+std::string const&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const</td></tr>
+<tr class="separator:a2c6757fef8e7312462030a99f38a1c07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Evaluate methods</div></td></tr>
 <tr class="memitem:a4e812608a91e3b7bff97b3f8c586f6ce"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function.html#a4e812608a91e3b7bff97b3f8c586f6ce">evaluateObjective</a> (const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;x, double &amp;f)=0</td></tr>
 <tr class="separator:a4e812608a91e3b7bff97b3f8c586f6ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4481328b6257b032d73fc4df187bcfc"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function.html#ac4481328b6257b032d73fc4df187bcfc">evaluateGradient</a> (const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;x, <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;g)=0</td></tr>
-<tr class="separator:ac4481328b6257b032d73fc4df187bcfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86df805aff967631bac77afc46541bc6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function.html#a86df805aff967631bac77afc46541bc6">evaluateGradient</a> (const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;x, const std::vector&lt; int &gt; &amp;cols, <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;g)=0</td></tr>
-<tr class="separator:a86df805aff967631bac77afc46541bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0086de9b52cc1d2b9beecc6a87d98b1c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function.html#a0086de9b52cc1d2b9beecc6a87d98b1c">evaluateHessianVectorProduct</a> (const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;x, const std::vector&lt; int &gt; &amp;cols, const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;v, <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;Hv)=0</td></tr>
-<tr class="separator:a0086de9b52cc1d2b9beecc6a87d98b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb4ae78d399ea6c8a665f5f871277d1d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function.html#abb4ae78d399ea6c8a665f5f871277d1d">evaluateGradient</a> (const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;x, const std::vector&lt; int &gt; &amp;indicies, <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;g)=0</td></tr>
+<tr class="separator:abb4ae78d399ea6c8a665f5f871277d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fd6b2976f02617206fc51af7c766654"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function.html#a7fd6b2976f02617206fc51af7c766654">evaluateHessianVectorProduct</a> (const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;x, const std::vector&lt; int &gt; &amp;indicies, const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;v, <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;Hv)=0</td></tr>
+<tr class="separator:a7fd6b2976f02617206fc51af7c766654"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -132,9 +128,7 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a34715606f42c1d45dc30853125009e6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function.html#a34715606f42c1d45dc30853125009e6c">operator=</a> (const <a class="el" href="class_fa_r_s_a_1_1_function.html">Function</a> &amp;)</td></tr>
 <tr class="separator:a34715606f42c1d45dc30853125009e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> class </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7e6bf246aabd0d0c97df4480597b196e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e6bf246aabd0d0c97df4480597b196e">&#9670;&nbsp;</a></span>Function() <span class="overload">[1/2]</span></h2>
 
@@ -215,8 +209,8 @@ Private Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a86df805aff967631bac77afc46541bc6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86df805aff967631bac77afc46541bc6">&#9670;&nbsp;</a></span>evaluateGradient() <span class="overload">[1/2]</span></h2>
+<a id="abb4ae78d399ea6c8a665f5f871277d1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb4ae78d399ea6c8a665f5f871277d1d">&#9670;&nbsp;</a></span>evaluateGradient()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -234,7 +228,7 @@ Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::vector&lt; int &gt; &amp;&#160;</td>
-          <td class="paramname"><em>cols</em>, </td>
+          <td class="paramname"><em>indicies</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -257,63 +251,18 @@ Private Member Functions</h2></td></tr>
 <p>Evaluates gradient in subspace defined by variables in cols. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>is a given point/iterate, a constant double array </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cols</td><td>is a vector of group indices </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">indicies</td><td>is a vector of coordinates of the vector x </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">g</td><td>is the gradient value at "x", a double array (return value) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html#ace94a366b1e0dbca40e4496d0447b4d8">FaRSA::FunctionSmooth</a>.</p>
+<p>Implemented in <a class="el" href="class_linear_regression_loss.html#a4e6b08a4a4c32f2ab973db23d5e5c4ec">LinearRegressionLoss</a>, and <a class="el" href="class_group_l1.html#a343bc9658f4827c2f435277b685d2a17">GroupL1</a>.</p>
 
 </div>
 </div>
-<a id="ac4481328b6257b032d73fc4df187bcfc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4481328b6257b032d73fc4df187bcfc">&#9670;&nbsp;</a></span>evaluateGradient() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool FaRSA::Function::evaluateGradient </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;&#160;</td>
-          <td class="paramname"><em>g</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Evaluates gradient </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>is a given point/iterate, a constant double array </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">g</td><td>is the gradient value at "x", a double array (return value) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html#a556d18d7e84247ef03038497bd80fc8e">FaRSA::FunctionSmooth</a>, <a class="el" href="class_fa_r_s_a_1_1_function_non_smooth.html#abf07d1dbcdfa31419a51ad8f118ce5ed">FaRSA::FunctionNonSmooth</a>, <a class="el" href="class_linear_regression_loss.html#ae356d233729c159ec060ae87fda0b061">LinearRegressionLoss</a>, <a class="el" href="class_group_l1.html#a4d35f82c7bfea903a185ea408bbc927b">GroupL1</a>, and <a class="el" href="class_linear_regression_loss.html#ae356d233729c159ec060ae87fda0b061">LinearRegressionLoss</a>.</p>
-
-</div>
-</div>
-<a id="a0086de9b52cc1d2b9beecc6a87d98b1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0086de9b52cc1d2b9beecc6a87d98b1c">&#9670;&nbsp;</a></span>evaluateHessianVectorProduct()</h2>
+<a id="a7fd6b2976f02617206fc51af7c766654"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fd6b2976f02617206fc51af7c766654">&#9670;&nbsp;</a></span>evaluateHessianVectorProduct()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -331,7 +280,7 @@ Private Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::vector&lt; int &gt; &amp;&#160;</td>
-          <td class="paramname"><em>cols</em>, </td>
+          <td class="paramname"><em>indicies</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -360,14 +309,14 @@ Private Member Functions</h2></td></tr>
 <p>Evaluates Hessian-vector product in subspace defined by variables in cols. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>is a given point/iterate, a constant double array </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cols</td><td>is a vector of selected group indices </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">indicies</td><td>is a vector of selected coordinates </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>is a given vector, a constant double array </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">Hv</td><td>is the Hessian value at "x" times "v", a double array (return value) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html#a091684f2ce3e9e35cbe7d10fde9b1a61">FaRSA::FunctionSmooth</a>, <a class="el" href="class_linear_regression_loss.html#a7900817f2a8d8d60f9e0f5b6a35458b1">LinearRegressionLoss</a>, <a class="el" href="class_group_l1.html#afd3f31c0eee98442d19804f4616b26ff">GroupL1</a>, and <a class="el" href="class_linear_regression_loss.html#a7900817f2a8d8d60f9e0f5b6a35458b1">LinearRegressionLoss</a>.</p>
+<p>Implemented in <a class="el" href="class_linear_regression_loss.html#acfa47a7a89881eef2f87d28477c08451">LinearRegressionLoss</a>, and <a class="el" href="class_group_l1.html#a1734570bc2cdeba1017336217792c1fa">GroupL1</a>.</p>
 
 </div>
 </div>
@@ -412,7 +361,7 @@ Private Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html#a6ef2075c06bb23ad1753722b0d2a3728">FaRSA::FunctionSmooth</a>, <a class="el" href="class_linear_regression_loss.html#a13b13014eecec46fcd8a05360f344621">LinearRegressionLoss</a>, <a class="el" href="class_group_l1.html#a18c0b3719b2dbc38bce825e67ffc69b3">GroupL1</a>, and <a class="el" href="class_linear_regression_loss.html#a13b13014eecec46fcd8a05360f344621">LinearRegressionLoss</a>.</p>
+<p>Implemented in <a class="el" href="class_linear_regression_loss.html#a13b13014eecec46fcd8a05360f344621">LinearRegressionLoss</a>, and <a class="el" href="class_group_l1.html#a18c0b3719b2dbc38bce825e67ffc69b3">GroupL1</a>.</p>
 
 </div>
 </div>

@@ -6,6 +6,7 @@
 
 #include <cstdio>
 
+#include "testMatrix.hpp"
 #include "testOptions.hpp"
 #include "testReporter.hpp"
 #include "testVector.hpp"
@@ -13,37 +14,52 @@
 // Main function
 int main()
 {
+    // Initialize result
+    int result = 0;
 
-  // Initialize result
-  int result = 0;
+    // Run tests
+    printf("testing Options.................... ");
+    if (!testOptionsImplementation(0))
+    {
+        printf("success.\n");
+    }
+    else
+    {
+        result = 1;
+        printf("failure! (run testOptions for details)\n");
+    }
+    printf("testing Reporter................... ");
+    if (!testReporterImplementation(0))
+    {
+        printf("success.\n");
+    }
+    else
+    {
+        result = 1;
+        printf("failure! (run testReporter for details)\n");
+    }
+    printf("testing Vector..................... ");
+    if (!testVectorImplementation(0))
+    {
+        printf("success.\n");
+    }
+    else
+    {
+        result = 1;
+        printf("failure! (run testVector for details)\n");
+    }
+    printf("testing Matrix..................... ");
+    if (!testMatrixImplementation(0))
+    {
+        printf("success.\n");
+    }
+    else
+    {
+        result = 1;
+        printf("failure! (run testMatrix for details)\n");
+    }
 
-  // Run tests
-  printf("testing Options.................... ");
-  if (!testOptionsImplementation(0)) {
-    printf("success.\n");
-  }
-  else {
-    result = 1;
-    printf("failure! (run testOptions for details)\n");
-  }
-  printf("testing Reporter................... ");
-  if (!testReporterImplementation(0)) {
-    printf("success.\n");
-  }
-  else {
-    result = 1;
-    printf("failure! (run testReporter for details)\n");
-  }
-  printf("testing Vector..................... ");
-  if (!testVectorImplementation(0)) {
-    printf("success.\n");
-  }
-  else {
-    result = 1;
-    printf("failure! (run testVector for details)\n");
-  }
+    // Return
+    return 0;
 
-  // Return
-  return 0;
-
-} // end main
+}  // end main

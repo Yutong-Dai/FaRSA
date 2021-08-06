@@ -79,84 +79,80 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef __FARSAFUNCTIONNONSMOOTH_HPP__</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define __FARSAFUNCTIONNONSMOOTH_HPP__</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;FaRSAFunction.hpp&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;FaRSAPoint.hpp&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>FaRSA</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html">   20</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html">FunctionNonSmooth</a> : <span class="keyword">public</span> <a class="code" href="class_fa_r_s_a_1_1_function.html">Function</a></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;   <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#a10b81ffd0c71b97c11edbc16dd682f06">   28</a></span>&#160;    <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#a10b81ffd0c71b97c11edbc16dd682f06">FunctionNonSmooth</a>();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#a832870f2437bfa7e0ae915c6fcbee714">   36</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#a832870f2437bfa7e0ae915c6fcbee714">~FunctionNonSmooth</a>(){};</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">float</span>                          getPenalty()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> penalty_; };</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    std::vector&lt;float&gt;*            getWeights()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> weights_; };</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::vector&lt;std::vector&lt;int&gt;&gt;* getGroups()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> groups_; };</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">// /**</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">//  * Evaluates objective</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="comment">//  * \param[in] x is a given point/iterate, a constant double array</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">//  * \param[out] f is the objective value at &quot;x&quot;, a double (return value)</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="comment">//  */</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="comment">// virtual bool evaluateObjective(const Vector&amp; x, double&amp; f) = 0;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">// /**</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">//  * Evaluates gradient. This method is not intended for the smooth</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">//  function,</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">//  * so will always return false.</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">//  * \param[in] x is a given point/iterate, a constant double array</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">//  * \param[out] g is the gradient value at &quot;x&quot;, a double array (return</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">//  value)</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="comment">//  */</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#abf07d1dbcdfa31419a51ad8f118ce5ed">   61</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#abf07d1dbcdfa31419a51ad8f118ce5ed">evaluateGradient</a>(<span class="keyword">const</span> <a class="code" href="class_fa_r_s_a_1_1_vector.html">Vector</a>&amp; x, <a class="code" href="class_fa_r_s_a_1_1_vector.html">Vector</a>&amp; g) { <span class="keywordflow">return</span> <span class="keyword">false</span>; };</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">// virtual bool evaluateGradient(const Vector&amp; x, const std::vector&lt;int&gt;</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">// cols,</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">//                               Vector&amp; g) = 0;</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">// /**</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">//  * Evaluates Hessian-vector product</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="comment">//  * \param[in] x is a given point/iterate, a constant double array</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">//  * \param[in] cols is a vector of group indices</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="comment">//  * \param[in] v is a given vector, a constant double array</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="comment">//  * \param[out] Hv is the Hessian value at &quot;x&quot; times &quot;v&quot;, a double array</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">//  * (return value)</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="comment">//  */</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="comment">// virtual bool evaluateHessianVectorProduct(const Vector&amp;          x,</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="comment">//                                           const std::vector&lt;int&gt; cols,</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="comment">//                                           const Vector&amp; v, Vector&amp; Hv) =</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">//                                           0;</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#abe341f19cf6ba038b697dc071903fbb1">   83</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#abe341f19cf6ba038b697dc071903fbb1">evaluateProximalGradient</a>(<span class="keyword">const</span> <a class="code" href="class_fa_r_s_a_1_1_vector.html">Vector</a>&amp; x,</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                          <a class="code" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a>*   quantities) = 0;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">//  protected:</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="comment">//   /** @name Protected members */</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">//   //@{</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="comment">//   int number_of_variables_;               /**&lt; Number of variables */</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="comment">//   std::vector&lt;std::vector&lt;int&gt; &gt; groups_; /**&lt; Group data          */</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="comment">//                                           //@}</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#a180a1056c261c856460684aa8a754cea">  102</a></span>&#160;    <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#a180a1056c261c856460684aa8a754cea">FunctionNonSmooth</a>(<span class="keyword">const</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html">FunctionNonSmooth</a>&amp;);</div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#a32dfbaa49e4de14a078e9d8eff4a5f90">  106</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#a32dfbaa49e4de14a078e9d8eff4a5f90">operator=</a>(<span class="keyword">const</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html">FunctionNonSmooth</a>&amp;);</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;FaRSAFunction.hpp&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;FaRSAMatrix.hpp&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;FaRSAVector.hpp&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>FaRSA</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html">FunctionNonSmooth</a> : <span class="keyword">public</span> <a class="code" href="class_fa_r_s_a_1_1_function.html">Function</a></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;   <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#a10b81ffd0c71b97c11edbc16dd682f06">   27</a></span>&#160;    <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#a10b81ffd0c71b97c11edbc16dd682f06">FunctionNonSmooth</a>(){};</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#a832870f2437bfa7e0ae915c6fcbee714">   35</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#a832870f2437bfa7e0ae915c6fcbee714">~FunctionNonSmooth</a>(){};</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="comment">// /**</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="comment">//  * Evaluates objective</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">//  * \param[in] x is a given point/iterate, a constant double array</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">//  * \param[out] f is the objective value at &quot;x&quot;, a double (return value)</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">//  */</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">// virtual bool evaluateObjective(const Vector&amp; x, double&amp; f) = 0;</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment"></span>    <span class="comment">// bool evaluateGradient(const Vector&amp; x, Vector&amp; g) { return false; };</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">// /**</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">//  * Evaluates gradient</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">//  * \param[in] x is a given point/iterate, a constant double array</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="comment">//  * \param[in] cols is a vector of group indices</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="comment">//  * \param[out] g is the gradient value at &quot;x&quot;, a double array (return</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">//  * value)</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="comment">//  */</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">// virtual bool evaluateGradient(const Vector&amp; x, const std::vector&lt;int&gt;&amp; cols,</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">//                               Vector&amp; g) = 0;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">// /**</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="comment">//  * Evaluates Hessian-vector product</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">//  * \param[in] x is a given point/iterate, a constant double array</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">//  * \param[in] cols is a vector of group indices</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">//  * \param[in] v is a given vector, a constant double array</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">//  * \param[out] Hv is the Hessian value at &quot;x&quot; times &quot;v&quot;, a double</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">//  array</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="comment">//  * (return value)</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">//  */</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="comment">// virtual bool evaluateHessianVectorProduct(const Vector&amp;          x,</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="comment">//                                           const std::vector&lt;int&gt;</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">//                                           cols, const Vector&amp; v,</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="comment">//                                           Vector&amp; Hv) = 0;</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#a612c2a40aa796c1cda8ee95e96ad6e04">   80</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#a612c2a40aa796c1cda8ee95e96ad6e04">evaluateProximalGradient</a>(<span class="keyword">const</span> <a class="code" href="class_fa_r_s_a_1_1_vector.html">Vector</a>&amp; x, <span class="keyword">const</span> <a class="code" href="class_fa_r_s_a_1_1_vector.html">Vector</a>&amp; gradfx,</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                                          <span class="keywordtype">double</span>  stepsize,</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                                          <a class="code" href="class_fa_r_s_a_1_1_vector.html">Vector</a>&amp; proxgrad) = 0;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="comment">//  protected:</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">//   /** @name Protected members */</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">//   //@{</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="comment">//   int number_of_variables_;               /**&lt; Number of variables */</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">//   std::vector&lt;std::vector&lt;int&gt; &gt; groups_; /**&lt; Group data          */</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="comment">//                                           //@}</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#a180a1056c261c856460684aa8a754cea">  100</a></span>&#160;    <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#a180a1056c261c856460684aa8a754cea">FunctionNonSmooth</a>(<span class="keyword">const</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html">FunctionNonSmooth</a>&amp;);</div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="class_fa_r_s_a_1_1_function_non_smooth.html#a32dfbaa49e4de14a078e9d8eff4a5f90">  104</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html#a32dfbaa49e4de14a078e9d8eff4a5f90">operator=</a>(<span class="keyword">const</span> <a class="code" href="class_fa_r_s_a_1_1_function_non_smooth.html">FunctionNonSmooth</a>&amp;);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;};  <span class="comment">// end FunctionNonSmooth</span></div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;};  <span class="comment">// end FunctionNonSmooth</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}  <span class="comment">// namespace FaRSA</span></div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;}  <span class="comment">// namespace FaRSA</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __FARSAFUNCTIONNONSMOOTH_HPP__ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __FARSAFUNCTIONNONSMOOTH_HPP__ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html_a612c2a40aa796c1cda8ee95e96ad6e04"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html#a612c2a40aa796c1cda8ee95e96ad6e04">FaRSA::FunctionNonSmooth::evaluateProximalGradient</a></div><div class="ttdeci">virtual bool evaluateProximalGradient(const Vector &amp;x, const Vector &amp;gradfx, double stepsize, Vector &amp;proxgrad)=0</div></div>
 <div class="ttc" id="aclass_fa_r_s_a_1_1_function_html"><div class="ttname"><a href="class_fa_r_s_a_1_1_function.html">FaRSA::Function</a></div><div class="ttdef"><b>Definition:</b> FaRSAFunction.hpp:22</div></div>
 <div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html_a180a1056c261c856460684aa8a754cea"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html#a180a1056c261c856460684aa8a754cea">FaRSA::FunctionNonSmooth::FunctionNonSmooth</a></div><div class="ttdeci">FunctionNonSmooth(const FunctionNonSmooth &amp;)</div></div>
-<div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html_a832870f2437bfa7e0ae915c6fcbee714"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html#a832870f2437bfa7e0ae915c6fcbee714">FaRSA::FunctionNonSmooth::~FunctionNonSmooth</a></div><div class="ttdeci">virtual ~FunctionNonSmooth()</div><div class="ttdef"><b>Definition:</b> FaRSAFunctionNonSmooth.hpp:36</div></div>
-<div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html_a10b81ffd0c71b97c11edbc16dd682f06"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html#a10b81ffd0c71b97c11edbc16dd682f06">FaRSA::FunctionNonSmooth::FunctionNonSmooth</a></div><div class="ttdeci">FunctionNonSmooth()</div></div>
-<div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html">FaRSA::FunctionNonSmooth</a></div><div class="ttdef"><b>Definition:</b> FaRSAFunctionNonSmooth.hpp:21</div></div>
+<div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html_a832870f2437bfa7e0ae915c6fcbee714"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html#a832870f2437bfa7e0ae915c6fcbee714">FaRSA::FunctionNonSmooth::~FunctionNonSmooth</a></div><div class="ttdeci">virtual ~FunctionNonSmooth()</div><div class="ttdef"><b>Definition:</b> FaRSAFunctionNonSmooth.hpp:35</div></div>
+<div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html_a10b81ffd0c71b97c11edbc16dd682f06"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html#a10b81ffd0c71b97c11edbc16dd682f06">FaRSA::FunctionNonSmooth::FunctionNonSmooth</a></div><div class="ttdeci">FunctionNonSmooth()</div><div class="ttdef"><b>Definition:</b> FaRSAFunctionNonSmooth.hpp:27</div></div>
+<div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html">FaRSA::FunctionNonSmooth</a></div><div class="ttdef"><b>Definition:</b> FaRSAFunctionNonSmooth.hpp:20</div></div>
 <div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html_a32dfbaa49e4de14a078e9d8eff4a5f90"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html#a32dfbaa49e4de14a078e9d8eff4a5f90">FaRSA::FunctionNonSmooth::operator=</a></div><div class="ttdeci">void operator=(const FunctionNonSmooth &amp;)</div></div>
 <div class="ttc" id="aclass_fa_r_s_a_1_1_vector_html"><div class="ttname"><a href="class_fa_r_s_a_1_1_vector.html">FaRSA::Vector</a></div><div class="ttdef"><b>Definition:</b> FaRSAVector.hpp:27</div></div>
-<div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html_abe341f19cf6ba038b697dc071903fbb1"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html#abe341f19cf6ba038b697dc071903fbb1">FaRSA::FunctionNonSmooth::evaluateProximalGradient</a></div><div class="ttdeci">virtual bool evaluateProximalGradient(const Vector &amp;x, Quantities *quantities)=0</div></div>
-<div class="ttc" id="aclass_fa_r_s_a_1_1_quantities_html"><div class="ttname"><a href="class_fa_r_s_a_1_1_quantities.html">FaRSA::Quantities</a></div><div class="ttdef"><b>Definition:</b> FaRSAQuantities.hpp:37</div></div>
-<div class="ttc" id="aclass_fa_r_s_a_1_1_function_non_smooth_html_abf07d1dbcdfa31419a51ad8f118ce5ed"><div class="ttname"><a href="class_fa_r_s_a_1_1_function_non_smooth.html#abf07d1dbcdfa31419a51ad8f118ce5ed">FaRSA::FunctionNonSmooth::evaluateGradient</a></div><div class="ttdeci">bool evaluateGradient(const Vector &amp;x, Vector &amp;g)</div><div class="ttdef"><b>Definition:</b> FaRSAFunctionNonSmooth.hpp:61</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20

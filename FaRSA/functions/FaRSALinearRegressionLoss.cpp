@@ -9,20 +9,21 @@
 
 #include "FaRSALinearRegressionLoss.hpp"
 
-#include "FaRSADeclarations.hpp"
-#include "FaRSADefinitions.hpp"
+#include <iostream>
 
 bool LinearRegressionLoss::evaluateObjective(const Vector& x, double& f)
 {
-    data_matrix_.matrixVectorProduct(x, residual);
-    residual.addScaledVector(-1, data_label_);
-    f = residual.innerProduct(residual) / (2 * number_of_data_points_);
+    data_matrix_.matrixVectorProduct(x, residual_);
+    residual_.addScaledVector(-1, data_label_);
+    f = residual_.innerProduct(residual_) / (2 * number_of_data_points_);
     return !isnan(f);
 }  // end  evaluateObjective
 
-bool LinearRegressionLoss::evaluateGradient(const Vector& x, Vector& g)
+bool LinearRegressionLoss::evaluateGradient(const Vector&           x,
+                                            const std::vector<int>& indicies,
+                                            Vector&                 g)
 {
-    data_matrix_.matrixTransposeVectorProduct(residual, g);
+    data_matrix_.matrixTransposeVectorProduct(residual_, g);
     g.scale(1.0 / number_of_data_points_);
     for (int i = 0; i < g.length(); i++)
     {
@@ -35,11 +36,12 @@ bool LinearRegressionLoss::evaluateGradient(const Vector& x, Vector& g)
 }  // end  evaluateGradient
 
 bool LinearRegressionLoss::evaluateHessianVectorProduct(
-    const Vector& x, const std::vector<int>& cols, const Vector& v, Vector& Hv)
+    const Vector& x, const std::vector<int>& indicies, const Vector& v,
+    Vector& Hv)
 {
-    Matrix submatrix(data_matrix_.numberOfRows(), cols.size(),
-                     cols.size() * data_matrix_.numberOfRows());
-    data_matrix_.col(cols, submatrix);
+    Matrix submatrix(data_matrix_.numberOfRows(), indicies.size(),
+                     indicies.size() * data_matrix_.numberOfRows());
+    data_matrix_.col(indicies, submatrix);
     Vector temp(submatrix.numberOfRows());
     submatrix.matrixVectorProduct(v, temp);
     submatrix.matrixTransposeVectorProduct(temp, Hv);

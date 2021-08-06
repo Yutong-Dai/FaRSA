@@ -16,8 +16,11 @@
 namespace FaRSA
 {
 /**
- * Problem class
+ * Forward declarations
  */
+class Quantities;
+class Reporter;
+
 class Function
 {
    public:
@@ -38,8 +41,9 @@ class Function
 
     /** @name Get methods */
     //@{
-    int         getNumberOfVariables() { return number_of_variables_; };
-    std::string getName() { return name_; };
+    int numberOfVariables() { return number_of_variables_; };
+
+    std::string const name() const { return name_; };
     //@}
 
     /** @name Evaluate methods */
@@ -50,32 +54,34 @@ class Function
      * \param[out] f is the objective value at "x", a double (return value)
      */
     virtual bool evaluateObjective(const Vector& x, double& f) = 0;
-    /**
-     * Evaluates gradient
-     * \param[in] x is a given point/iterate, a constant double array
-     * \param[out] g is the gradient value at "x", a double array (return value)
-     */
-    virtual bool evaluateGradient(const Vector& x, Vector& g) = 0;
+    // /**
+    //  * Evaluates gradient
+    //  * \param[in] x is a given point/iterate, a constant double array
+    //  * \param[out] g is the gradient value at "x", a double array (return
+    //  value)
+    //  */
+    // virtual bool evaluateGradient(const Vector& x, Vector& g) = 0;
     /**
      * Evaluates gradient in subspace defined by variables
      * in cols.
      * \param[in] x is a given point/iterate, a constant double array
-     * \param[in] cols is a vector of group indices
+     * \param[in] indicies is a vector of coordinates of the vector x
      * \param[out] g is the gradient value at "x", a double array (return value)
      */
-    virtual bool evaluateGradient(const Vector& x, const std::vector<int>& cols,
-                                  Vector& g) = 0;
+    virtual bool evaluateGradient(const Vector&           x,
+                                  const std::vector<int>& indicies,
+                                  Vector&                 g) = 0;
     /**
      * Evaluates Hessian-vector product in subspace defined by variables
      * in cols.
      * \param[in] x is a given point/iterate, a constant double array
-     * \param[in] cols is a vector of selected group indices
+     * \param[in] indicies is a vector of selected coordinates
      * \param[in] v is a given vector, a constant double array
      * \param[out] Hv is the Hessian value at "x" times "v", a double array
      * (return value)
      */
     virtual bool evaluateHessianVectorProduct(const Vector&           x,
-                                              const std::vector<int>& cols,
+                                              const std::vector<int>& indicies,
                                               const Vector& v, Vector& Hv) = 0;
     //@}
 
@@ -84,6 +90,7 @@ class Function
     //@{
     int         number_of_variables_;
     std::string name_;
+
     //@}
 
    private:

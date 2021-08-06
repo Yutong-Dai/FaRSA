@@ -60,8 +60,7 @@ void SpacePartitionFirstOrder::partitionSpace(const Options*  options,
         }
 
         // Check for success
-        THROW_EXCEPTION(SP_SUCCESS_EXCEPTION,
-                        "Direction computation successful.")
+        THROW_EXCEPTION(SP_SUCCESS_EXCEPTION, "Space Partition successful.")
     }  // end try
 
     // catch exceptions

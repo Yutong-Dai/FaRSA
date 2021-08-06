@@ -16,6 +16,8 @@
 #include "FaRSAQuantities.hpp"
 #include "FaRSAReporter.hpp"
 #include "FaRSAStrategies.hpp"
+#include "FaRSAFunctionSmooth"
+#include "FaRSAFunctionNonSmooth"
 
 namespace FaRSA
 {

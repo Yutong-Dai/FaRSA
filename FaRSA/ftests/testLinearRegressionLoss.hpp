@@ -80,7 +80,8 @@ int testLinearRegressionLossImplementation(int option)
     }
 
     // test gradient evaluation
-    bool gevalSuccess = ls.evaluateGradient(x, g);
+    std::vector<int> placeholder;
+    bool gevalSuccess = ls.evaluateGradient(x, placeholder, g);
     if (!gevalSuccess)
     {
         result = 1;
@@ -97,6 +98,9 @@ int testLinearRegressionLossImplementation(int option)
             result = 1;
         }
     }
+
+    ls.evaluateGradient(x, cols, g);
+
     // test Hessian-Vector Product for submatrix
     std::sort(cols.begin(), cols.end());
     bool hvevalSuccess = ls.evaluateHessianVectorProduct(x, cols, v, Hv);

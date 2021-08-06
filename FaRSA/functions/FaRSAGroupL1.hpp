@@ -15,10 +15,10 @@
 #include <map>
 #include <vector>
 
-#include "FaRSAFunctionNonSmooth.hpp"
+#include "FaRSAFunctionNonsmooth.hpp"
 using namespace FaRSA;
 
-class GroupL1 : public FunctionNonSmooth
+class GroupL1 : public FunctionNonsmooth
 {
    public:
     /** @name Constructors */
@@ -26,8 +26,8 @@ class GroupL1 : public FunctionNonSmooth
     /**
      * Constructor
      */
-    GroupL1(std::vector<std::vector<int>>& groups, std::vector<double>& weights,
-            double penalty);
+    GroupL1(std::shared_ptr<std::vector<std::vector<int>>> groups,
+            std::shared_ptr<std::vector<double>> weights, double penalty);
     //@}
 
     /** @name Destructor */
@@ -39,9 +39,12 @@ class GroupL1 : public FunctionNonSmooth
 
     /** @name Get methods */
     //@{
-    double                         getPenalty() const { return penalty_; };
-    std::vector<double>&           getWeights() { return weights_; };
-    std::vector<std::vector<int>>& getGroups() { return groups_; };
+    double const                         penalty() const { return penalty_; };
+    std::shared_ptr<std::vector<double>> weights() { return weights_; };
+    std::shared_ptr<std::vector<std::vector<int>>> const groups() const
+    {
+        return groups_;
+    };
     //@}
 
     /** @name Evaluate methods */
@@ -59,19 +62,19 @@ class GroupL1 : public FunctionNonSmooth
      * \param[out] g is the gradient value at "x", a double array (return value)
      * \return indicator of success (true) or failure (false)
      */
-    bool evaluateGradient(const Vector& x, const std::vector<int>& cols,
+    bool evaluateGradient(const Vector& x, const std::vector<int>& indicies,
                           Vector& g);
     /**
      * Evaluates gradient in subspace defined by variables
      * in subgroups.
      * \param[in] x is a given point/iterate, a constant double array
-     * \param[in] subgroups is a vector of column indices
+     * \param[in] indicies is a vector of column indices
      * \param[in] v is a given vector, a constant double array
      * \param[out] Hv is the product of the Hessian and "v", a double array
      * (return value) \return indicator of success (true) or failure (false)
      */
     bool evaluateHessianVectorProduct(const Vector&           x,
-                                      const std::vector<int>& cols,
+                                      const std::vector<int>& indicies,
                                       const Vector& v, Vector& Hv);
     /**
      * @brief Evaluator proximal operator at u
@@ -81,8 +84,9 @@ class GroupL1 : public FunctionNonSmooth
      * \return true
      * \return false
      */
-    bool evaluateProximalGradient(const Vector& x, const Vector& gradfx,
-                                  double stepsize, Vector& proxgrad);
+    bool computeProximalGradientUpdate(const Vector& x, const Vector& gradfx,
+                                       Quantities& quantities,
+                                       Vector&     proxgrad);
 
     //@}
 
@@ -104,8 +108,8 @@ class GroupL1 : public FunctionNonSmooth
      * Private members
      */
     //@{
-    double              penalty_;
-    std::vector<double> weights_;
+    double                               penalty_;
+    std::shared_ptr<std::vector<double>> weights_;
     /** a vector of vector specifing the groups of variables
      *  For example, consider the following group structures:
      *  group1: [0,1]; group2: [2,3,4,5]; group3:[6]
@@ -113,8 +117,7 @@ class GroupL1 : public FunctionNonSmooth
      *  the first element is the statring position of the i-th group
      *  the second element is the ending position of the i-th group
      */
-    std::vector<std::vector<int>> groups_;
-    std::vector<double>           per_group_norm_;
+    std::vector<double> per_group_norm_;
     // std::vector<int>              per_group_size_;
     std::vector<int>      idx_to_group_;
     std::map<int, double> per_group_gradient_step_norm_;

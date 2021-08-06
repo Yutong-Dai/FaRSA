@@ -7,6 +7,7 @@
 #ifndef __TESTGROUPL1_HPP__
 #define __TESTGROUPL1_HPP__
 
+#include <FaRSAQuantities.hpp>
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -40,12 +41,31 @@ int testGroupL1Implementation(int option)
     }  // end if
 
     // set-up groups
-    std::vector<std::vector<int>> groups{{0, 1}, {2, 4}, {5, 5}};
-    std::vector<double>           weights;
-    double                        penaty = 1.23;
-    weights.push_back(sqrt(2.0));
-    weights.push_back(sqrt(3.0));
-    weights.push_back(sqrt(1.0));
+    std::shared_ptr<std::vector<std::vector<int>>> groups(
+        new std::vector<std::vector<int>>);
+    std::vector<int> temp;
+    temp.push_back(0);
+    temp.push_back(1);
+    groups->push_back(temp);
+    temp.clear();
+    temp.push_back(2);
+    temp.push_back(4);
+    groups->push_back(temp);
+    temp.clear();
+    temp.push_back(5);
+    temp.push_back(5);
+    groups->push_back(temp);
+    // std::vector<std::vector<int>> groups{{0, 1}, {2, 4}, {5, 5}};
+
+    // std::vector<double> weights;
+    // weights.push_back(sqrt(2.0));
+    // weights.push_back(sqrt(3.0));
+    // weights.push_back(sqrt(1.0));
+    std::shared_ptr<std::vector<double>> weights(new std::vector<double>);
+    weights->push_back(sqrt(2.0));
+    weights->push_back(sqrt(3.0));
+    weights->push_back(sqrt(1.0));
+    double penaty = 1.23;
 
     GroupL1 r(groups, weights, penaty);
     Vector  ans;
@@ -93,6 +113,8 @@ int testGroupL1Implementation(int option)
     }
 
     // test proximal gradient evaluation
+    Quantities quantities;
+    quantities.setStepsize(0.2);
     Vector gradfx(6);
     Vector proxgrad(6);
     for (int i = 0; i < gradfx.length(); i++)
@@ -101,7 +123,8 @@ int testGroupL1Implementation(int option)
     }
     // gradfx.print(&reporter, "gradfx:");
     bool proxevalSuccess;
-    proxevalSuccess = r.evaluateProximalGradient(x, gradfx, 0.2, proxgrad);
+    proxevalSuccess =
+        r.computeProximalGradientUpdate(x, gradfx, quantities, proxgrad);
     ans.setFromFile((char*)"./data/rprox1.txt");
     // proxgrad.print(&reporter, "proximal-grad:");
     if (!proxevalSuccess)
@@ -124,7 +147,9 @@ int testGroupL1Implementation(int option)
     {
         gradfx.valuesModifiable()[i] = x.values()[i] + 2.0;
     }
-    proxevalSuccess = r.evaluateProximalGradient(x, gradfx, 0.2, proxgrad);
+
+    proxevalSuccess =
+        r.computeProximalGradientUpdate(x, gradfx, quantities, proxgrad);
     ans.setFromFile((char*)"./data/rprox2.txt");
     if (!proxevalSuccess)
     {

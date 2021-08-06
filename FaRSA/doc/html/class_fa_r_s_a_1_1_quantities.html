@@ -89,8 +89,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad71e4a6b3a2cecab7559047e9e31f313"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_quantities.html#ad71e4a6b3a2cecab7559047e9e31f313">getOptions</a> (const <a class="el" href="class_fa_r_s_a_1_1_options.html">Options</a> *options, const <a class="el" href="class_fa_r_s_a_1_1_reporter.html">Reporter</a> *reporter)</td></tr>
 <tr class="separator:ad71e4a6b3a2cecab7559047e9e31f313"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Initialization methods</div></td></tr>
-<tr class="memitem:ade103ae1fb6b88691880fdc533d5d573"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_quantities.html#ade103ae1fb6b88691880fdc533d5d573">initialize</a> (const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> &gt; problem)</td></tr>
-<tr class="separator:ade103ae1fb6b88691880fdc533d5d573"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75068d174b87f754942478f6bf5d1464"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_quantities.html#a75068d174b87f754942478f6bf5d1464">initialize</a> (const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html">FunctionSmooth</a> &gt; function_smooth, const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html">FunctionNonsmooth</a> &gt; function_nonsmooth, const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;initail_point)</td></tr>
+<tr class="separator:a75068d174b87f754942478f6bf5d1464"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Get methods</div></td></tr>
 <tr class="memitem:a94a67db131a21e37a381aae6632d669f"><td class="memItemLeft" align="right" valign="top">clock_t const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_quantities.html#a94a67db131a21e37a381aae6632d669f">startTime</a> () const</td></tr>
 <tr class="separator:a94a67db131a21e37a381aae6632d669f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,6 +164,12 @@ std::shared_ptr&lt; std::vector&lt; int &gt; &gt; const&#160;</td><td class="mem
 <tr class="memitem:adb30b622fa153e37f7848c0c651ae425"><td class="memItemLeft" align="right" valign="top"><a id="adb30b622fa153e37f7848c0c651ae425"></a>
 std::shared_ptr&lt; std::vector&lt; int &gt; &gt; const&#160;</td><td class="memItemRight" valign="bottom"><b>groupsSecondOrder</b> () const</td></tr>
 <tr class="separator:adb30b622fa153e37f7848c0c651ae425"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7edd37f1ccd7599f54b1be580ee5e018"><td class="memItemLeft" align="right" valign="top"><a id="a7edd37f1ccd7599f54b1be580ee5e018"></a>
+std::shared_ptr&lt; std::vector&lt; int &gt; &gt; const&#160;</td><td class="memItemRight" valign="bottom"><b>groupsWorking</b> () const</td></tr>
+<tr class="separator:a7edd37f1ccd7599f54b1be580ee5e018"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea17d40667406157f4999b333586e45b"><td class="memItemLeft" align="right" valign="top"><a id="aea17d40667406157f4999b333586e45b"></a>
+std::shared_ptr&lt; std::vector&lt; int &gt; &gt; const&#160;</td><td class="memItemRight" valign="bottom"><b>indiciesWorking</b> () const</td></tr>
+<tr class="separator:aea17d40667406157f4999b333586e45b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a504fe04ef8e1f6bdf98dda43b4c2c141"><td class="memItemLeft" align="right" valign="top"><a id="a504fe04ef8e1f6bdf98dda43b4c2c141"></a>
 int const&#160;</td><td class="memItemRight" valign="bottom"><b>numberOfGroups</b> () const</td></tr>
 <tr class="separator:a504fe04ef8e1f6bdf98dda43b4c2c141"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -270,6 +276,12 @@ std::shared_ptr&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRi
 <tr class="memitem:accfac8bee8d3cf61e926ca1b5f69fc01"><td class="memItemLeft" align="right" valign="top"><a id="accfac8bee8d3cf61e926ca1b5f69fc01"></a>
 std::shared_ptr&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>groups_second_order_</b></td></tr>
 <tr class="separator:accfac8bee8d3cf61e926ca1b5f69fc01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecc06a78aca5049c9b8317e95bf9ccf2"><td class="memItemLeft" align="right" valign="top"><a id="aecc06a78aca5049c9b8317e95bf9ccf2"></a>
+std::shared_ptr&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>groups_working_</b></td></tr>
+<tr class="separator:aecc06a78aca5049c9b8317e95bf9ccf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a384da45bd157d45e6168643483ad6c10"><td class="memItemLeft" align="right" valign="top"><a id="a384da45bd157d45e6168643483ad6c10"></a>
+std::shared_ptr&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>indicies_working_</b></td></tr>
+<tr class="separator:a384da45bd157d45e6168643483ad6c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Private members (set by options)</div></td></tr>
 <tr class="memitem:a657b4d05850f8e96b282f962b3dc09bd"><td class="memItemLeft" align="right" valign="top"><a id="a657b4d05850f8e96b282f962b3dc09bd"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>scaling_threshold_</b></td></tr>
@@ -819,8 +831,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>kappa_decrease_fact
 
 </div>
 </div>
-<a id="ade103ae1fb6b88691880fdc533d5d573"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade103ae1fb6b88691880fdc533d5d573">&#9670;&nbsp;</a></span>initialize()</h2>
+<a id="a75068d174b87f754942478f6bf5d1464"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75068d174b87f754942478f6bf5d1464">&#9670;&nbsp;</a></span>initialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -828,9 +840,25 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>kappa_decrease_fact
         <tr>
           <td class="memname">bool FaRSA::Quantities::initialize </td>
           <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> &gt;&#160;</td>
-          <td class="paramname"><em>problem</em></td><td>)</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html">FunctionSmooth</a> &gt;&#160;</td>
+          <td class="paramname"><em>function_smooth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html">FunctionNonsmooth</a> &gt;&#160;</td>
+          <td class="paramname"><em>function_nonsmooth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>initail_point</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

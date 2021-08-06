@@ -78,8 +78,8 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:ab253726c1f38df20ff6aebeef3d46d4b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#ab253726c1f38df20ff6aebeef3d46d4b">Point</a> (const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> &gt; <a class="el" href="class_fa_r_s_a_1_1_point.html#a8d19854e23b5b75be0116ae8fcfded4f">problem</a>, const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt; <a class="el" href="class_fa_r_s_a_1_1_point.html#a33e81530540757d589dd66b7f2bdf2f2">vector</a>, double <a class="el" href="class_fa_r_s_a_1_1_point.html#aa82fd7931659ff6dc709d81ae8b4009a">scale</a>)</td></tr>
-<tr class="separator:ab253726c1f38df20ff6aebeef3d46d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addc2f2be827f8674f6efd8ce397dace6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#addc2f2be827f8674f6efd8ce397dace6">Point</a> (const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html">FunctionSmooth</a> &gt; f, const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html">FunctionNonsmooth</a> &gt; r, const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt; <a class="el" href="class_fa_r_s_a_1_1_point.html#a33e81530540757d589dd66b7f2bdf2f2">vector</a>, double <a class="el" href="class_fa_r_s_a_1_1_point.html#aa82fd7931659ff6dc709d81ae8b4009a">scale</a>)</td></tr>
+<tr class="separator:addc2f2be827f8674f6efd8ce397dace6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Destructor</div></td></tr>
 <tr class="memitem:aab3b7efeb2adf502428c6132795d3b03"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#aab3b7efeb2adf502428c6132795d3b03">~Point</a> ()</td></tr>
 <tr class="separator:aab3b7efeb2adf502428c6132795d3b03"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -92,25 +92,47 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Set methods</div></td></tr>
 <tr class="memitem:ab92d55e389e62d619d2721ff5e2cb6c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#ab92d55e389e62d619d2721ff5e2cb6c9">determineScale</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
 <tr class="separator:ab92d55e389e62d619d2721ff5e2cb6c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90b834da47e06fd654ce89136880b9be"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a90b834da47e06fd654ce89136880b9be">evaluateObjective</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
-<tr class="separator:a90b834da47e06fd654ce89136880b9be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e1317ac80cc63069e5b5517ef72ff7e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a0e1317ac80cc63069e5b5517ef72ff7e">evaluateGradient</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
-<tr class="separator:a0e1317ac80cc63069e5b5517ef72ff7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a420fefcb777e1cd2bf4fef5e6743c2ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a420fefcb777e1cd2bf4fef5e6743c2ad">scaleObjective</a> ()</td></tr>
-<tr class="separator:a420fefcb777e1cd2bf4fef5e6743c2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a149527f382936475d6e3d233b51f518a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a149527f382936475d6e3d233b51f518a">scaleGradient</a> ()</td></tr>
-<tr class="separator:a149527f382936475d6e3d233b51f518a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec13bf577ebdb29acb721755a65ea612"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#aec13bf577ebdb29acb721755a65ea612">evaluateObjectiveSmooth</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
+<tr class="separator:aec13bf577ebdb29acb721755a65ea612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56eeb38c7ac8cc54b3c74a3d8d6d70c4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a56eeb38c7ac8cc54b3c74a3d8d6d70c4">evaluateObjectiveNonsmooth</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
+<tr class="separator:a56eeb38c7ac8cc54b3c74a3d8d6d70c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52b072f379ee67af13e4cb1e6f3a7be3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a52b072f379ee67af13e4cb1e6f3a7be3">evaluateGradientSmooth</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
+<tr class="separator:a52b072f379ee67af13e4cb1e6f3a7be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9997fc767d6a288c9fcd347848b324f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#ac9997fc767d6a288c9fcd347848b324f">evaluateGradientNonsmooth</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
+<tr class="separator:ac9997fc767d6a288c9fcd347848b324f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3587c1ecb805e1f114d903a2f0fbfca0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a3587c1ecb805e1f114d903a2f0fbfca0">scaleObjectiveSmooth</a> ()</td></tr>
+<tr class="separator:a3587c1ecb805e1f114d903a2f0fbfca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46f0805996ee59007c6de195e843b947"><td class="memItemLeft" align="right" valign="top"><a id="a46f0805996ee59007c6de195e843b947"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>scaleObjectiveNonsmooth</b> ()</td></tr>
+<tr class="separator:a46f0805996ee59007c6de195e843b947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ff2a88a9d06e6d0b457c57b68653003"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a2ff2a88a9d06e6d0b457c57b68653003">scaleGradientSmooth</a> ()</td></tr>
+<tr class="separator:a2ff2a88a9d06e6d0b457c57b68653003"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae59d9ba3d4888225128e556a892bd8f5"><td class="memItemLeft" align="right" valign="top"><a id="ae59d9ba3d4888225128e556a892bd8f5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>scaleGradientNonsmooth</b> ()</td></tr>
+<tr class="separator:ae59d9ba3d4888225128e556a892bd8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Get methods</div></td></tr>
-<tr class="memitem:a8d19854e23b5b75be0116ae8fcfded4f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a8d19854e23b5b75be0116ae8fcfded4f">problem</a> () const</td></tr>
-<tr class="separator:a8d19854e23b5b75be0116ae8fcfded4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a364c0965f90a54cdd971ca87e365d614"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html">FunctionSmooth</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a364c0965f90a54cdd971ca87e365d614">funcion_smooth</a> () const</td></tr>
+<tr class="separator:a364c0965f90a54cdd971ca87e365d614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f63692694f3eb432123568588848626"><td class="memItemLeft" align="right" valign="top"><a id="a5f63692694f3eb432123568588848626"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html">FunctionNonsmooth</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>funcion_nonsmooth</b> () const</td></tr>
+<tr class="separator:a5f63692694f3eb432123568588848626"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33e81530540757d589dd66b7f2bdf2f2"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a33e81530540757d589dd66b7f2bdf2f2">vector</a> () const</td></tr>
 <tr class="separator:a33e81530540757d589dd66b7f2bdf2f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8574304c8f316c3eb7fbe3841501accf"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a8574304c8f316c3eb7fbe3841501accf">objective</a> () const</td></tr>
-<tr class="separator:a8574304c8f316c3eb7fbe3841501accf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a599276111b0e8bbe692b780ccf1eebaf"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a599276111b0e8bbe692b780ccf1eebaf">objectiveUnscaled</a> () const</td></tr>
-<tr class="separator:a599276111b0e8bbe692b780ccf1eebaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c8be0f2201c1cc7c1c1f40481441ca6"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a2c8be0f2201c1cc7c1c1f40481441ca6">gradient</a> () const</td></tr>
-<tr class="separator:a2c8be0f2201c1cc7c1c1f40481441ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae71914c1cb46bad10f62d5109b97d133"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#ae71914c1cb46bad10f62d5109b97d133">objectiveSmooth</a> () const</td></tr>
+<tr class="separator:ae71914c1cb46bad10f62d5109b97d133"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb15b17c75b903271f1a026790a616fc"><td class="memItemLeft" align="right" valign="top"><a id="adb15b17c75b903271f1a026790a616fc"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>objectiveNonsmooth</b> () const</td></tr>
+<tr class="separator:adb15b17c75b903271f1a026790a616fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ac1887d872a3bf97cbc4de3358f1e98"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a4ac1887d872a3bf97cbc4de3358f1e98">objectiveSmoothUnscaled</a> () const</td></tr>
+<tr class="separator:a4ac1887d872a3bf97cbc4de3358f1e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a428fac8b1a85df8ebeda4420f884983a"><td class="memItemLeft" align="right" valign="top"><a id="a428fac8b1a85df8ebeda4420f884983a"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>objectiveNonsmoothUnscaled</b> () const</td></tr>
+<tr class="separator:a428fac8b1a85df8ebeda4420f884983a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89ab73be5bab51aeaa97c09773fc3368"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a89ab73be5bab51aeaa97c09773fc3368">gradient_smooth</a> () const</td></tr>
+<tr class="separator:a89ab73be5bab51aeaa97c09773fc3368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1970f4f195472838b6e9bf3a4238d179"><td class="memItemLeft" align="right" valign="top"><a id="a1970f4f195472838b6e9bf3a4238d179"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_nonsmooth</b> () const</td></tr>
+<tr class="separator:a1970f4f195472838b6e9bf3a4238d179"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa82fd7931659ff6dc709d81ae8b4009a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#aa82fd7931659ff6dc709d81ae8b4009a">scale</a> () const</td></tr>
 <tr class="separator:aa82fd7931659ff6dc709d81ae8b4009a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -127,33 +149,66 @@ Private Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Private members</div></td></tr>
-<tr class="memitem:a72fdc14f59a01df3e69135b4b078274e"><td class="memItemLeft" align="right" valign="top"><a id="a72fdc14f59a01df3e69135b4b078274e"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>objective_evaluated_</b></td></tr>
-<tr class="separator:a72fdc14f59a01df3e69135b4b078274e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac0c9a458e088293ffaf4c66be7e4a0b"><td class="memItemLeft" align="right" valign="top"><a id="aac0c9a458e088293ffaf4c66be7e4a0b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_evaluated_</b></td></tr>
-<tr class="separator:aac0c9a458e088293ffaf4c66be7e4a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b36662f9bc6a5525fcf9618cb653dc5"><td class="memItemLeft" align="right" valign="top"><a id="a8b36662f9bc6a5525fcf9618cb653dc5"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>objective_</b></td></tr>
-<tr class="separator:a8b36662f9bc6a5525fcf9618cb653dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a999bdc8f48688b5d80fad512a79c7eb5"><td class="memItemLeft" align="right" valign="top"><a id="a999bdc8f48688b5d80fad512a79c7eb5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>objective_smooth_evaluated_</b></td></tr>
+<tr class="separator:a999bdc8f48688b5d80fad512a79c7eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4f1c3016dc0d67c1d16363a0e34d189"><td class="memItemLeft" align="right" valign="top"><a id="aa4f1c3016dc0d67c1d16363a0e34d189"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>objective_nonsmooth_evaluated_</b></td></tr>
+<tr class="separator:aa4f1c3016dc0d67c1d16363a0e34d189"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac083925062c375289ba87bfd0ef44793"><td class="memItemLeft" align="right" valign="top"><a id="ac083925062c375289ba87bfd0ef44793"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_smooth_evaluated_</b></td></tr>
+<tr class="separator:ac083925062c375289ba87bfd0ef44793"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66d527f0c065156f7c930dd12fbb0ca0"><td class="memItemLeft" align="right" valign="top"><a id="a66d527f0c065156f7c930dd12fbb0ca0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_nonsmooth_evaluated_</b></td></tr>
+<tr class="separator:a66d527f0c065156f7c930dd12fbb0ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada62d869cea2bcd7b38f918ce938ba93"><td class="memItemLeft" align="right" valign="top"><a id="ada62d869cea2bcd7b38f918ce938ba93"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>objective_smooth_</b></td></tr>
+<tr class="separator:ada62d869cea2bcd7b38f918ce938ba93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d3a6afd7b2e4b9cfb144eb4f8bb7f70"><td class="memItemLeft" align="right" valign="top"><a id="a6d3a6afd7b2e4b9cfb144eb4f8bb7f70"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>objective_nonsmooth_</b></td></tr>
+<tr class="separator:a6d3a6afd7b2e4b9cfb144eb4f8bb7f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b0a0e510d85496d3b5a28fc0e82d7f2"><td class="memItemLeft" align="right" valign="top"><a id="a7b0a0e510d85496d3b5a28fc0e82d7f2"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>scale_</b></td></tr>
 <tr class="separator:a7b0a0e510d85496d3b5a28fc0e82d7f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a6ffa1894c451d26e10d504fe84e50e"><td class="memItemLeft" align="right" valign="top"><a id="a0a6ffa1894c451d26e10d504fe84e50e"></a>
-std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>problem_</b></td></tr>
-<tr class="separator:a0a6ffa1894c451d26e10d504fe84e50e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ee897ce0000293d92477af904834f83"><td class="memItemLeft" align="right" valign="top"><a id="a5ee897ce0000293d92477af904834f83"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>number_of_variables_</b></td></tr>
+<tr class="separator:a5ee897ce0000293d92477af904834f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c6827b58aab8531491472a8eb61ded5"><td class="memItemLeft" align="right" valign="top"><a id="a0c6827b58aab8531491472a8eb61ded5"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>number_of_groups_</b></td></tr>
+<tr class="separator:a0c6827b58aab8531491472a8eb61ded5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad60f714856ce9be945ffd22e5a001942"><td class="memItemLeft" align="right" valign="top"><a id="ad60f714856ce9be945ffd22e5a001942"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html">FunctionSmooth</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>function_smooth_</b></td></tr>
+<tr class="separator:ad60f714856ce9be945ffd22e5a001942"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b614f88839f6c5c1b5fe1231ca0439e"><td class="memItemLeft" align="right" valign="top"><a id="a0b614f88839f6c5c1b5fe1231ca0439e"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html">FunctionNonsmooth</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>function_nonsmooth_</b></td></tr>
+<tr class="separator:a0b614f88839f6c5c1b5fe1231ca0439e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a470e25481db37c32496fb60237d2c9f4"><td class="memItemLeft" align="right" valign="top"><a id="a470e25481db37c32496fb60237d2c9f4"></a>
 std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>vector_</b></td></tr>
 <tr class="separator:a470e25481db37c32496fb60237d2c9f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af63303a7cf482699b19157aee6aa60dd"><td class="memItemLeft" align="right" valign="top"><a id="af63303a7cf482699b19157aee6aa60dd"></a>
-std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_</b></td></tr>
-<tr class="separator:af63303a7cf482699b19157aee6aa60dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adff2b86179083cfe222da8bfabb66b56"><td class="memItemLeft" align="right" valign="top"><a id="adff2b86179083cfe222da8bfabb66b56"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_smooth_</b></td></tr>
+<tr class="separator:adff2b86179083cfe222da8bfabb66b56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eb7610890a04e967c276563b592c484"><td class="memItemLeft" align="right" valign="top"><a id="a7eb7610890a04e967c276563b592c484"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_nonsmooth_</b></td></tr>
+<tr class="separator:a7eb7610890a04e967c276563b592c484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabfa61f19f398fc43b4d10981bfe2032"><td class="memItemLeft" align="right" valign="top"><a id="aabfa61f19f398fc43b4d10981bfe2032"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hv_smooth_</b></td></tr>
+<tr class="separator:aabfa61f19f398fc43b4d10981bfe2032"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c8a66a6dadec99c4598caf9caae234a"><td class="memItemLeft" align="right" valign="top"><a id="a3c8a66a6dadec99c4598caf9caae234a"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hv_nonsmooth_</b></td></tr>
+<tr class="separator:a3c8a66a6dadec99c4598caf9caae234a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16fab0b817b0bb1432b40ba2b9dce660"><td class="memItemLeft" align="right" valign="top"><a id="a16fab0b817b0bb1432b40ba2b9dce660"></a>
+std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>full_indicies_vector_</b></td></tr>
+<tr class="separator:a16fab0b817b0bb1432b40ba2b9dce660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4690280653d013bbcfd41efddf75038"><td class="memItemLeft" align="right" valign="top"><a id="ab4690280653d013bbcfd41efddf75038"></a>
+std::shared_ptr&lt; std::vector&lt; std::vector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>groups_</b></td></tr>
+<tr class="separator:ab4690280653d013bbcfd41efddf75038"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_fa_r_s_a_1_1_point.html">Point</a> class </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ab253726c1f38df20ff6aebeef3d46d4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab253726c1f38df20ff6aebeef3d46d4b">&#9670;&nbsp;</a></span>Point() <span class="overload">[1/2]</span></h2>
+<a id="addc2f2be827f8674f6efd8ce397dace6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addc2f2be827f8674f6efd8ce397dace6">&#9670;&nbsp;</a></span>Point() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -161,8 +216,14 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
         <tr>
           <td class="memname">FaRSA::Point::Point </td>
           <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> &gt;&#160;</td>
-          <td class="paramname"><em>problem</em>, </td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html">FunctionSmooth</a> &gt;&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html">FunctionNonsmooth</a> &gt;&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -185,7 +246,8 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
 </div><div class="memdoc">
 <p>Construct <a class="el" href="class_fa_r_s_a_1_1_point.html">Point</a> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">problem</td><td>is pointer to <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> object </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>is pointer to FaRSAFunctionSmooth object </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">r</td><td>is pointer to FaRSAFunctionNonsmooth object </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">vector</td><td>is pointer to <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> object </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">scale</td><td>is scaling factor for function evaluations </td></tr>
   </table>
@@ -273,14 +335,14 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
 
 </div>
 </div>
-<a id="a0e1317ac80cc63069e5b5517ef72ff7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e1317ac80cc63069e5b5517ef72ff7e">&#9670;&nbsp;</a></span>evaluateGradient()</h2>
+<a id="ac9997fc767d6a288c9fcd347848b324f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9997fc767d6a288c9fcd347848b324f">&#9670;&nbsp;</a></span>evaluateGradientNonsmooth()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool FaRSA::Point::evaluateGradient </td>
+          <td class="memname">bool FaRSA::Point::evaluateGradientNonsmooth </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;&#160;</td>
           <td class="paramname"><em>quantities</em></td><td>)</td>
@@ -298,14 +360,39 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
 
 </div>
 </div>
-<a id="a90b834da47e06fd654ce89136880b9be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90b834da47e06fd654ce89136880b9be">&#9670;&nbsp;</a></span>evaluateObjective()</h2>
+<a id="a52b072f379ee67af13e4cb1e6f3a7be3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52b072f379ee67af13e4cb1e6f3a7be3">&#9670;&nbsp;</a></span>evaluateGradientSmooth()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool FaRSA::Point::evaluateObjective </td>
+          <td class="memname">bool FaRSA::Point::evaluateGradientSmooth </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;&#160;</td>
+          <td class="paramname"><em>quantities</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate gradient </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">quantities</td><td>is reference to IterationQuanitites object from FaRSA </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean indicating success </dd></dl>
+
+</div>
+</div>
+<a id="a56eeb38c7ac8cc54b3c74a3d8d6d70c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56eeb38c7ac8cc54b3c74a3d8d6d70c4">&#9670;&nbsp;</a></span>evaluateObjectiveNonsmooth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FaRSA::Point::evaluateObjectiveNonsmooth </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;&#160;</td>
           <td class="paramname"><em>quantities</em></td><td>)</td>
@@ -323,8 +410,33 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
 
 </div>
 </div>
-<a id="a2c8be0f2201c1cc7c1c1f40481441ca6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c8be0f2201c1cc7c1c1f40481441ca6">&#9670;&nbsp;</a></span>gradient()</h2>
+<a id="aec13bf577ebdb29acb721755a65ea612"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec13bf577ebdb29acb721755a65ea612">&#9670;&nbsp;</a></span>evaluateObjectiveSmooth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FaRSA::Point::evaluateObjectiveSmooth </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;&#160;</td>
+          <td class="paramname"><em>quantities</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate objective </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">quantities</td><td>is reference to IterationQuanitites object from FaRSA </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean indicating success </dd></dl>
+
+</div>
+</div>
+<a id="a364c0965f90a54cdd971ca87e365d614"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a364c0965f90a54cdd971ca87e365d614">&#9670;&nbsp;</a></span>funcion_smooth()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -333,7 +445,33 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a>&gt; FaRSA::Point::gradient </td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_fa_r_s_a_1_1_function_smooth.html">FunctionSmooth</a>&gt; FaRSA::Point::funcion_smooth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get pointer to <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> </p><dl class="section return"><dt>Returns</dt><dd>is pointer to <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> corresponding to point </dd></dl>
+
+</div>
+</div>
+<a id="a89ab73be5bab51aeaa97c09773fc3368"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89ab73be5bab51aeaa97c09773fc3368">&#9670;&nbsp;</a></span>gradient_smooth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a>&gt; FaRSA::Point::gradient_smooth </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -380,9 +518,9 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Make new <a class="el" href="class_fa_r_s_a_1_1_point.html">Point</a> by adding "scalar1" times this <a class="el" href="class_fa_r_s_a_1_1_point.html">Point</a>'s <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> to "scalar2" times other_vector </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Make new <a class="el" href="class_fa_r_s_a_1_1_point.html">Point</a> by adding "scalar1" times this <a class="el" href="class_fa_r_s_a_1_1_point.html">Point</a>'s <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> to "scalar2" times other_vector</p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">scalar1</td><td>is scalar value for linear combination </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">scalar1</td><td>is scalar value for linear combination</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">scalar2</td><td>is scalar value for linear combination </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">other_vector</td><td>is reference to other <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> </td></tr>
   </table>
@@ -392,8 +530,8 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
 
 </div>
 </div>
-<a id="a8574304c8f316c3eb7fbe3841501accf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8574304c8f316c3eb7fbe3841501accf">&#9670;&nbsp;</a></span>objective()</h2>
+<a id="ae71914c1cb46bad10f62d5109b97d133"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae71914c1cb46bad10f62d5109b97d133">&#9670;&nbsp;</a></span>objectiveSmooth()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -402,7 +540,7 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double FaRSA::Point::objective </td>
+          <td class="memname">double FaRSA::Point::objectiveSmooth </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -418,8 +556,8 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
 
 </div>
 </div>
-<a id="a599276111b0e8bbe692b780ccf1eebaf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a599276111b0e8bbe692b780ccf1eebaf">&#9670;&nbsp;</a></span>objectiveUnscaled()</h2>
+<a id="a4ac1887d872a3bf97cbc4de3358f1e98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ac1887d872a3bf97cbc4de3358f1e98">&#9670;&nbsp;</a></span>objectiveSmoothUnscaled()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -428,7 +566,7 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double FaRSA::Point::objectiveUnscaled </td>
+          <td class="memname">double FaRSA::Point::objectiveSmoothUnscaled </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -506,32 +644,6 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
 
 </div>
 </div>
-<a id="a8d19854e23b5b75be0116ae8fcfded4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d19854e23b5b75be0116ae8fcfded4f">&#9670;&nbsp;</a></span>problem()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a>&gt; FaRSA::Point::problem </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get pointer to <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> </p><dl class="section return"><dt>Returns</dt><dd>is pointer to <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> corresponding to point </dd></dl>
-
-</div>
-</div>
 <a id="aa82fd7931659ff6dc709d81ae8b4009a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa82fd7931659ff6dc709d81ae8b4009a">&#9670;&nbsp;</a></span>scale()</h2>
 
@@ -558,8 +670,8 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
 
 </div>
 </div>
-<a id="a149527f382936475d6e3d233b51f518a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a149527f382936475d6e3d233b51f518a">&#9670;&nbsp;</a></span>scaleGradient()</h2>
+<a id="a2ff2a88a9d06e6d0b457c57b68653003"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ff2a88a9d06e6d0b457c57b68653003">&#9670;&nbsp;</a></span>scaleGradientSmooth()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -568,7 +680,7 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void FaRSA::Point::scaleGradient </td>
+          <td class="memname">void FaRSA::Point::scaleGradientSmooth </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -584,8 +696,8 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
 
 </div>
 </div>
-<a id="a420fefcb777e1cd2bf4fef5e6743c2ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a420fefcb777e1cd2bf4fef5e6743c2ad">&#9670;&nbsp;</a></span>scaleObjective()</h2>
+<a id="a3587c1ecb805e1f114d903a2f0fbfca0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3587c1ecb805e1f114d903a2f0fbfca0">&#9670;&nbsp;</a></span>scaleObjectiveSmooth()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -594,7 +706,7 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void FaRSA::Point::scaleObjective </td>
+          <td class="memname">void FaRSA::Point::scaleObjectiveSmooth </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>

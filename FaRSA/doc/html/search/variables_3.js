@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['groups_5f_413',['groups_',['../class_fa_r_s_a_1_1_problem.html#a9af64bff06f15f233e85fab77ce07cf2',1,'FaRSA::Problem::groups_()'],['../class_group_l1.html#a6a88008b559faa803c4fc1f115ad2c02',1,'GroupL1::groups_()']]]
+  ['groups_5f_355',['groups_',['../class_fa_r_s_a_1_1_function_nonsmooth.html#ac8fe56a3f3e11c16ea3c3963683ab59e',1,'FaRSA::FunctionNonsmooth::groups_()'],['../class_fa_r_s_a_1_1_problem.html#a8996d69ef51f66135bc0782432908249',1,'FaRSA::Problem::groups_()']]]
 ];
