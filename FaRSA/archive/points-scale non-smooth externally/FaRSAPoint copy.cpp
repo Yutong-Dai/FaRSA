@@ -7,6 +7,7 @@
 #include "FaRSAPoint.hpp"
 
 #include <cmath>
+
 namespace FaRSA
 {
 // Constructor, copy elements from input vector
@@ -83,15 +84,6 @@ void Point::determineScale(Quantities& quantities)
     {
         scale_ = quantities.scalingThreshold() / gradient_smooth_->normInf();
     }
-    quantities.setScaleApplied(scale_);
-    // re-scale the related values evaluated point x, where gradient_smooth is
-    // evaluated at, since scale_ is the actual one being used instead of 1.0
-    if (fabs(1.0 - scale_) > 1e-16)
-    {
-        scaleObjectiveSmooth();
-        scaleGradientSmooth();
-        function_nonsmooth_->scalePenalty(scale_);
-    }
 
 }  // end determineScale
 
@@ -158,13 +150,11 @@ bool Point::evaluateObjectiveNonsmooth(Quantities& quantities)
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
 
-        // Scale is already done when call determin the scale
-        // this is becuase of the proximal gradient update
-        // is not a linear transformation, one has to scale
-        // penalty first
+        // Scale
+        objective_nonsmooth_ = scale_ * objective_nonsmooth_;
 
         // Check for nan
-        if (isnan(objective_nonsmooth_))
+        if (isnan(objective_smooth_))
         {
             objective_nonsmooth_evaluated_ = false;
         }
@@ -271,8 +261,8 @@ bool Point::evaluateGradientNonsmooth(Quantities& quantities)
             "Function Nonsmooth Objective value should have been "
             "evaluated before evaluating the gradient, but wasn't.");
         // Declare gradient vector
-        std::shared_ptr<Vector> gradient(
-            new Vector(quantities.indiciesWorking()->size()));
+        std::shared_ptr<Vector> gradient(new Vector());
+
         // Set gradient vector
         gradient_nonsmooth_ = gradient;
 
@@ -294,13 +284,10 @@ bool Point::evaluateGradientNonsmooth(Quantities& quantities)
         gradient_nonsmooth_->copyArray(g.values());
 
         // Scale
-        // Scale is already done when call determine the scale
-        // this is becuase of the proximal gradient update
-        // is not a linear transformation, one has to scale
-        // penalty first
-        // gradient_nonsmooth_->scale(scale_);
+        gradient_nonsmooth_->scale(scale_);
 
     }  // end if
+
     // Return
     return gradient_nonsmooth_evaluated_;
 
@@ -315,6 +302,12 @@ bool Point::computeProximalGradientUpdate(Quantities& quantities)
                          "Function Smooth Gradient should have been "
                          "evaluated before computing the proximal gradient "
                          "update, but wasn't.");
+
+        ASSERT_EXCEPTION(
+            objective_smooth_evaluated_,
+            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+            "Function Smooth Objective value should have been "
+            "evaluated before evaluating the objective, but wasn't.");
         // Declare gradient vector
         std::shared_ptr<Vector> proxgrad(new Vector(vector_->length()));
 
@@ -338,131 +331,33 @@ bool Point::computeProximalGradientUpdate(Quantities& quantities)
         // Evaluate gradient value
         proximal_gradient_update_->copyArray(p.values());
 
-        // // Increment gradient evaluation counter
-        // quantities.incrementGradientCounter();
+        // Scale
+        gradient_smooth_->scale(scale_);
 
-        // // Check for gradient evaluation limit
-        // if (quantities.gradientCounter() >=
-        //     quantities.gradientEvaluationLimit())
+        // Check for nan this can be skipped as the implementation for
+        // function_smooth_->evaluateGradient will check NA.
+        // for (int i = 0; i < gradient_smooth_->length(); i++)
         // {
-        //     THROW_EXCEPTION(FARSA_GRADIENT_EVALUATION_LIMIT_EXCEPTION,
-        //                     "Gradient evaluation limit reached.");
+        //     if (isnan(gradient_smooth_->values()[i]))
+        //     {
+        //         gradient_smooth_evaluated_ = false;
+        //     }
         // }
 
-    }  // end if
-
-    // Return
-    return proximal_gradient_update_evaluated_;
-}
-
-bool Point::evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v,
-                                               Quantities& quantities)
-{
-    if ((!hessian_vector_product_smooth_evaluated_))
-    {
-        ASSERT_EXCEPTION(gradient_smooth_evaluated_,
-                         FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
-                         "Function Smooth Gradient value should have been "
-                         "evaluated before evaluating the Hessian Vector "
-                         "product, but wasn't.");
-        // Declare gradient vector
-        std::shared_ptr<Vector> hv(
-            new Vector(quantities.indiciesWorking()->size()));
-
-        // Set gradient vector
-        hessian_vector_product_smooth_ = hv;
-
-        // Declare temporary array
-        Vector temp(v->length());
-
-        // Set evaluation start time as current time
-        clock_t start_time = clock();
-
-        // Evaluate gradient value at the full space
-        hessian_vector_product_smooth_evaluated_ =
-            function_smooth_->evaluateHessianVectorProduct(
-                *vector_, *(quantities.indiciesWorking()), *v, temp);
-
-        // Increment evaluation time
-        quantities.incrementEvaluationTime(clock() - start_time);
-
-        // Evaluate gradient value
-        hessian_vector_product_smooth_->copyArray(temp.values());
-
-        // Scale
-        hessian_vector_product_smooth_->scale(scale_);
-
-        // Increment Hessian Vector Product counter
-        quantities.incrementHessianVectorCounter();
+        // Increment gradient evaluation counter
+        quantities.incrementGradientCounter();
 
         // Check for gradient evaluation limit
-        if (quantities.hessianVectorCounter() >=
-            quantities.hessianVectorProductEvaluationLimit())
+        if (quantities.gradientCounter() >=
+            quantities.gradientEvaluationLimit())
         {
-            THROW_EXCEPTION(
-                FARSA_HESSIAN_VECTOR_PRODUCT_EVALUATION_LIMIT_EXCEPTION,
-                "Hessian Vector Product evaluation limit reached.");
+            THROW_EXCEPTION(FARSA_GRADIENT_EVALUATION_LIMIT_EXCEPTION,
+                            "Gradient evaluation limit reached.");
         }
 
     }  // end if
 
     // Return
-    return hessian_vector_product_smooth_evaluated_;
+    return gradient_smooth_evaluated_;
 }
-bool Point::evaluateHessianVectorProductNonsmooth(std::shared_ptr<Vector> v,
-                                                  Quantities& quantities)
-{
-    if ((!hessian_vector_product_nonsmooth_evaluated_))
-    {
-        ASSERT_EXCEPTION(gradient_nonsmooth_evaluated_,
-                         FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
-                         "Function Smooth Gradient value should have been "
-                         "evaluated before evaluating the Hessian Vector "
-                         "product, but wasn't.");
-        // Declare gradient vector
-        std::shared_ptr<Vector> hv(
-            new Vector(quantities.indiciesWorking()->size()));
-
-        // Set gradient vector
-        hessian_vector_product_nonsmooth_ = hv;
-
-        // Declare temporary array
-        Vector temp(v->length());
-
-        // Set evaluation start time as current time
-        clock_t start_time = clock();
-
-        // Evaluate gradient value at the full space
-        hessian_vector_product_nonsmooth_evaluated_ =
-            function_nonsmooth_->evaluateHessianVectorProduct(
-                *vector_, *(quantities.indiciesWorking()), *v, temp);
-
-        // Increment evaluation time
-        quantities.incrementEvaluationTime(clock() - start_time);
-
-        // Evaluate gradient value
-        hessian_vector_product_nonsmooth_->copyArray(temp.values());
-
-        // Scale
-        // Scale is already done when call determine the scale
-        // this is becuase of the proximal gradient update
-        // is not a linear transformation, one has to scale
-        // penalty first
-        // hessian_vector_product_nonsmooth_->scale(scale_);
-
-        // // Check for gradient evaluation limit
-        // if (quantities.hessianVectorCounter() >=
-        //     quantities.hessianVectorProductEvaluationLimit())
-        // {
-        //     THROW_EXCEPTION(
-        //         FARSA_HESSIAN_VECTOR_PRODUCT_EVALUATION_LIMIT_EXCEPTION,
-        //         "Hessian Vector Product evaluation limit reached.");
-        // }
-
-    }  // end if
-
-    // Return
-    return hessian_vector_product_nonsmooth_evaluated_;
-}
-
 }  // namespace FaRSA

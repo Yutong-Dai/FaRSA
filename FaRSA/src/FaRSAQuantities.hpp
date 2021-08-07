@@ -129,6 +129,11 @@ class Quantities
      * \return gradient evaluations performed so far
      */
     inline int const gradientCounter() const { return gradient_counter_; };
+
+    inline int const hessianVectorCounter() const
+    {
+        return hessian_vector_counter_;
+    };
     /**
      * Gradient evaluation limit
      * \return gradient evaluation limit
@@ -136,6 +141,11 @@ class Quantities
     inline int const gradientEvaluationLimit() const
     {
         return gradient_evaluation_limit_;
+    };
+
+    inline int const hessianVectorProductEvaluationLimit() const
+    {
+        return hessian_vector_product_evaluation_limit_;
     };
     /**
      * Iteration counter
@@ -236,6 +246,7 @@ class Quantities
 
     inline int const numberOfGroups() const { return number_of_groups_; };
 
+    inline float const scaleApplied() const { return scale_applied_; };
     //@}
 
     /** @name Set methods */
@@ -290,6 +301,18 @@ class Quantities
     {
         number_of_groups_ = number_of_groups;
     };
+
+    inline void setScalingThreshold(double scale)
+    {
+        scaling_threshold_ = scale;
+    };
+    inline void setScaleApplied(double scale) { scale_applied_ = scale; };
+
+    inline void setIndiciesWorking(
+        std::shared_ptr<std::vector<int>> indicies_working)
+    {
+        indicies_working_ = indicies_working;
+    };
     //@}
 
     /** @name Increment methods */
@@ -311,6 +334,7 @@ class Quantities
      * Increment gradient evaluation counter
      */
     inline void incrementGradientCounter() { gradient_counter_++; };
+    inline void incrementHessianVectorCounter() { hessian_vector_counter_++; };
     /**
      * Increment iteration counter
      */
@@ -389,6 +413,7 @@ class Quantities
     double                            stepsize_;
     int                               function_counter_;
     int                               gradient_counter_;
+    int                               hessian_vector_counter_;
     int                               iteration_counter_;
     int                               number_of_variables_;
     int                               number_of_groups_;
@@ -404,12 +429,14 @@ class Quantities
     /** @name Private members (set by options) */
     //@{
     double scaling_threshold_;
+    double scale_applied_;
     // for termination
     double cpu_time_limit_;
     double iterate_norm_tolerance_;
     double stationarity_tolerance_;
     int    function_evaluation_limit_;
     int    gradient_evaluation_limit_;
+    int    hessian_vector_product_evaluation_limit_;
     int    iteration_limit_;
     // for backtrack-linesearch
     double linesearch_armijo_eta_;

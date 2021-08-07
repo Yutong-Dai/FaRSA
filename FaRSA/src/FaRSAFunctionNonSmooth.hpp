@@ -49,6 +49,10 @@ class FunctionNonsmooth : public Function
     /** @name Evaluate methods */
     //@{
     //@}
+    /** @name scale methods */
+    //@{
+    virtual bool scalePenalty(double scale) = 0;
+    //@}
 
     /** @name Compute methods */
     //@{
@@ -77,6 +81,7 @@ class FunctionNonsmooth : public Function
      * group_
      */
     std::shared_ptr<std::vector<std::vector<int>>> groups_;
+    double                                         penalty_;
     //@}
 
    private:

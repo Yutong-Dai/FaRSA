@@ -18,6 +18,7 @@ Quantities::Quantities()
       stepsize_(0.0),
       function_counter_(0),
       gradient_counter_(0),
+      hessian_vector_counter_(0),
       iteration_counter_(0),
       number_of_variables_(0),
       scaling_threshold_(1.0),
@@ -124,6 +125,12 @@ void Quantities::addOptions(Options* options, const Reporter* reporter)
         "iterations.\n"
         "Default     : 1e+04.");
     options->addIntegerOption(
+        reporter, "hessian_vector_product_evaluation_limit", 1e+08, 0,
+        FARSA_INT_INFINITY,
+        "Limit on the number of hessian vector product evaluation that will be "
+        "performed.\n"
+        "Default     : 1e+08.");
+    options->addIntegerOption(
         reporter, "linesearch_max_backtrack", 100, 0, FARSA_INT_INFINITY,
         "Limit on the number of backtrack-linesearch will be performed.\n"
         "Default     : 100.");
@@ -163,6 +170,8 @@ void Quantities::getOptions(const Options* options, const Reporter* reporter)
     options->valueAsInteger(reporter, "iteration_limit", iteration_limit_);
     options->valueAsInteger(reporter, "linesearch_max_backtrack",
                             linesearch_max_backtrack_);
+    options->valueAsInteger(reporter, "hessian_vector_product_evaluation_limit",
+                            hessian_vector_product_evaluation_limit_);
 }  // end getOptions
 
 // Initialization

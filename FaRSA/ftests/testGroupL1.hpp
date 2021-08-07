@@ -189,7 +189,7 @@ int testGroupL1Implementation(int option)
             reporter.printf(R_SOLVER, R_BASIC,
                             "Expected Hv[%d]:%8.5f | Actual Hv[%d]:%8.5f | "
                             "Difference: %20.16f\n",
-                            ans.values()[i], i, proxgrad.values()[i], i,
+                            ans.values()[i], i, Hv.values()[i], i,
                             fabs(Hv.values()[i] - ans.values()[i]));
             result = 1;
         }

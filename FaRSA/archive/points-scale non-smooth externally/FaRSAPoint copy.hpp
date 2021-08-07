@@ -110,10 +110,8 @@ class Point
      * FaRSA \return boolean indicating success
      */
     bool evaluateGradientNonsmooth(Quantities& quantities);
-    bool evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v,
-                                            Quantities&             quantities);
-    bool evaluateHessianVectorProductNonsmooth(std::shared_ptr<Vector> v,
-                                               Quantities& quantities);
+    // bool evaluateHessianVectorProductSmooth(Quantities& quantities);
+    // bool evaluateHessianVectorProductNonsmooth(Quantities& quantities);
 
     bool computeProximalGradientUpdate(Quantities& quantities);
 

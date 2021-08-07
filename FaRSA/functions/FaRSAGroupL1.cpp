@@ -59,6 +59,15 @@ GroupL1::GroupL1(std::shared_ptr<std::vector<std::vector<int>>> groups,
     per_group_norm_ = std::vector<double>(groups_->size(), 0.0);
 }
 
+bool GroupL1::scalePenalty(double scale)
+{
+    for (int i = 0; i < weights_->size(); i++)
+    {
+        (*weights_)[i] *= scale;
+    }
+    return true;
+}
+
 // evaluateObjective
 bool GroupL1::evaluateObjective(const Vector& x, double& f)
 {

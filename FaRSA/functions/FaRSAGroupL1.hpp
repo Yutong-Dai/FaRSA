@@ -49,6 +49,11 @@ class GroupL1 : public FunctionNonsmooth
 
     /** @name Evaluate methods */
     //@{
+    bool scalePenalty(double scale);
+    //@}
+
+    /** @name Evaluate methods */
+    //@{
     /**
      * Evaluates objective
      * \param[in] x is a given point/iterate, a constant double array
@@ -108,7 +113,6 @@ class GroupL1 : public FunctionNonsmooth
      * Private members
      */
     //@{
-    double                               penalty_;
     std::shared_ptr<std::vector<double>> weights_;
     /** a vector of vector specifing the groups of variables
      *  For example, consider the following group structures:
