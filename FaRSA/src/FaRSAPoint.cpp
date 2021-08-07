@@ -26,8 +26,6 @@ Point::Point(const std::shared_ptr<FunctionSmooth>    function_smooth,
 {
     number_of_variables_ = function_smooth_->numberOfVariables();
     number_of_groups_ = function_nonsmooth_->numberOfGroups();
-    full_indicies_vector_.resize(number_of_variables_);
-    groups_ = function_nonsmooth_->groups();
     // Declare new vector
     std::shared_ptr<Vector> new_vector(new Vector(vector->length()));
 
@@ -41,9 +39,8 @@ Point::Point(const std::shared_ptr<FunctionSmooth>    function_smooth,
     gradient_smooth_.reset();
     gradient_nonsmooth_.reset();
     proximal_gradient_update_.reset();
-    hv_smooth_.reset();
-    hv_nonsmooth_.reset();
-
+    hessian_vector_product_smooth_.reset();
+    hessian_vector_product_nonsmooth_.reset();
 }  // end constructor
 
 // Print
@@ -219,8 +216,9 @@ bool Point::evaluateGradientSmooth(Quantities& quantities)
         clock_t start_time = clock();
 
         // Evaluate gradient value at the full space
+        std::vector<int> full_indicies_vector(vector_->length());
         gradient_smooth_evaluated_ = function_smooth_->evaluateGradient(
-            *vector_, full_indicies_vector_, g);
+            *vector_, full_indicies_vector, g);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);

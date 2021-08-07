@@ -188,6 +188,7 @@ bool Quantities::initialize(
     evaluation_time_ = 0;
     function_counter_ = 0;
     gradient_counter_ = 0;
+    hessian_vector_counter_ = 0;
     iteration_counter_ = 0;
 
     // Declare success boolean
@@ -201,8 +202,10 @@ bool Quantities::initialize(
         success = false;
     }
 
-    // Set number of variables
+    // Set number of variables, groups and get group structures
     number_of_variables_ = function_smooth->numberOfVariables();
+    number_of_groups_ = function_nonsmooth->numberOfGroups();
+    groups_ = function_nonsmooth->groups();
 
     // Declare vector
     std::shared_ptr<Vector> v(new Vector(number_of_variables_));
@@ -221,6 +224,26 @@ bool Quantities::initialize(
     // Initialize stepsize
     stepsize_ = 0.0;
 
+    // Evaluate smooth function at current iterate to get the scale
+    bool evaluation_success = initial_iterate->evaluateObjectiveSmooth(*this);
+    // Check for success
+    if (!evaluation_success)
+    {
+        THROW_EXCEPTION(FARSA_FUNCTION_EVALUATION_FAILURE_EXCEPTION,
+                        "Smooth function objective evaluation at the initial "
+                        "point failed.");
+    }
+    evaluation_success = initial_iterate->evaluateGradientSmooth(*this);
+    if (!evaluation_success)
+    {
+        THROW_EXCEPTION(FARSA_GRADIENT_EVALUATION_FAILURE_EXCEPTION,
+                        "Smooth function gradient evaluation at the initial "
+                        "point failed.");
+    }
+    // note the determineScale method will scale the smooth function value and
+    // gradient properly at the initial point; it will also scale the penalty
+    // for the nonsmooth function and set the scale_applied_ with proper value
+    initial_iterate->determineScale(*this);
     // Return
     return success;
 

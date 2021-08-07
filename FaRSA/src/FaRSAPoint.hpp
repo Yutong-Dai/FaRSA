@@ -311,10 +311,6 @@ class Point
     std::shared_ptr<Vector>            proximal_gradient_update_;
     std::shared_ptr<Vector>            hessian_vector_product_smooth_;
     std::shared_ptr<Vector>            hessian_vector_product_nonsmooth_;
-    std::shared_ptr<Vector>            hv_smooth_;
-    std::shared_ptr<Vector>            hv_nonsmooth_;
-    std::vector<int>                   full_indicies_vector_;
-    std::shared_ptr<std::vector<std::vector<int>>> groups_;
     //@}
 
 };  // end Point

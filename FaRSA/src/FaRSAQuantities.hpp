@@ -407,29 +407,29 @@ class Quantities
     /** @name Private members */
     //@{
     // generic members
-    clock_t                           end_time_;
-    clock_t                           evaluation_time_;
-    clock_t                           start_time_;
-    double                            stepsize_;
-    int                               function_counter_;
-    int                               gradient_counter_;
-    int                               hessian_vector_counter_;
-    int                               iteration_counter_;
-    int                               number_of_variables_;
-    int                               number_of_groups_;
-    std::shared_ptr<Point>            current_iterate_;
-    std::shared_ptr<Point>            trial_iterate_;
-    std::shared_ptr<Vector>           direction_;
-    std::shared_ptr<std::vector<int>> groups_first_order_;
-    std::shared_ptr<std::vector<int>> groups_second_order_;
-    std::shared_ptr<std::vector<int>> groups_working_;
-    std::shared_ptr<std::vector<int>> indicies_working_;
-    //@}
+    clock_t                                        end_time_;
+    clock_t                                        evaluation_time_;
+    clock_t                                        start_time_;
+    double                                         stepsize_;
+    double                                         scale_applied_;
+    int                                            function_counter_;
+    int                                            gradient_counter_;
+    int                                            hessian_vector_counter_;
+    int                                            iteration_counter_;
+    int                                            number_of_variables_;
+    int                                            number_of_groups_;
+    std::shared_ptr<Point>                         current_iterate_;
+    std::shared_ptr<Point>                         trial_iterate_;
+    std::shared_ptr<Vector>                        direction_;
+    std::shared_ptr<std::vector<int>>              groups_first_order_;
+    std::shared_ptr<std::vector<int>>              groups_second_order_;
+    std::shared_ptr<std::vector<int>>              groups_working_;
+    std::shared_ptr<std::vector<int>>              indicies_working_;
+    std::shared_ptr<std::vector<std::vector<int>>> groups_;
 
     /** @name Private members (set by options) */
     //@{
     double scaling_threshold_;
-    double scale_applied_;
     // for termination
     double cpu_time_limit_;
     double iterate_norm_tolerance_;
