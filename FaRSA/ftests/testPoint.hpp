@@ -93,16 +93,21 @@ int testPointImplementation(int option)
     // tests begins here
     Vector ans;
 
+    reporter.printf(R_SOLVER, R_BASIC, "Test scale=1.0 computation...\n");
     // determin the scale based on the point p
-    bool fSmoothevalSuccess = p.evaluateObjectiveSmooth(quantities);
-    bool gSmoothevalSuccess = p.evaluateGradientSmooth(quantities);
+    bool fSmoothevalSuccess;
+    bool gSmoothevalSuccess;
+    bool fNonsmoothevalSuccess;
+    bool gNonsmoothevalSuccess;
+    fSmoothevalSuccess = p.evaluateObjectiveSmooth(quantities);
+    gSmoothevalSuccess = p.evaluateGradientSmooth(quantities);
     p.determineScale(quantities);
-    bool fNonsmoothevalSuccess = p.evaluateObjectiveNonsmooth(quantities);
-    bool gNonsmoothevalSuccess = p.evaluateGradientNonsmooth(quantities);
+    fNonsmoothevalSuccess = p.evaluateObjectiveNonsmooth(quantities);
+    gNonsmoothevalSuccess = p.evaluateGradientNonsmooth(quantities);
 
     reporter.printf(R_SOLVER, R_BASIC,
                     "Scale used based on the gradient of the smooth function "
-                    "at the initial point is: %2.3e\n",
+                    "at the initial point is: %9.8f\n",
                     p.scale());
 
     // check values
@@ -188,8 +193,8 @@ int testPointImplementation(int option)
     {
         v->valuesModifiable()[i] = i * 1.1;
     }
-    bool hvSmoothEvalSuccess =
-        p.evaluateHessianVectorProductSmooth(v, quantities);
+    bool hvSmoothEvalSuccess;
+    hvSmoothEvalSuccess = p.evaluateHessianVectorProductSmooth(v, quantities);
     ans.setFromFile((char*)"./data/fHv.txt");
     auto fHv = p.hessianVectorProductSmooth();
     if ((!hvSmoothEvalSuccess) || (fHv->length() != v->length()))
@@ -209,7 +214,8 @@ int testPointImplementation(int option)
         }
     }
 
-    bool hvNonsmoothEvalSuccess =
+    bool hvNonsmoothEvalSuccess;
+    hvNonsmoothEvalSuccess =
         p.evaluateHessianVectorProductNonsmooth(v, quantities);
     ans.setFromFile((char*)"./data/rHv.txt");
     auto rHv = p.hessianVectorProductNonsmooth();
@@ -231,7 +237,8 @@ int testPointImplementation(int option)
     }
 
     // test proximal gradient
-    bool proxComputeSuccess = p.computeProximalGradientUpdate(quantities);
+    bool proxComputeSuccess;
+    proxComputeSuccess = p.computeProximalGradientUpdate(quantities);
     ans.setFromFile((char*)"./data/trueProx.txt");
     auto prox = p.proximalGraidentUpdate();
     if ((!proxComputeSuccess) || (prox->length() != x->length()))
@@ -247,6 +254,152 @@ int testPointImplementation(int option)
                             "Difference: %20.16f\n",
                             ans.values()[i], i, prox->values()[i], i,
                             fabs(prox->values()[i] - ans.values()[i]));
+            result = 1;
+        }
+    }
+    reporter.printf(R_SOLVER, R_BASIC, "Test scaled computation...\n");
+    Point pnew(f, r, x, 1.0);
+    quantities.setScalingThreshold(0.1);
+    fSmoothevalSuccess = pnew.evaluateObjectiveSmooth(quantities);
+    gSmoothevalSuccess = pnew.evaluateGradientSmooth(quantities);
+    pnew.determineScale(quantities);
+    fNonsmoothevalSuccess = pnew.evaluateObjectiveNonsmooth(quantities);
+    gNonsmoothevalSuccess = pnew.evaluateGradientNonsmooth(quantities);
+    reporter.printf(R_SOLVER, R_BASIC,
+                    "Scale used based on the gradient of the smooth function "
+                    "at the initial point is: %9.8f\n",
+                    pnew.scale());
+
+    // check values
+    ans.setFromFile((char*)"./data/ffun_scaled.txt");
+    if (!fSmoothevalSuccess or
+        fabs(pnew.objectiveSmooth() - ans.values()[0]) > 1e-7)
+    {
+        result = 1;
+        reporter.printf(R_SOLVER, R_BASIC,
+                        "Test Smooth Objective: Expected fval:%8.5f | Actual "
+                        "fval:%8.5f | Difference: %8.5f\n",
+                        ans.values()[0], pnew.objectiveSmooth(),
+                        fabs(pnew.objectiveSmoothUnscaled() - ans.values()[0]));
+    }
+
+    ans.setFromFile((char*)"./data/rfun_scaled.txt");
+    if (!fNonsmoothevalSuccess or
+        fabs(pnew.objectiveNonsmooth() - ans.values()[0]) > 1e-7)
+    {
+        result = 1;
+        reporter.printf(
+            R_SOLVER, R_BASIC,
+            "Test Nonsmooth Objective: Expected fval:%8.5f | Actual "
+            "fval:%8.5f | Difference: %8.5f\n",
+            ans.values()[0], pnew.objectiveNonsmooth(),
+            fabs(pnew.objectiveNonsmooth() - ans.values()[0]));
+    }
+
+    // gradient smooth
+    ans.setFromFile((char*)"./data/fgrad_scaled.txt");
+    auto gnew = pnew.gradientSmooth();
+    if ((!gSmoothevalSuccess) || (gnew->length() != x->length()))
+    {
+        result = 1;
+    }
+
+    for (int i = 0; i < gnew->length(); i++)
+    {
+        if (fabs((*gnew).values()[i] - ans.values()[i]) > 1e-7)
+        {
+            reporter.printf(R_SOLVER, R_BASIC,
+                            "Test Smooth gradient: Expected g[%d]:%8.5f | "
+                            "Actual g[%d]:%8.5f | "
+                            "Difference: %20.16f\n",
+                            ans.values()[i], i, (*gnew).values()[i], i,
+                            fabs((*gnew).values()[i] - ans.values()[i]));
+            result = 1;
+        }
+    }
+    // gradient nonsmooth
+    ans.setFromFile((char*)"./data/rgrad_scaled.txt");
+    auto grnew = pnew.gradientNonsmooth();
+    if ((!gNonsmoothevalSuccess) ||
+        (grnew->length() != quantities.indiciesWorking()->size()))
+    {
+        result = 1;
+    }
+
+    for (int i = 0; i < grnew->length(); i++)
+    {
+        if (fabs((*grnew).values()[i] - ans.values()[i]) > 1e-7)
+        {
+            reporter.printf(R_SOLVER, R_BASIC,
+                            "Test Nonsmooth gradient: Expected g[%d]:%8.5f | "
+                            "Actual g[%d]:%8.5f | "
+                            "Difference: %20.16f\n",
+                            ans.values()[i], i, (*grnew).values()[i], i,
+                            fabs((*grnew).values()[i] - ans.values()[i]));
+            result = 1;
+        }
+    }
+
+    // test Hessian-Vector Product
+    hvSmoothEvalSuccess =
+        pnew.evaluateHessianVectorProductSmooth(v, quantities);
+    ans.setFromFile((char*)"./data/fHv_scaled.txt");
+    auto fHvnew = pnew.hessianVectorProductSmooth();
+    if ((!hvSmoothEvalSuccess) || (fHvnew->length() != v->length()))
+    {
+        result = 1;
+    }
+    for (int i = 0; i < fHvnew->length(); i++)
+    {
+        if (fabs(fHvnew->values()[i] - ans.values()[i]) > 1e-7)
+        {
+            reporter.printf(R_SOLVER, R_BASIC,
+                            "Expected Hv[%d]:%8.5f | Actual Hv[%d]:%8.5f | "
+                            "Difference: %20.16f\n",
+                            ans.values()[i], i, fHvnew->values()[i], i,
+                            fabs(fHvnew->values()[i] - ans.values()[i]));
+            result = 1;
+        }
+    }
+
+    hvNonsmoothEvalSuccess =
+        pnew.evaluateHessianVectorProductNonsmooth(v, quantities);
+    ans.setFromFile((char*)"./data/rHv_scaled.txt");
+    auto rHvnew = pnew.hessianVectorProductNonsmooth();
+    if ((!hvNonsmoothEvalSuccess) || (rHvnew->length() != v->length()))
+    {
+        result = 1;
+    }
+    for (int i = 0; i < rHvnew->length(); i++)
+    {
+        if (fabs(rHvnew->values()[i] - ans.values()[i]) > 1e-7)
+        {
+            reporter.printf(R_SOLVER, R_BASIC,
+                            "Expected Hv[%d]:%8.5f | Actual Hv[%d]:%8.5f | "
+                            "Difference: %20.16f\n",
+                            ans.values()[i], i, rHvnew->values()[i], i,
+                            fabs(rHvnew->values()[i] - ans.values()[i]));
+            result = 1;
+        }
+    }
+
+    // test proximal gradient
+    proxComputeSuccess = pnew.computeProximalGradientUpdate(quantities);
+    ans.setFromFile((char*)"./data/trueProx_scaled.txt");
+    auto proxnew = pnew.proximalGraidentUpdate();
+    if ((!proxComputeSuccess) || (proxnew->length() != x->length()))
+    {
+        result = 1;
+    }
+    for (int i = 0; i < proxnew->length(); i++)
+    {
+        if (fabs(proxnew->values()[i] - ans.values()[i]) > 1e-7)
+        {
+            reporter.printf(R_SOLVER, R_BASIC,
+                            "Expected prox[%d]:%8.5f | Actual prox[%d]:%8.5f | "
+                            "Difference: %20.16f\n",
+                            ans.values()[i], i, proxnew->values()[i], i,
+                            fabs(proxnew->values()[i] - ans.values()[i]));
             result = 1;
         }
     }
