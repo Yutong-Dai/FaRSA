@@ -31,7 +31,7 @@ class SpacePartitionFirstOrder : public SpacePartition
     /**
      * Constructor
      */
-    SpacePartitionFirstOrder(){};
+    SpacePartitionFirstOrder() { is_partitioned_ = false; };
     //@}
 
     /** @name Destructor */
@@ -65,8 +65,7 @@ class SpacePartitionFirstOrder : public SpacePartition
      * \param[in,out] quantities is pointer to Quantities object from FaRSA
      * \param[in] reporter is pointer to Reporter object from FaRSA
      */
-    void initialize(const Options* options, Quantities* quantities,
-                    const Reporter* reporter);
+    void initialize(const Options* options, Quantities* quantities, const Reporter* reporter);
     //@}
 
     /** @name Get methods */
@@ -75,7 +74,7 @@ class SpacePartitionFirstOrder : public SpacePartition
      * Get name of strategy
      * \return string with name of strategy
      */
-    std::string name() { return "First Order Partition(Full Space)"; };
+    std::string name() { return "FirstOrderPartition"; };
     //@}
 
     /** @name Space Partition method */
@@ -87,8 +86,8 @@ class SpacePartitionFirstOrder : public SpacePartition
      * \param[in] reporter is pointer to Reporter object from FaRSA
      * \param[in,out] strategies is pointer to Strategies object from FaRSA
      */
-    void partitionSpace(const Options* options, Quantities* quantities,
-                        const Reporter* reporter, Strategies* strategies);
+    void partitionSpace(const Options* options, Quantities* quantities, const Reporter* reporter,
+                        Strategies* strategies);
     //@}
 
    private:
@@ -105,7 +104,11 @@ class SpacePartitionFirstOrder : public SpacePartition
      */
     void operator=(const SpacePartitionFirstOrder&);
     //@}
-
+    /** @name Private members */
+    //@{
+    bool is_partitioned_; /* this space partition strategy needs only be done
+                             once; so create a boolean to track  */
+    //@}
 };  // end SpacePartition
 
 }  // namespace FaRSA

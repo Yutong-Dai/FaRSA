@@ -69,20 +69,23 @@ class Strategies
      * \param[in,out] quantities is pointer to Quantities object from FaRSA
      * \param[in] reporter is pointer to Reporter object from FaRSA
      */
-    void initialize(const Options* options, Quantities* quantities,
-                    const Reporter* reporter);
+    void initialize(const Options* options, Quantities* quantities, const Reporter* reporter);
     //@}
 
     /** @name Get methods */
     //@{
+    inline std::shared_ptr<SpacePartition> spacePartition() { return space_partition_; }
     /**
      * Get pointer to DirectionComputation
      * \return pointer to DirectionComputation object
      */
-    inline std::shared_ptr<DirectionComputation>
-    directionComputationFirstOrder()
+    inline std::shared_ptr<DirectionComputation> directionComputationFirstOrder()
     {
         return direction_computation_first_order_;
+    }
+    inline std::shared_ptr<DirectionComputation> directionComputationSecondOrder()
+    {
+        return direction_computation_second_order_;
     }
     /**
      * Get pointer to LineSearch
@@ -135,6 +138,7 @@ class Strategies
 
     /** @name * Private members */
     //@{
+    std::shared_ptr<SpacePartition>       space_partition_;
     std::shared_ptr<DirectionComputation> direction_computation_first_order_;
     std::shared_ptr<DirectionComputation> direction_computation_second_order_;
     std::shared_ptr<LineSearch>           line_search_;

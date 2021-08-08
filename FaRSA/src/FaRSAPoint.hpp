@@ -103,6 +103,7 @@ class Point
      * \param[in,out] quantities is reference to IterationQuanitites object from
      * FaRSA \return boolean indicating success
      */
+    bool evaluateObjectiveAll(Quantities& quantities);
     bool evaluateGradientSmooth(Quantities& quantities);
     /**
      * Evaluate gradient
@@ -197,6 +198,20 @@ class Point
             "FunctionNonsmooth should have been evaluated, but wasn't.");
         return objective_nonsmooth_;
     };
+
+    inline double objectiveAll() const
+    {
+        ASSERT_EXCEPTION(
+            objective_smooth_evaluated_,
+            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+            "FunctionSmooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(
+            objective_nonsmooth_evaluated_,
+            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+            "FunctionNonsmooth should have been evaluated, but wasn't.");
+        return objective_smooth_ + objective_nonsmooth_;
+    }
+
     /**
      * Get objective (unscaled)
      * \return objective (unscaled) as double

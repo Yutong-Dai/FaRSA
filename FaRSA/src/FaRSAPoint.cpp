@@ -191,6 +191,14 @@ bool Point::evaluateObjectiveNonsmooth(Quantities& quantities)
 
 }  // end evaluateObjective
 
+// evaluateObjectiveAll
+bool Point::evaluateObjectiveAll(Quantities& quantities)
+{
+    bool evaluation_success_smooth = evaluateObjectiveSmooth(quantities);
+    bool evaluation_success_nonsmooth = evaluateObjectiveNonsmooth(quantities);
+    return (evaluation_success_smooth && evaluation_success_nonsmooth);
+}  // end evaluateObjectiveAll
+
 // evaluateGradientSmooth
 bool Point::evaluateGradientSmooth(Quantities& quantities)
 {

@@ -29,8 +29,7 @@ int testGroupL1Implementation(int option)
     if (option == 1)
     {
         // Declare stream report
-        std::shared_ptr<StreamReport> s(
-            new StreamReport("s", R_SOLVER, R_BASIC));
+        std::shared_ptr<StreamReport> s(new StreamReport("s", R_SOLVER, R_BASIC));
 
         // Set stream report to standard output
         s->setStream(&std::cout);
@@ -41,9 +40,8 @@ int testGroupL1Implementation(int option)
     }  // end if
 
     // set-up groups
-    std::shared_ptr<std::vector<std::vector<int>>> groups(
-        new std::vector<std::vector<int>>);
-    std::vector<int> temp;
+    std::shared_ptr<std::vector<std::vector<int>>> groups(new std::vector<std::vector<int>>);
+    std::vector<int>                               temp;
     temp.push_back(0);
     temp.push_back(1);
     groups->push_back(temp);
@@ -84,8 +82,7 @@ int testGroupL1Implementation(int option)
     if (!fevalSuccess or fabs(f - ans.values()[0]) > 1e-7)
     {
         result = 1;
-        reporter.printf(R_SOLVER, R_BASIC,
-                        "Expected fval:%8.5f | Actual fval:%8.5f\n",
+        reporter.printf(R_SOLVER, R_BASIC, "Expected fval:%8.5f | Actual fval:%8.5f\n",
                         ans.values()[0], f);
     }
 
@@ -114,7 +111,7 @@ int testGroupL1Implementation(int option)
 
     // test proximal gradient evaluation
     Quantities quantities;
-    quantities.setStepsize(0.2);
+    quantities.setStepsizeProximalGradient(0.2);
     Vector gradfx(6);
     Vector proxgrad(6);
     for (int i = 0; i < gradfx.length(); i++)
@@ -123,8 +120,7 @@ int testGroupL1Implementation(int option)
     }
     // gradfx.print(&reporter, "gradfx:");
     bool proxevalSuccess;
-    proxevalSuccess =
-        r.computeProximalGradientUpdate(x, gradfx, quantities, proxgrad);
+    proxevalSuccess = r.computeProximalGradientUpdate(x, gradfx, quantities, proxgrad);
     ans.setFromFile((char*)"./data/rprox1.txt");
     // proxgrad.print(&reporter, "proximal-grad:");
     if (!proxevalSuccess)
@@ -148,8 +144,7 @@ int testGroupL1Implementation(int option)
         gradfx.valuesModifiable()[i] = x.values()[i] + 2.0;
     }
 
-    proxevalSuccess =
-        r.computeProximalGradientUpdate(x, gradfx, quantities, proxgrad);
+    proxevalSuccess = r.computeProximalGradientUpdate(x, gradfx, quantities, proxgrad);
     ans.setFromFile((char*)"./data/rprox2.txt");
     if (!proxevalSuccess)
     {

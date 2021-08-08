@@ -110,7 +110,8 @@ class Quantities
      * Get stepsize
      * \return current stepsize
      */
-    inline double const stepsize() const { return stepsize_; };
+    inline double const stepsizeLineSearch() const { return stepsize_ls_; };
+    inline double const stepsizeProximalGradient() const { return stepsize_prox_; };
     /**
      * Function evaluation counter
      * \return function evaluations performed so far
@@ -120,28 +121,19 @@ class Quantities
      * Function evaluation limit
      * \return function evaluation limit
      */
-    inline int const functionEvaluationLimit() const
-    {
-        return function_evaluation_limit_;
-    };
+    inline int const functionEvaluationLimit() const { return function_evaluation_limit_; };
     /**
      * Gradient evaluation counter
      * \return gradient evaluations performed so far
      */
     inline int const gradientCounter() const { return gradient_counter_; };
 
-    inline int const hessianVectorCounter() const
-    {
-        return hessian_vector_counter_;
-    };
+    inline int const hessianVectorCounter() const { return hessian_vector_counter_; };
     /**
      * Gradient evaluation limit
      * \return gradient evaluation limit
      */
-    inline int const gradientEvaluationLimit() const
-    {
-        return gradient_evaluation_limit_;
-    };
+    inline int const gradientEvaluationLimit() const { return gradient_evaluation_limit_; };
 
     inline int const hessianVectorProductEvaluationLimit() const
     {
@@ -177,10 +169,7 @@ class Quantities
      * @brief Get stationarity tolerance
      * \return double const stationarity_tolerance_
      */
-    inline double const stationarityTolerance() const
-    {
-        return stationarity_tolerance_;
-    };
+    inline double const stationarityTolerance() const { return stationarity_tolerance_; };
     /**
      * @brief Get stationarity iteration limit
      *
@@ -192,38 +181,14 @@ class Quantities
      *
      * \return double const iterate_norm_tolerance_
      */
-    inline double const iterateNormTolerance() const
-    {
-        return iterate_norm_tolerance_;
-    };
-
-    inline double const linesearchArmijoEta() const
-    {
-        return linesearch_armijo_eta_;
-    };
-
-    inline double const linesearchStepsizeDecreaseFactor() const
-    {
-        return linesearch_stepsize_decrease_factor_;
-    };
-
-    inline int const linesearchMaxBacktrack() const
-    {
-        return linesearch_max_backtrack_;
-    };
+    inline double const iterateNormTolerance() const { return iterate_norm_tolerance_; };
 
     inline double const kappa1Max() const { return kappa1_max_; };
     inline double const kappa1min() const { return kappa1_min_; };
     inline double const kappa2Max() const { return kappa2_max_; };
     inline double const kappa2min() const { return kappa2_min_; };
-    inline double const kappaIncreaseFactor() const
-    {
-        return kappa_increase_factor_;
-    };
-    inline double const kappaDecreaseFactor() const
-    {
-        return kappa_decrease_factor_;
-    };
+    inline double const kappaIncreaseFactor() const { return kappa_increase_factor_; };
+    inline double const kappaDecreaseFactor() const { return kappa_decrease_factor_; };
 
     inline std::shared_ptr<std::vector<int>> const groupsFirstOrder() const
     {
@@ -247,6 +212,7 @@ class Quantities
     inline int const numberOfGroups() const { return number_of_groups_; };
 
     inline float const scaleApplied() const { return scale_applied_; };
+    inline DC_Type     directionType() { return direction_type_; };
     //@}
 
     /** @name Set methods */
@@ -270,26 +236,33 @@ class Quantities
     /**
      * Set trial iterate pointer to current iterate pointer
      */
-    inline void setTrialIterateToCurrentIterate()
-    {
-        trial_iterate_ = current_iterate_;
-    };
+    inline void setTrialIterateToCurrentIterate() { trial_iterate_ = current_iterate_; };
     /**
      * Set stepsize
      * \param[in] stepsize is new value to represent stepsize
      */
-    inline void setStepsize(double stepsize) { stepsize_ = stepsize; };
+    inline void setStepsizeLineSearch(double stepsize) { stepsize_ls_ = stepsize; };
 
-    inline void setGroupsFirstOrder(
-        const std::shared_ptr<std::vector<int>> groups_first_order)
+    inline void setStepsizeProximalGradient(double stepsize) { stepsize_prox_ = stepsize; };
+
+    inline void setGroupsFirstOrder(const std::shared_ptr<std::vector<int>> groups_first_order)
     {
         groups_first_order_ = groups_first_order;
     };
 
-    inline void setGroupsSecondOrder(
-        const std::shared_ptr<std::vector<int>> groups_second_order)
+    inline void setGroupsSecondOrder(const std::shared_ptr<std::vector<int>> groups_second_order)
     {
         groups_second_order_ = groups_second_order;
+    };
+
+    inline void setGroupsWorking(std::shared_ptr<std::vector<int>> groups_working)
+    {
+        groups_working_ = groups_working;
+    };
+
+    inline void setIndiciesWorking(std::shared_ptr<std::vector<int>> indicies_working)
+    {
+        indicies_working_ = indicies_working;
     };
 
     inline void setNumberOfVariables(int number_of_variables)
@@ -297,22 +270,11 @@ class Quantities
         number_of_variables_ = number_of_variables;
     };
 
-    inline void setNumberOfGroups(int number_of_groups)
-    {
-        number_of_groups_ = number_of_groups;
-    };
+    inline void setNumberOfGroups(int number_of_groups) { number_of_groups_ = number_of_groups; };
 
-    inline void setScalingThreshold(double scale)
-    {
-        scaling_threshold_ = scale;
-    };
+    inline void setScalingThreshold(double scale) { scaling_threshold_ = scale; };
     inline void setScaleApplied(double scale) { scale_applied_ = scale; };
-
-    inline void setIndiciesWorking(
-        std::shared_ptr<std::vector<int>> indicies_working)
-    {
-        indicies_working_ = indicies_working;
-    };
+    inline void setDirectionType(DC_Type direction_type) { direction_type_ = direction_type; };
     //@}
 
     /** @name Increment methods */
@@ -410,7 +372,8 @@ class Quantities
     clock_t                                        end_time_;
     clock_t                                        evaluation_time_;
     clock_t                                        start_time_;
-    double                                         stepsize_;
+    double                                         stepsize_ls_;
+    double                                         stepsize_prox_;
     double                                         scale_applied_;
     int                                            function_counter_;
     int                                            gradient_counter_;
@@ -426,6 +389,7 @@ class Quantities
     std::shared_ptr<std::vector<int>>              groups_working_;
     std::shared_ptr<std::vector<int>>              indicies_working_;
     std::shared_ptr<std::vector<std::vector<int>>> groups_;
+    DC_Type                                        direction_type_;
 
     /** @name Private members (set by options) */
     //@{
@@ -438,10 +402,6 @@ class Quantities
     int    gradient_evaluation_limit_;
     int    hessian_vector_product_evaluation_limit_;
     int    iteration_limit_;
-    // for backtrack-linesearch
-    double linesearch_armijo_eta_;
-    double linesearch_stepsize_decrease_factor_;
-    int    linesearch_max_backtrack_;
     // for space partition using (FaRSAGroup)
     double kappa1_max_;
     double kappa1_min_;

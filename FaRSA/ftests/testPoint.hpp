@@ -17,6 +17,7 @@
 #include "FaRSAOptions.hpp"
 #include "FaRSAPoint.hpp"
 #include "FaRSAReporter.hpp"
+#include "FaRSAStrategies.hpp"
 using namespace FaRSA;
 
 // Implementation of test
@@ -32,8 +33,7 @@ int testPointImplementation(int option)
     if (option == 1)
     {
         // Declare stream report
-        std::shared_ptr<StreamReport> s(
-            new StreamReport("s", R_SOLVER, R_BASIC));
+        std::shared_ptr<StreamReport> s(new StreamReport("s", R_SOLVER, R_BASIC));
 
         // Set stream report to standard output
         s->setStream(&std::cout);
@@ -44,15 +44,14 @@ int testPointImplementation(int option)
     }  // end if
 
     // create smooth function
-    std::shared_ptr<LinearRegressionLoss> f(new LinearRegressionLoss(
-        (char*)"./data/lsMatrix.txt", M_COORDINATE_LIST,
-        (char*)"./data/lsLabel.txt", "stdNormal106"));
+    std::shared_ptr<LinearRegressionLoss> f(
+        new LinearRegressionLoss((char*)"./data/lsMatrix.txt", M_COORDINATE_LIST,
+                                 (char*)"./data/lsLabel.txt", "stdNormal106"));
 
     // create non-smooth funciton
     // set-up groups
-    std::shared_ptr<std::vector<std::vector<int>>> groups(
-        new std::vector<std::vector<int>>);
-    std::vector<int> temp;
+    std::shared_ptr<std::vector<std::vector<int>>> groups(new std::vector<std::vector<int>>);
+    std::vector<int>                               temp;
     temp.push_back(0);
     temp.push_back(1);
     groups->push_back(temp);
@@ -79,9 +78,10 @@ int testPointImplementation(int option)
     x->valuesModifiable()[5] = 3.3;
     Point      p(f, r, x, 1.0);
     Quantities quantities;
+    Strategies strategies;
     Options    options;
     quantities.addOptions(&options, &reporter);
-    quantities.setStepsize(0.2);
+    quantities.setStepsizeProximalGradient(0.2);
     quantities.getOptions(&options, &reporter);
     quantities.setScalingThreshold(200.0);
     std::shared_ptr<std::vector<int>> indicies_working(new std::vector<int>);
@@ -112,8 +112,7 @@ int testPointImplementation(int option)
 
     // check values
     ans.setFromFile((char*)"./data/ffun.txt");
-    if (!fSmoothevalSuccess or
-        fabs(p.objectiveSmoothUnscaled() - ans.values()[0]) > 1e-7)
+    if (!fSmoothevalSuccess or fabs(p.objectiveSmoothUnscaled() - ans.values()[0]) > 1e-7)
     {
         result = 1;
         reporter.printf(R_SOLVER, R_BASIC,
@@ -124,16 +123,14 @@ int testPointImplementation(int option)
     }
 
     ans.setFromFile((char*)"./data/rfun.txt");
-    if (!fNonsmoothevalSuccess or
-        fabs(p.objectiveNonsmoothUnscaled() - ans.values()[0]) > 1e-7)
+    if (!fNonsmoothevalSuccess or fabs(p.objectiveNonsmoothUnscaled() - ans.values()[0]) > 1e-7)
     {
         result = 1;
-        reporter.printf(
-            R_SOLVER, R_BASIC,
-            "Test Nonsmooth Objective: Expected fval:%8.5f | Actual "
-            "fval:%8.5f | Difference: %8.5f\n",
-            ans.values()[0], p.objectiveNonsmoothUnscaled(),
-            fabs(p.objectiveNonsmoothUnscaled() - ans.values()[0]));
+        reporter.printf(R_SOLVER, R_BASIC,
+                        "Test Nonsmooth Objective: Expected fval:%8.5f | Actual "
+                        "fval:%8.5f | Difference: %8.5f\n",
+                        ans.values()[0], p.objectiveNonsmoothUnscaled(),
+                        fabs(p.objectiveNonsmoothUnscaled() - ans.values()[0]));
     }
 
     // gradient smooth
@@ -161,8 +158,7 @@ int testPointImplementation(int option)
     // gradient nonsmooth
     ans.setFromFile((char*)"./data/rgrad.txt");
     auto gr = p.gradientNonsmooth();
-    if ((!gNonsmoothevalSuccess) ||
-        (gr->length() != quantities.indiciesWorking()->size()))
+    if ((!gNonsmoothevalSuccess) || (gr->length() != quantities.indiciesWorking()->size()))
     {
         result = 1;
     }
@@ -215,8 +211,7 @@ int testPointImplementation(int option)
     }
 
     bool hvNonsmoothEvalSuccess;
-    hvNonsmoothEvalSuccess =
-        p.evaluateHessianVectorProductNonsmooth(v, quantities);
+    hvNonsmoothEvalSuccess = p.evaluateHessianVectorProductNonsmooth(v, quantities);
     ans.setFromFile((char*)"./data/rHv.txt");
     auto rHv = p.hessianVectorProductNonsmooth();
     if ((!hvNonsmoothEvalSuccess) || (rHv->length() != v->length()))
@@ -272,8 +267,7 @@ int testPointImplementation(int option)
 
     // check values
     ans.setFromFile((char*)"./data/ffun_scaled.txt");
-    if (!fSmoothevalSuccess or
-        fabs(pnew.objectiveSmooth() - ans.values()[0]) > 1e-7)
+    if (!fSmoothevalSuccess or fabs(pnew.objectiveSmooth() - ans.values()[0]) > 1e-7)
     {
         result = 1;
         reporter.printf(R_SOLVER, R_BASIC,
@@ -284,16 +278,14 @@ int testPointImplementation(int option)
     }
 
     ans.setFromFile((char*)"./data/rfun_scaled.txt");
-    if (!fNonsmoothevalSuccess or
-        fabs(pnew.objectiveNonsmooth() - ans.values()[0]) > 1e-7)
+    if (!fNonsmoothevalSuccess or fabs(pnew.objectiveNonsmooth() - ans.values()[0]) > 1e-7)
     {
         result = 1;
-        reporter.printf(
-            R_SOLVER, R_BASIC,
-            "Test Nonsmooth Objective: Expected fval:%8.5f | Actual "
-            "fval:%8.5f | Difference: %8.5f\n",
-            ans.values()[0], pnew.objectiveNonsmooth(),
-            fabs(pnew.objectiveNonsmooth() - ans.values()[0]));
+        reporter.printf(R_SOLVER, R_BASIC,
+                        "Test Nonsmooth Objective: Expected fval:%8.5f | Actual "
+                        "fval:%8.5f | Difference: %8.5f\n",
+                        ans.values()[0], pnew.objectiveNonsmooth(),
+                        fabs(pnew.objectiveNonsmooth() - ans.values()[0]));
     }
 
     // gradient smooth
@@ -320,8 +312,7 @@ int testPointImplementation(int option)
     // gradient nonsmooth
     ans.setFromFile((char*)"./data/rgrad_scaled.txt");
     auto grnew = pnew.gradientNonsmooth();
-    if ((!gNonsmoothevalSuccess) ||
-        (grnew->length() != quantities.indiciesWorking()->size()))
+    if ((!gNonsmoothevalSuccess) || (grnew->length() != quantities.indiciesWorking()->size()))
     {
         result = 1;
     }
@@ -341,8 +332,7 @@ int testPointImplementation(int option)
     }
 
     // test Hessian-Vector Product
-    hvSmoothEvalSuccess =
-        pnew.evaluateHessianVectorProductSmooth(v, quantities);
+    hvSmoothEvalSuccess = pnew.evaluateHessianVectorProductSmooth(v, quantities);
     ans.setFromFile((char*)"./data/fHv_scaled.txt");
     auto fHvnew = pnew.hessianVectorProductSmooth();
     if ((!hvSmoothEvalSuccess) || (fHvnew->length() != v->length()))
@@ -362,8 +352,7 @@ int testPointImplementation(int option)
         }
     }
 
-    hvNonsmoothEvalSuccess =
-        pnew.evaluateHessianVectorProductNonsmooth(v, quantities);
+    hvNonsmoothEvalSuccess = pnew.evaluateHessianVectorProductNonsmooth(v, quantities);
     ans.setFromFile((char*)"./data/rHv_scaled.txt");
     auto rHvnew = pnew.hessianVectorProductNonsmooth();
     if ((!hvNonsmoothEvalSuccess) || (rHvnew->length() != v->length()))

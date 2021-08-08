@@ -57,6 +57,12 @@ enum DC_Status
     DC_EVALUATION_FAILURE,
     DC_ITERATION_LIMIT
 };
+enum DC_Type
+{
+    DC_UNSPECIFIED = -1,
+    DC_PROXIMAL_GRADIENT,
+    DC_TRUNCATED_NEWTON
+};
 /**
  * Line search enumerations
  */
@@ -68,6 +74,7 @@ enum LS_Status
     LS_STEPSIZE_TOO_SMALL,
     LS_ITERATION_LIMIT
 };
+
 /**
  * Report type enumerations
  */
