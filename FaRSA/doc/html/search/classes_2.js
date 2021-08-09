@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['groupl1_187',['GroupL1',['../class_group_l1.html',1,'']]]
+  ['filereport_212',['FileReport',['../class_fa_r_s_a_1_1_file_report.html',1,'FaRSA']]],
+  ['function_213',['Function',['../class_fa_r_s_a_1_1_function.html',1,'FaRSA']]],
+  ['functionnonsmooth_214',['FunctionNonsmooth',['../class_fa_r_s_a_1_1_function_nonsmooth.html',1,'FaRSA']]],
+  ['functionsmooth_215',['FunctionSmooth',['../class_fa_r_s_a_1_1_function_smooth.html',1,'FaRSA']]]
 ];

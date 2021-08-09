@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['linearregressionloss_188',['LinearRegressionLoss',['../class_linear_regression_loss.html',1,'']]]
+  ['groupl1_216',['GroupL1',['../class_group_l1.html',1,'']]]
 ];

@@ -98,6 +98,9 @@ std::shared_ptr&lt; std::vector&lt; double &gt; &gt;&#160;</td><td class="memIte
 std::shared_ptr&lt; std::vector&lt; std::vector&lt; int &gt; &gt; &gt; const&#160;</td><td class="memItemRight" valign="bottom"><b>groups</b> () const</td></tr>
 <tr class="separator:ad52c1517fb8e40add7532b391c2469ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Evaluate methods</div></td></tr>
+<tr class="memitem:abf565234d26a201f2d2d332e06681c09"><td class="memItemLeft" align="right" valign="top"><a id="abf565234d26a201f2d2d332e06681c09"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>scalePenalty</b> (double scale)</td></tr>
+<tr class="separator:abf565234d26a201f2d2d332e06681c09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18c0b3719b2dbc38bce825e67ffc69b3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_group_l1.html#a18c0b3719b2dbc38bce825e67ffc69b3">evaluateObjective</a> (const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;x, double &amp;f)</td></tr>
 <tr class="separator:a18c0b3719b2dbc38bce825e67ffc69b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a343bc9658f4827c2f435277b685d2a17"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_group_l1.html#a343bc9658f4827c2f435277b685d2a17">evaluateGradient</a> (const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;x, const std::vector&lt; int &gt; &amp;indicies, <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;g)</td></tr>
@@ -134,10 +137,7 @@ std::string const&#160;</td><td class="memItemRight" valign="bottom"><b>name</b>
 Default compiler generated methods</h2></td></tr>
 <tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrpac193357d0277286ff10582b446bf325"></a>(Hidden to avoid implicit creation/calling.) </p>
 </td></tr>
-<tr class="memitem:aa715f8c096051943b60c3eedb79a5020"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_group_l1.html#aa715f8c096051943b60c3eedb79a5020">penalty_</a></td></tr>
-<tr class="separator:aa715f8c096051943b60c3eedb79a5020"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe5889f31c421d0116d004db4d4fb793"><td class="memItemLeft" align="right" valign="top"><a id="afe5889f31c421d0116d004db4d4fb793"></a>
-std::shared_ptr&lt; std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>weights_</b></td></tr>
+<tr class="memitem:afe5889f31c421d0116d004db4d4fb793"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_group_l1.html#afe5889f31c421d0116d004db4d4fb793">weights_</a></td></tr>
 <tr class="separator:afe5889f31c421d0116d004db4d4fb793"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad35bad545ec3a35a1d603129dffbbf73"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_group_l1.html#ad35bad545ec3a35a1d603129dffbbf73">per_group_norm_</a></td></tr>
 <tr class="separator:ad35bad545ec3a35a1d603129dffbbf73"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,6 +160,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>number_of_groups_</b><
 <tr class="separator:ac3e1c44085cd58770ec84519d1f9d238 inherit pro_attribs_class_fa_r_s_a_1_1_function_nonsmooth"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8fe56a3f3e11c16ea3c3963683ab59e inherit pro_attribs_class_fa_r_s_a_1_1_function_nonsmooth"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; std::vector&lt; std::vector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html#ac8fe56a3f3e11c16ea3c3963683ab59e">groups_</a></td></tr>
 <tr class="separator:ac8fe56a3f3e11c16ea3c3963683ab59e inherit pro_attribs_class_fa_r_s_a_1_1_function_nonsmooth"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7047862fd3c08ebfa8ef76570b8f491e inherit pro_attribs_class_fa_r_s_a_1_1_function_nonsmooth"><td class="memItemLeft" align="right" valign="top"><a id="a7047862fd3c08ebfa8ef76570b8f491e"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>penalty_</b></td></tr>
+<tr class="separator:a7047862fd3c08ebfa8ef76570b8f491e inherit pro_attribs_class_fa_r_s_a_1_1_function_nonsmooth"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_fa_r_s_a_1_1_function"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_fa_r_s_a_1_1_function')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_fa_r_s_a_1_1_function.html">FaRSA::Function</a></td></tr>
 <tr class="memitem:a4ec1aaa2b0f0e7745c0cb028b649b320 inherit pro_attribs_class_fa_r_s_a_1_1_function"><td class="memItemLeft" align="right" valign="top"><a id="a4ec1aaa2b0f0e7745c0cb028b649b320"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>number_of_variables_</b></td></tr>
@@ -506,29 +509,6 @@ false </dd></dl>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="aa715f8c096051943b60c3eedb79a5020"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa715f8c096051943b60c3eedb79a5020">&#9670;&nbsp;</a></span>penalty_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double GroupL1::penalty_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Private members </p>
-
-</div>
-</div>
 <a id="ad35bad545ec3a35a1d603129dffbbf73"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad35bad545ec3a35a1d603129dffbbf73">&#9670;&nbsp;</a></span>per_group_norm_</h2>
 
@@ -549,6 +529,29 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 <p>a vector of vector specifing the groups of variables For example, consider the following group structures: group1: [0,1]; group2: [2,3,4,5]; group3:[6] the groups_ [[0,1], [2,5], [6,6]], for i-th subvector, the first element is the statring position of the i-th group the second element is the ending position of the i-th group </p>
+
+</div>
+</div>
+<a id="afe5889f31c421d0116d004db4d4fb793"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe5889f31c421d0116d004db4d4fb793">&#9670;&nbsp;</a></span>weights_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;std::vector&lt;double&gt; &gt; GroupL1::weights_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Private members </p>
 
 </div>
 </div>

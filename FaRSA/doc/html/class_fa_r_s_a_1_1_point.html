@@ -96,10 +96,22 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aec13bf577ebdb29acb721755a65ea612"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56eeb38c7ac8cc54b3c74a3d8d6d70c4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a56eeb38c7ac8cc54b3c74a3d8d6d70c4">evaluateObjectiveNonsmooth</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
 <tr class="separator:a56eeb38c7ac8cc54b3c74a3d8d6d70c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52b072f379ee67af13e4cb1e6f3a7be3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a52b072f379ee67af13e4cb1e6f3a7be3">evaluateGradientSmooth</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
+<tr class="memitem:af14d46c820725159d90f30ec0a853725"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#af14d46c820725159d90f30ec0a853725">evaluateObjectiveAll</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
+<tr class="separator:af14d46c820725159d90f30ec0a853725"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52b072f379ee67af13e4cb1e6f3a7be3"><td class="memItemLeft" align="right" valign="top"><a id="a52b072f379ee67af13e4cb1e6f3a7be3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>evaluateGradientSmooth</b> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
 <tr class="separator:a52b072f379ee67af13e4cb1e6f3a7be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9997fc767d6a288c9fcd347848b324f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#ac9997fc767d6a288c9fcd347848b324f">evaluateGradientNonsmooth</a> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
 <tr class="separator:ac9997fc767d6a288c9fcd347848b324f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb0c6c83f850ccfa768538deddeba3a7"><td class="memItemLeft" align="right" valign="top"><a id="adb0c6c83f850ccfa768538deddeba3a7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>evaluateHessianVectorProductSmooth</b> (std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt; v, <a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
+<tr class="separator:adb0c6c83f850ccfa768538deddeba3a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90f64eed90a8d199c79a1c2c7fb45924"><td class="memItemLeft" align="right" valign="top"><a id="a90f64eed90a8d199c79a1c2c7fb45924"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>evaluateHessianVectorProductNonsmooth</b> (std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt; v, <a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
+<tr class="separator:a90f64eed90a8d199c79a1c2c7fb45924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab56083e718e3db04a6486d7630583372"><td class="memItemLeft" align="right" valign="top"><a id="ab56083e718e3db04a6486d7630583372"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>computeProximalGradientUpdate</b> (<a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;quantities)</td></tr>
+<tr class="separator:ab56083e718e3db04a6486d7630583372"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3587c1ecb805e1f114d903a2f0fbfca0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a3587c1ecb805e1f114d903a2f0fbfca0">scaleObjectiveSmooth</a> ()</td></tr>
 <tr class="separator:a3587c1ecb805e1f114d903a2f0fbfca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46f0805996ee59007c6de195e843b947"><td class="memItemLeft" align="right" valign="top"><a id="a46f0805996ee59007c6de195e843b947"></a>
@@ -123,16 +135,28 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.ht
 <tr class="memitem:adb15b17c75b903271f1a026790a616fc"><td class="memItemLeft" align="right" valign="top"><a id="adb15b17c75b903271f1a026790a616fc"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>objectiveNonsmooth</b> () const</td></tr>
 <tr class="separator:adb15b17c75b903271f1a026790a616fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c60969435fd60de871e605b89e06594"><td class="memItemLeft" align="right" valign="top"><a id="a2c60969435fd60de871e605b89e06594"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>objectiveAll</b> () const</td></tr>
+<tr class="separator:a2c60969435fd60de871e605b89e06594"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ac1887d872a3bf97cbc4de3358f1e98"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a4ac1887d872a3bf97cbc4de3358f1e98">objectiveSmoothUnscaled</a> () const</td></tr>
 <tr class="separator:a4ac1887d872a3bf97cbc4de3358f1e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a428fac8b1a85df8ebeda4420f884983a"><td class="memItemLeft" align="right" valign="top"><a id="a428fac8b1a85df8ebeda4420f884983a"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>objectiveNonsmoothUnscaled</b> () const</td></tr>
 <tr class="separator:a428fac8b1a85df8ebeda4420f884983a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89ab73be5bab51aeaa97c09773fc3368"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#a89ab73be5bab51aeaa97c09773fc3368">gradient_smooth</a> () const</td></tr>
-<tr class="separator:a89ab73be5bab51aeaa97c09773fc3368"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1970f4f195472838b6e9bf3a4238d179"><td class="memItemLeft" align="right" valign="top"><a id="a1970f4f195472838b6e9bf3a4238d179"></a>
-std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_nonsmooth</b> () const</td></tr>
-<tr class="separator:a1970f4f195472838b6e9bf3a4238d179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5773b1ddfe83effb7730174fe77be29"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#ab5773b1ddfe83effb7730174fe77be29">gradientSmooth</a> () const</td></tr>
+<tr class="separator:ab5773b1ddfe83effb7730174fe77be29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b5b59d7c1b72c73b42a82a79752d17b"><td class="memItemLeft" align="right" valign="top"><a id="a8b5b59d7c1b72c73b42a82a79752d17b"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>gradientNonsmooth</b> () const</td></tr>
+<tr class="separator:a8b5b59d7c1b72c73b42a82a79752d17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab8ffdfd1ad4c2e48db8abb038749d93"><td class="memItemLeft" align="right" valign="top"><a id="aab8ffdfd1ad4c2e48db8abb038749d93"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>proximalGraidentUpdate</b> () const</td></tr>
+<tr class="separator:aab8ffdfd1ad4c2e48db8abb038749d93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a86ff9e460271c6b6e1353678d7a992"><td class="memItemLeft" align="right" valign="top"><a id="a2a86ff9e460271c6b6e1353678d7a992"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hessianVectorProductSmooth</b> () const</td></tr>
+<tr class="separator:a2a86ff9e460271c6b6e1353678d7a992"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88d89a58c77e429e652322d475e351e0"><td class="memItemLeft" align="right" valign="top"><a id="a88d89a58c77e429e652322d475e351e0"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hessianVectorProductNonsmooth</b> () const</td></tr>
+<tr class="separator:a88d89a58c77e429e652322d475e351e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa82fd7931659ff6dc709d81ae8b4009a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_point.html#aa82fd7931659ff6dc709d81ae8b4009a">scale</a> () const</td></tr>
 <tr class="separator:aa82fd7931659ff6dc709d81ae8b4009a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -161,6 +185,15 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_smooth_evalu
 <tr class="memitem:a66d527f0c065156f7c930dd12fbb0ca0"><td class="memItemLeft" align="right" valign="top"><a id="a66d527f0c065156f7c930dd12fbb0ca0"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_nonsmooth_evaluated_</b></td></tr>
 <tr class="separator:a66d527f0c065156f7c930dd12fbb0ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a8c0435afc1d38f964c28e281c5d6af"><td class="memItemLeft" align="right" valign="top"><a id="a4a8c0435afc1d38f964c28e281c5d6af"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>proximal_gradient_update_evaluated_</b></td></tr>
+<tr class="separator:a4a8c0435afc1d38f964c28e281c5d6af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a3cca8b11d570002b736e4300a18c68"><td class="memItemLeft" align="right" valign="top"><a id="a8a3cca8b11d570002b736e4300a18c68"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>hessian_vector_product_smooth_evaluated_</b></td></tr>
+<tr class="separator:a8a3cca8b11d570002b736e4300a18c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1500c42e1a4ca9862d7b226aff6d401b"><td class="memItemLeft" align="right" valign="top"><a id="a1500c42e1a4ca9862d7b226aff6d401b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>hessian_vector_product_nonsmooth_evaluated_</b></td></tr>
+<tr class="separator:a1500c42e1a4ca9862d7b226aff6d401b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada62d869cea2bcd7b38f918ce938ba93"><td class="memItemLeft" align="right" valign="top"><a id="ada62d869cea2bcd7b38f918ce938ba93"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>objective_smooth_</b></td></tr>
 <tr class="separator:ada62d869cea2bcd7b38f918ce938ba93"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,18 +224,15 @@ std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</
 <tr class="memitem:a7eb7610890a04e967c276563b592c484"><td class="memItemLeft" align="right" valign="top"><a id="a7eb7610890a04e967c276563b592c484"></a>
 std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_nonsmooth_</b></td></tr>
 <tr class="separator:a7eb7610890a04e967c276563b592c484"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabfa61f19f398fc43b4d10981bfe2032"><td class="memItemLeft" align="right" valign="top"><a id="aabfa61f19f398fc43b4d10981bfe2032"></a>
-std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hv_smooth_</b></td></tr>
-<tr class="separator:aabfa61f19f398fc43b4d10981bfe2032"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c8a66a6dadec99c4598caf9caae234a"><td class="memItemLeft" align="right" valign="top"><a id="a3c8a66a6dadec99c4598caf9caae234a"></a>
-std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hv_nonsmooth_</b></td></tr>
-<tr class="separator:a3c8a66a6dadec99c4598caf9caae234a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16fab0b817b0bb1432b40ba2b9dce660"><td class="memItemLeft" align="right" valign="top"><a id="a16fab0b817b0bb1432b40ba2b9dce660"></a>
-std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>full_indicies_vector_</b></td></tr>
-<tr class="separator:a16fab0b817b0bb1432b40ba2b9dce660"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4690280653d013bbcfd41efddf75038"><td class="memItemLeft" align="right" valign="top"><a id="ab4690280653d013bbcfd41efddf75038"></a>
-std::shared_ptr&lt; std::vector&lt; std::vector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>groups_</b></td></tr>
-<tr class="separator:ab4690280653d013bbcfd41efddf75038"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7daa1858aa281a4a5bf20d8e34125d3"><td class="memItemLeft" align="right" valign="top"><a id="af7daa1858aa281a4a5bf20d8e34125d3"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>proximal_gradient_update_</b></td></tr>
+<tr class="separator:af7daa1858aa281a4a5bf20d8e34125d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb12ae97651b0528c299ebb3badf8d61"><td class="memItemLeft" align="right" valign="top"><a id="afb12ae97651b0528c299ebb3badf8d61"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hessian_vector_product_smooth_</b></td></tr>
+<tr class="separator:afb12ae97651b0528c299ebb3badf8d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9b607c4b1726c9c7ff4a94120b9753f"><td class="memItemLeft" align="right" valign="top"><a id="ae9b607c4b1726c9c7ff4a94120b9753f"></a>
+std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hessian_vector_product_nonsmooth_</b></td></tr>
+<tr class="separator:ae9b607c4b1726c9c7ff4a94120b9753f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_fa_r_s_a_1_1_point.html">Point</a> class </p>
@@ -360,14 +390,14 @@ std::shared_ptr&lt; std::vector&lt; std::vector&lt; int &gt; &gt; &gt;&#160;</td
 
 </div>
 </div>
-<a id="a52b072f379ee67af13e4cb1e6f3a7be3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52b072f379ee67af13e4cb1e6f3a7be3">&#9670;&nbsp;</a></span>evaluateGradientSmooth()</h2>
+<a id="af14d46c820725159d90f30ec0a853725"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af14d46c820725159d90f30ec0a853725">&#9670;&nbsp;</a></span>evaluateObjectiveAll()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool FaRSA::Point::evaluateGradientSmooth </td>
+          <td class="memname">bool FaRSA::Point::evaluateObjectiveAll </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> &amp;&#160;</td>
           <td class="paramname"><em>quantities</em></td><td>)</td>
@@ -461,8 +491,8 @@ std::shared_ptr&lt; std::vector&lt; std::vector&lt; int &gt; &gt; &gt;&#160;</td
 
 </div>
 </div>
-<a id="a89ab73be5bab51aeaa97c09773fc3368"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89ab73be5bab51aeaa97c09773fc3368">&#9670;&nbsp;</a></span>gradient_smooth()</h2>
+<a id="ab5773b1ddfe83effb7730174fe77be29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5773b1ddfe83effb7730174fe77be29">&#9670;&nbsp;</a></span>gradientSmooth()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -471,7 +501,7 @@ std::shared_ptr&lt; std::vector&lt; std::vector&lt; int &gt; &gt; &gt;&#160;</td
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a>&gt; FaRSA::Point::gradient_smooth </td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a>&gt; FaRSA::Point::gradientSmooth </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
