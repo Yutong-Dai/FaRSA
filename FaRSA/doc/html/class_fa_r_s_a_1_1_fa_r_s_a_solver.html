@@ -112,8 +112,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a08254c57858c35b835bd0cc55509d8e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_fa_r_s_a_solver.html#a08254c57858c35b835bd0cc55509d8e0">setStatus</a> (FaRSA_Status <a class="el" href="class_fa_r_s_a_1_1_fa_r_s_a_solver.html#a79e3e3b52dac5cc9ddd2b293b6d32e4a">status</a>)</td></tr>
 <tr class="separator:a08254c57858c35b835bd0cc55509d8e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Optimize method</div></td></tr>
-<tr class="memitem:a762fed478d0de4891d77ae8fafde6bcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_fa_r_s_a_solver.html#a762fed478d0de4891d77ae8fafde6bcd">optimize</a> (const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> &gt; problem)</td></tr>
-<tr class="separator:a762fed478d0de4891d77ae8fafde6bcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44ea433a7647fc143d799ff25ba1b41d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_fa_r_s_a_solver.html#a44ea433a7647fc143d799ff25ba1b41d">optimize</a> (const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html">FunctionSmooth</a> &gt; function_smooth, const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html">FunctionNonsmooth</a> &gt; function_nonsmooth, const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;initail_point)</td></tr>
+<tr class="separator:a44ea433a7647fc143d799ff25ba1b41d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -128,9 +128,12 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:adb9fb79d8923809780a6dde219e2c5ed"><td class="memItemLeft" align="right" valign="top"><a id="adb9fb79d8923809780a6dde219e2c5ed"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>addOptions</b> ()</td></tr>
 <tr class="separator:adb9fb79d8923809780a6dde219e2c5ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a446029998de509c9ffeff1ee387240a6"><td class="memItemLeft" align="right" valign="top"><a id="a446029998de509c9ffeff1ee387240a6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>evaluateFunctionsAtCurrentIterate</b> ()</td></tr>
-<tr class="separator:a446029998de509c9ffeff1ee387240a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04a45bf899bed9593d015f9c727add79"><td class="memItemLeft" align="right" valign="top"><a id="a04a45bf899bed9593d015f9c727add79"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>evaluateFunctionstAtCurrentIterate</b> ()</td></tr>
+<tr class="separator:a04a45bf899bed9593d015f9c727add79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48933154b4c24004d0a1b49d4048edb2"><td class="memItemLeft" align="right" valign="top"><a id="a48933154b4c24004d0a1b49d4048edb2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>computeProximalGradientUpdateAtCurrentIterate</b> ()</td></tr>
+<tr class="separator:a48933154b4c24004d0a1b49d4048edb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a854db623acfd032ab89978751633d596"><td class="memItemLeft" align="right" valign="top"><a id="a854db623acfd032ab89978751633d596"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>printFooter</b> ()</td></tr>
 <tr class="separator:a854db623acfd032ab89978751633d596"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -388,8 +391,8 @@ FaRSA_Status&#160;</td><td class="memItemRight" valign="bottom"><b>status_</b></
 
 </div>
 </div>
-<a id="a762fed478d0de4891d77ae8fafde6bcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a762fed478d0de4891d77ae8fafde6bcd">&#9670;&nbsp;</a></span>optimize()</h2>
+<a id="a44ea433a7647fc143d799ff25ba1b41d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44ea433a7647fc143d799ff25ba1b41d">&#9670;&nbsp;</a></span>optimize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -397,9 +400,25 @@ FaRSA_Status&#160;</td><td class="memItemRight" valign="bottom"><b>status_</b></
         <tr>
           <td class="memname">void FaRSA::FaRSASolver::optimize </td>
           <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_problem.html">Problem</a> &gt;&#160;</td>
-          <td class="paramname"><em>problem</em></td><td>)</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_smooth.html">FunctionSmooth</a> &gt;&#160;</td>
+          <td class="paramname"><em>function_smooth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html">FunctionNonsmooth</a> &gt;&#160;</td>
+          <td class="paramname"><em>function_nonsmooth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_fa_r_s_a_1_1_vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>initail_point</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -409,6 +428,7 @@ FaRSA_Status&#160;</td><td class="memItemRight" valign="bottom"><b>status_</b></
   </table>
   </dd>
 </dl>
+<p>The scale is determined within the quantities iniatilization and the objective value and the gradient are properly scaled, which are evaluated at the initial point</p>
 
 </div>
 </div>

@@ -53,56 +53,96 @@ void ParameterUpdatePGStepsize::initialize(const Options* options, Quantities* q
 void ParameterUpdatePGStepsize::update(const Options* options, Quantities* quantities,
                                        const Reporter* reporter, Strategies* strategies)
 {
+    // Initialize values
+    setStatus(PU_UNSET);
     auto ptr = std::static_pointer_cast<LineSearchBacktracking>(strategies->lineSearch());
     bool perform_backtrack = ptr->numberOfBacktrack() > 0;
-    if (method_.compare("DecreaseByFraction") == 0)
+    try
     {
-        if (perform_backtrack)
+        if (method_.compare("DecreaseByFraction") == 0)
         {
-            quantities->setStepsizeProximalGradient(quantities->stepsizeProximalGradient() *
-                                                    decrease_factor_);
+            if (perform_backtrack)
+            {
+                quantities->setStepsizeProximalGradient(quantities->stepsizeProximalGradient() *
+                                                        decrease_factor_);
+            }
+            THROW_EXCEPTION(PU_SUCCESS_EXCEPTION, "Parameter Update Successful.");
+        }
+        else if (method_.compare("Heuristic") == 0)
+        {
+            if (perform_backtrack)
+            {
+                quantities->setStepsizeProximalGradient(quantities->stepsizeProximalGradient() *
+                                                        decrease_factor_);
+            }
+            else
+            {
+                quantities->setStepsizeProximalGradient(quantities->stepsizeProximalGradient() *
+                                                        increase_factor_);
+            }
+            THROW_EXCEPTION(PU_SUCCESS_EXCEPTION, "Parameter Update Successful.");
+        }
+        else if (method_.compare("LipschitzEstimate") == 0)
+        {
+            /*
+            update proxStep size according to the paper
+                Curtis-Robinson2019_Article_ExploitingNegativeCurvatureInD
+            using equation (19) and the one follows.
+            */
+            bool evaluation_success;
+            evaluation_success = quantities->trialIterate()->evaluateObjectiveAll(*quantities);
+            if (!evaluation_success)
+            {
+                quantities->setStepsizeLineSearch(0.0);
+                THROW_EXCEPTION(PU_EVALUATION_FAILURE_EXCEPTION,
+                                "Parameter Update unsuccessful. Evaluation of Objective failed at "
+                                "the trial iterate.");
+            }
+            evaluation_success = quantities->currentIterate()->evaluateObjectiveAll(*quantities);
+            if (!evaluation_success)
+            {
+                quantities->setStepsizeLineSearch(0.0);
+                THROW_EXCEPTION(PU_EVALUATION_FAILURE_EXCEPTION,
+                                "Parameter Update unsuccessful. Evaluation of Objective failed at "
+                                "the current iterate.");
+            }
+            double actual_decrease = quantities->trialIterate()->objectiveAll() -
+                                     quantities->currentIterate()->objectiveAll();
+            auto step_taken = quantities->trialIterate()->vector()->makeNewLinearCombination(
+                1.0, -1.0, *quantities->currentIterate()->vector());
+            double step_taken_norm_square = step_taken->innerProduct(*step_taken);
+            double Lipschitz_estimate_old = 1 / quantities->stepsizeProximalGradient();
+            double directional_derivative =
+                quantities->currentIterate()->gradientSmooth()->innerProduct(*step_taken);
+            double model_decrease =
+                directional_derivative + 0.5 * step_taken_norm_square * Lipschitz_estimate_old;
+            double temp = Lipschitz_estimate_old +
+                          2.0 * (actual_decrease - model_decrease) / step_taken_norm_square;
+            // safeguard
+            if ((actual_decrease - model_decrease) > 0.0)
+            {
+                Lipschitz_estimate_old =
+                    fmax(2.0 * Lipschitz_estimate_old, fmin(1e3 * Lipschitz_estimate_old, temp));
+            }
+            double Lipschitz_estimate_new = fmax(fmax(1e-3, 1e-3 * Lipschitz_estimate_old), temp);
+            double new_stepsize_proximal_gradient = fmin(1 / Lipschitz_estimate_new, upper_bound_);
+            if (isnan(new_stepsize_proximal_gradient))
+            {
+            }
+            else
+            {
+                quantities->setStepsizeProximalGradient(new_stepsize_proximal_gradient);
+                THROW_EXCEPTION(PU_SUCCESS_EXCEPTION, "Parameter Update Successful.");
+            }
         }
     }
-    else if (method_.compare("Heuristic") == 0)
+    catch (PU_SUCCESS_EXCEPTION& exec)
     {
-        if (perform_backtrack)
-        {
-            quantities->setStepsizeProximalGradient(quantities->stepsizeProximalGradient() *
-                                                    decrease_factor_);
-        }
-        else
-        {
-            quantities->setStepsizeProximalGradient(quantities->stepsizeProximalGradient() *
-                                                    increase_factor_);
-        }
+        setStatus(PU_SUCCESS);
     }
-    else if (method_.compare("LipschitzEstimate") == 0)
+    catch (PU_EVALUATION_FAILURE_EXCEPTION& exec)
     {
-        /*
-        update proxStep size according to the paper
-            Curtis-Robinson2019_Article_ExploitingNegativeCurvatureInD
-        using equation (19) and the one follows.
-        */
-        double actual_decrease = quantities->trialIterate()->evaluateObjectiveAll(*quantities) -
-                                 quantities->currentIterate()->evaluateObjectiveAll(*quantities);
-        auto step_taken = quantities->trialIterate()->vector()->makeNewLinearCombination(
-            1.0, -1.0, *quantities->currentIterate()->vector());
-        double step_taken_norm_square = step_taken->innerProduct(*step_taken);
-        double Lipschitz_estimate_old = 1 / quantities->stepsizeProximalGradient();
-        double directional_derivative =
-            quantities->currentIterate()->gradientSmooth()->innerProduct(*step_taken);
-        double model_decrease =
-            directional_derivative + 0.5 * step_taken_norm_square * Lipschitz_estimate_old;
-        double temp = Lipschitz_estimate_old +
-                      2.0 * (actual_decrease - model_decrease) / step_taken_norm_square;
-        // safeguard
-        if ((actual_decrease - model_decrease) > 0.0)
-        {
-            Lipschitz_estimate_old =
-                fmax(2.0 * Lipschitz_estimate_old, fmin(1e3 * Lipschitz_estimate_old, temp));
-        }
-        double Lipschitz_estimate_new = fmax(fmax(1e-3, 1e-3 * Lipschitz_estimate_old), temp);
-        quantities->setStepsizeProximalGradient(fmin(1 / Lipschitz_estimate_new, upper_bound_));
+        setStatus(PU_EVALUATION_FAILURE);
     }
 }
 }  // namespace FaRSA

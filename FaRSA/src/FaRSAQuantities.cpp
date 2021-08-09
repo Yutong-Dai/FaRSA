@@ -281,9 +281,10 @@ void Quantities::printFooter(const Reporter* reporter)
                      "Objective.......................... : %e\n"
                      "Objective (unscaled)............... : %e\n"
                      "\n"
-                     "Number of iterations............... : %d\n"
-                     "Number of function evaluations..... : %d\n"
-                     "Number of gradient evaluations..... : %d\n"
+                     "Number of iterations............................. : %d\n"
+                     "Number of function evaluations................... : %d\n"
+                     "Number of gradient evaluations................... : %d\n"
+                     "Number of Hessian-vector product evaluations..... : %d\n"
                      "\n"
                      "CPU seconds........................ : %f\n"
                      "CPU seconds in FaRSA............... : %f\n"
@@ -292,7 +293,7 @@ void Quantities::printFooter(const Reporter* reporter)
                      current_iterate_->objectiveSmoothUnscaled() +
                          current_iterate_->objectiveNonsmoothUnscaled(),
                      iteration_counter_, function_counter_, gradient_counter_,
-                     (end_time_ - start_time_) / (double)CLOCKS_PER_SEC,
+                     hessian_vector_counter_, (end_time_ - start_time_) / (double)CLOCKS_PER_SEC,
                      (end_time_ - start_time_ - evaluation_time_) / (double)CLOCKS_PER_SEC,
                      evaluation_time_ / (double)CLOCKS_PER_SEC);
 

@@ -9,6 +9,7 @@
 #include "testGroupL1.hpp"
 #include "testLinearRegressionLoss.hpp"
 #include "testPoint.hpp"
+#include "testStrategies.hpp"
 // Main function
 int main()
 {
@@ -45,6 +46,16 @@ int main()
     {
         result = 1;
         printf("failure! (run testPoint for details)\n");
+    }
+    printf("testing Strategies................... ");
+    if (!testStrategiesImplementation(0))
+    {
+        printf("success.\n");
+    }
+    else
+    {
+        result = 1;
+        printf("failure! (run testStrategies for details)\n");
     }
 
     // Return

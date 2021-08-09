@@ -51,8 +51,8 @@ void Point::print(const Reporter* reporter, std::string name) const
 
 // Make new Point by adding "scalar1" times this Point's vector to "scalar2"
 // times other Vector
-std::shared_ptr<Point> Point::makeNewLinearCombination(
-    double scalar1, double scalar2, const Vector& other_vector) const
+std::shared_ptr<Point> Point::makeNewLinearCombination(double scalar1, double scalar2,
+                                                       const Vector& other_vector) const
 {
     // Create new Vector
     std::shared_ptr<Vector> new_vector =
@@ -71,8 +71,7 @@ std::shared_ptr<Point> Point::makeNewLinearCombination(
 void Point::determineScale(Quantities& quantities)
 {
     // Assert gradient has been evaluated
-    ASSERT_EXCEPTION(gradient_smooth_evaluated_,
-                     FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
+    ASSERT_EXCEPTION(gradient_smooth_evaluated_, FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
                      "Gradient should have been evaluated, but wasn't.");
 
     // Set scale
@@ -101,7 +100,7 @@ bool Point::evaluateObjectiveSmooth(Quantities& quantities)
         // Set evaluation start time as current time
         clock_t start_time = clock();
 
-        // Evaluate objective value for problem
+        // Evaluate objective value for smooth function
         // deference a shared pointer
         // https://stackoverflow.com/questions/11347111/dereferencing-a-pointer-when-passing-by-reference
         objective_smooth_evaluated_ =
@@ -123,8 +122,7 @@ bool Point::evaluateObjectiveSmooth(Quantities& quantities)
         quantities.incrementFunctionCounter();
 
         // Check for function evaluation limit
-        if (quantities.functionCounter() >=
-            quantities.functionEvaluationLimit())
+        if (quantities.functionCounter() >= quantities.functionEvaluationLimit())
         {
             THROW_EXCEPTION(FARSA_FUNCTION_EVALUATION_LIMIT_EXCEPTION,
                             "Function evaluation limit reached.");
@@ -149,8 +147,8 @@ bool Point::evaluateObjectiveNonsmooth(Quantities& quantities)
         // Evaluate objective value
         // deference a shared pointer
         // https://stackoverflow.com/questions/11347111/dereferencing-a-pointer-when-passing-by-reference
-        objective_nonsmooth_evaluated_ = function_nonsmooth_->evaluateObjective(
-            *vector_, objective_nonsmooth_);
+        objective_nonsmooth_evaluated_ =
+            function_nonsmooth_->evaluateObjective(*vector_, objective_nonsmooth_);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
@@ -205,11 +203,10 @@ bool Point::evaluateGradientSmooth(Quantities& quantities)
     // Check if gradient has been evaluated already
     if ((!gradient_smooth_evaluated_))
     {
-        ASSERT_EXCEPTION(
-            objective_smooth_evaluated_,
-            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
-            "Function Smooth Objective value should have been "
-            "evaluated before evaluating the objective, but wasn't.");
+        ASSERT_EXCEPTION(objective_smooth_evaluated_, FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+                         "(From Point::evaluateGradientSmooth): Function Smooth Objective value "
+                         "should have been "
+                         "evaluated before evaluating the objective, but wasn't.");
         // Declare gradient vector
         std::shared_ptr<Vector> gradient(new Vector(vector_->length()));
 
@@ -225,8 +222,8 @@ bool Point::evaluateGradientSmooth(Quantities& quantities)
 
         // Evaluate gradient value at the full space
         std::vector<int> full_indicies_vector(vector_->length());
-        gradient_smooth_evaluated_ = function_smooth_->evaluateGradient(
-            *vector_, full_indicies_vector, g);
+        gradient_smooth_evaluated_ =
+            function_smooth_->evaluateGradient(*vector_, full_indicies_vector, g);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
@@ -251,8 +248,7 @@ bool Point::evaluateGradientSmooth(Quantities& quantities)
         quantities.incrementGradientCounter();
 
         // Check for gradient evaluation limit
-        if (quantities.gradientCounter() >=
-            quantities.gradientEvaluationLimit())
+        if (quantities.gradientCounter() >= quantities.gradientEvaluationLimit())
         {
             THROW_EXCEPTION(FARSA_GRADIENT_EVALUATION_LIMIT_EXCEPTION,
                             "Gradient evaluation limit reached.");
@@ -271,14 +267,11 @@ bool Point::evaluateGradientNonsmooth(Quantities& quantities)
     // Check if gradient has been evaluated already
     if ((!gradient_nonsmooth_evaluated_))
     {
-        ASSERT_EXCEPTION(
-            objective_nonsmooth_evaluated_,
-            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
-            "Function Nonsmooth Objective value should have been "
-            "evaluated before evaluating the gradient, but wasn't.");
+        ASSERT_EXCEPTION(objective_nonsmooth_evaluated_, FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+                         "(Point::evaluateGradientNonsmooth): Function Nonsmooth Objective value "
+                         "should have been evaluated before evaluating the gradient, but wasn't.");
         // Declare gradient vector
-        std::shared_ptr<Vector> gradient(
-            new Vector(quantities.indiciesWorking()->size()));
+        std::shared_ptr<Vector> gradient(new Vector(quantities.indiciesWorking()->size()));
         // Set gradient vector
         gradient_nonsmooth_ = gradient;
 
@@ -290,8 +283,8 @@ bool Point::evaluateGradientNonsmooth(Quantities& quantities)
         clock_t start_time = clock();
 
         // Evaluate gradient value at the full space
-        gradient_nonsmooth_evaluated_ = function_nonsmooth_->evaluateGradient(
-            *vector_, *(quantities.indiciesWorking()), g);
+        gradient_nonsmooth_evaluated_ =
+            function_nonsmooth_->evaluateGradient(*vector_, *(quantities.indiciesWorking()), g);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
@@ -316,17 +309,17 @@ bool Point::computeProximalGradientUpdate(Quantities& quantities)
 {
     if ((!proximal_gradient_update_evaluated_))
     {
-        ASSERT_EXCEPTION(gradient_smooth_evaluated_,
-                         FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
-                         "Function Smooth Gradient should have been "
-                         "evaluated before computing the proximal gradient "
+        ASSERT_EXCEPTION(gradient_smooth_evaluated_, FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
+                         "(From Point::computeProximalGradientUpdate): Function Smooth Gradient "
+                         "should have been evaluated before computing the proximal gradient "
                          "update, but wasn't.");
         // Declare gradient vector
         std::shared_ptr<Vector> proxgrad(new Vector(vector_->length()));
+        std::shared_ptr<Vector> proxgradstep(new Vector(vector_->length()));
 
         // Set proximal_gradient_update vector
         proximal_gradient_update_ = proxgrad;
-
+        proximal_gradient_step_ = proxgradstep;
         // Declare temporary array
         Vector p(vector_->length());
 
@@ -334,16 +327,17 @@ bool Point::computeProximalGradientUpdate(Quantities& quantities)
         clock_t start_time = clock();
 
         // Evaluate gradient value at the full space
-        proximal_gradient_update_evaluated_ =
-            function_nonsmooth_->computeProximalGradientUpdate(
-                *vector_, *gradient_smooth_, quantities, p);
+        proximal_gradient_update_evaluated_ = function_nonsmooth_->computeProximalGradientUpdate(
+            *vector_, *gradient_smooth_, quantities, p);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
 
-        // Evaluate gradient value
+        // Compute proximal gradient update and step
         proximal_gradient_update_->copyArray(p.values());
-
+        // s = xprox - x
+        proximal_gradient_step_->copy(*proximal_gradient_update_);
+        proximal_gradient_step_->addScaledVector(-1.0, *vector_);
         // // Increment gradient evaluation counter
         // quantities.incrementGradientCounter();
 
@@ -361,19 +355,17 @@ bool Point::computeProximalGradientUpdate(Quantities& quantities)
     return proximal_gradient_update_evaluated_;
 }
 
-bool Point::evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v,
-                                               Quantities& quantities)
+bool Point::evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v, Quantities& quantities)
 {
     if ((!hessian_vector_product_smooth_evaluated_))
     {
-        ASSERT_EXCEPTION(gradient_smooth_evaluated_,
-                         FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
-                         "Function Smooth Gradient value should have been "
-                         "evaluated before evaluating the Hessian Vector "
-                         "product, but wasn't.");
+        ASSERT_EXCEPTION(
+            gradient_smooth_evaluated_, FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
+            "(From Point::evaluateHessianVectorProductSmooth): Function Smooth Gradient value "
+            "should have been evaluated before evaluating the Hessian Vector product, but "
+            "wasn't.");
         // Declare gradient vector
-        std::shared_ptr<Vector> hv(
-            new Vector(quantities.indiciesWorking()->size()));
+        std::shared_ptr<Vector> hv(new Vector(quantities.indiciesWorking()->size()));
 
         // Set gradient vector
         hessian_vector_product_smooth_ = hv;
@@ -385,9 +377,8 @@ bool Point::evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v,
         clock_t start_time = clock();
 
         // Evaluate gradient value at the full space
-        hessian_vector_product_smooth_evaluated_ =
-            function_smooth_->evaluateHessianVectorProduct(
-                *vector_, *(quantities.indiciesWorking()), *v, temp);
+        hessian_vector_product_smooth_evaluated_ = function_smooth_->evaluateHessianVectorProduct(
+            *vector_, *(quantities.indiciesWorking()), *v, temp);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
@@ -402,12 +393,10 @@ bool Point::evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v,
         quantities.incrementHessianVectorCounter();
 
         // Check for gradient evaluation limit
-        if (quantities.hessianVectorCounter() >=
-            quantities.hessianVectorProductEvaluationLimit())
+        if (quantities.hessianVectorCounter() >= quantities.hessianVectorProductEvaluationLimit())
         {
-            THROW_EXCEPTION(
-                FARSA_HESSIAN_VECTOR_PRODUCT_EVALUATION_LIMIT_EXCEPTION,
-                "Hessian Vector Product evaluation limit reached.");
+            THROW_EXCEPTION(FARSA_HESSIAN_VECTOR_PRODUCT_EVALUATION_LIMIT_EXCEPTION,
+                            "Hessian Vector Product evaluation limit reached.");
         }
 
     }  // end if
@@ -415,19 +404,17 @@ bool Point::evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v,
     // Return
     return hessian_vector_product_smooth_evaluated_;
 }
-bool Point::evaluateHessianVectorProductNonsmooth(std::shared_ptr<Vector> v,
-                                                  Quantities& quantities)
+bool Point::evaluateHessianVectorProductNonsmooth(std::shared_ptr<Vector> v, Quantities& quantities)
 {
     if ((!hessian_vector_product_nonsmooth_evaluated_))
     {
-        ASSERT_EXCEPTION(gradient_nonsmooth_evaluated_,
-                         FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
-                         "Function Smooth Gradient value should have been "
+        ASSERT_EXCEPTION(gradient_nonsmooth_evaluated_, FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
+                         "(From Point::evaluateHessianVectorProductNonsmooth): Function Smooth "
+                         "Gradient value should have been "
                          "evaluated before evaluating the Hessian Vector "
                          "product, but wasn't.");
         // Declare gradient vector
-        std::shared_ptr<Vector> hv(
-            new Vector(quantities.indiciesWorking()->size()));
+        std::shared_ptr<Vector> hv(new Vector(quantities.indiciesWorking()->size()));
 
         // Set gradient vector
         hessian_vector_product_nonsmooth_ = hv;

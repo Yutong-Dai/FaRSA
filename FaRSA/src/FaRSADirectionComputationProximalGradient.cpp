@@ -78,17 +78,23 @@ void DirectionComputationProximalGradient::computeDirection(const Options*  opti
             {
                 THROW_EXCEPTION(DC_EVALUATION_FAILURE_EXCEPTION,
                                 "Direction computation unsuccessful. Proximal "
-                                "Gradient Computation failed.");
+                                "gradient computation failed.");
             }
             // Set direction possibly in a low dimension;  then 0 is paading to
             // non-working indicies
             // directon = proximalGradientUpdate - currentIterate
             Vector search_direction_actual(quantities->numberOfVariables());
-            auto   prox_ptr = quantities->currentIterate()->proximalGraidentUpdate();
+            // auto   prox_ptr = quantities->currentIterate()->proximalGraidentUpdate();
+            // for (auto i : *(quantities->indiciesWorking()))
+            // {
+            //     search_direction_actual.valuesModifiable()[i] =
+            //         (*prox_ptr).values()[i] -
+            //         quantities->currentIterate()->vector()->values()[i];
+            // }
+            auto step_ptr = quantities->currentIterate()->proximalGraidentStep();
             for (auto i : *(quantities->indiciesWorking()))
             {
-                search_direction_actual.valuesModifiable()[i] =
-                    (*prox_ptr).values()[i] - quantities->currentIterate()->vector()->values()[i];
+                search_direction_actual.valuesModifiable()[i] = (*step_ptr).values()[i];
             }
             quantities->direction()->copy(search_direction_actual);
 

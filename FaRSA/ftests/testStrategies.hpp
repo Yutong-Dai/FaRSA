@@ -150,8 +150,8 @@ int testStrategiesImplementation(int option)
         R_SOLVER, R_BASIC, "perform directionComputationSecondOrder: %s\n",
         strategies.directionComputationSecondOrder()->performCompuation() ? "true" : "false");
     ans.setFromFile((char*)"./data/trueProx.txt");
-    ans.addScaledVector(-1.0, *(quantities.currentIterate()->vector()));
-    auto prox = quantities.direction();
+    // compare proximal gradient update
+    auto prox = quantities.currentIterate()->proximalGraidentUpdate();
     for (int i = 0; i < prox->length(); i++)
     {
         if (fabs(prox->values()[i] - ans.values()[i]) > 1e-7)
@@ -161,6 +161,21 @@ int testStrategiesImplementation(int option)
                             "Difference: %20.16f\n",
                             ans.values()[i], i, prox->values()[i], i,
                             fabs(prox->values()[i] - ans.values()[i]));
+            result = 1;
+        }
+    }
+    // compare search direction, which is identical to the proximal gradient step
+    ans.addScaledVector(-1.0, *(quantities.currentIterate()->vector()));
+    auto direction = quantities.direction();
+    for (int i = 0; i < prox->length(); i++)
+    {
+        if (fabs(direction->values()[i] - ans.values()[i]) > 1e-7)
+        {
+            reporter.printf(R_SOLVER, R_BASIC,
+                            "Expected direction[%d]:%8.5f | Actual direction[%d]:%8.5f | "
+                            "Difference: %20.16f\n",
+                            ans.values()[i], i, prox->values()[i], i,
+                            fabs(direction->values()[i] - ans.values()[i]));
             result = 1;
         }
     }

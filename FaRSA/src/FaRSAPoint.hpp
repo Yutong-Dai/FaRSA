@@ -42,8 +42,7 @@ class Point
      * \param[in] vector is pointer to Vector object
      * \param[in] scale is scaling factor for function evaluations
      */
-    Point(const std::shared_ptr<FunctionSmooth>    f,
-          const std::shared_ptr<FunctionNonsmooth> r,
+    Point(const std::shared_ptr<FunctionSmooth> f, const std::shared_ptr<FunctionNonsmooth> r,
           const std::shared_ptr<Vector> vector, double scale);
     //@}
 
@@ -74,8 +73,8 @@ class Point
      * \param[in] other_vector is reference to other Vector
      * \return pointer to new Point
      */
-    std::shared_ptr<Point> makeNewLinearCombination(
-        double scalar1, double scalar2, const Vector& other_vector) const;
+    std::shared_ptr<Point> makeNewLinearCombination(double scalar1, double scalar2,
+                                                    const Vector& other_vector) const;
     //@}
 
     /** @name Set methods */
@@ -111,11 +110,10 @@ class Point
      * FaRSA \return boolean indicating success
      */
     bool evaluateGradientNonsmooth(Quantities& quantities);
-    bool evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v,
-                                            Quantities&             quantities);
-    bool evaluateHessianVectorProductNonsmooth(std::shared_ptr<Vector> v,
-                                               Quantities& quantities);
+    bool evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v, Quantities& quantities);
+    bool evaluateHessianVectorProductNonsmooth(std::shared_ptr<Vector> v, Quantities& quantities);
 
+    // set both proximal gradient update and proximal gradient step
     bool computeProximalGradientUpdate(Quantities& quantities);
 
     /**
@@ -123,18 +121,14 @@ class Point
      */
     void scaleObjectiveSmooth()
     {
-        ASSERT_EXCEPTION(
-            objective_smooth_evaluated_,
-            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
-            "Objective Smooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(objective_smooth_evaluated_, FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+                         "Objective Smooth should have been evaluated, but wasn't.");
         objective_smooth_ *= scale_;
     }
     void scaleObjectiveNonsmooth()
     {
-        ASSERT_EXCEPTION(
-            objective_nonsmooth_evaluated_,
-            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
-            "Objective Nonsmooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(objective_nonsmooth_evaluated_, FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+                         "Objective Nonsmooth should have been evaluated, but wasn't.");
         objective_nonsmooth_ *= scale_;
     }
     /**
@@ -142,18 +136,14 @@ class Point
      */
     void scaleGradientSmooth()
     {
-        ASSERT_EXCEPTION(
-            gradient_smooth_evaluated_,
-            FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
-            "Gradient Smooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(gradient_smooth_evaluated_, FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
+                         "Gradient Smooth should have been evaluated, but wasn't.");
         gradient_smooth_->scale(scale_);
     };
     void scaleGradientNonsmooth()
     {
-        ASSERT_EXCEPTION(
-            gradient_nonsmooth_evaluated_,
-            FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
-            "Gradient Nonsmooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(gradient_nonsmooth_evaluated_, FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
+                         "Gradient Nonsmooth should have been evaluated, but wasn't.");
         gradient_nonsmooth_->scale(scale_);
     };
     //@}
@@ -164,10 +154,7 @@ class Point
      * Get pointer to Problem
      * \return is pointer to Problem corresponding to point
      */
-    inline std::shared_ptr<FunctionSmooth> funcion_smooth() const
-    {
-        return function_smooth_;
-    };
+    inline std::shared_ptr<FunctionSmooth>    funcion_smooth() const { return function_smooth_; };
     inline std::shared_ptr<FunctionNonsmooth> funcion_nonsmooth() const
     {
         return function_nonsmooth_;
@@ -183,32 +170,24 @@ class Point
      */
     inline double objectiveSmooth() const
     {
-        ASSERT_EXCEPTION(
-            objective_smooth_evaluated_,
-            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
-            "FunctionSmooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(objective_smooth_evaluated_, FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+                         "FunctionSmooth should have been evaluated, but wasn't.");
         return objective_smooth_;
     };
 
     inline double objectiveNonsmooth() const
     {
-        ASSERT_EXCEPTION(
-            objective_nonsmooth_evaluated_,
-            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
-            "FunctionNonsmooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(objective_nonsmooth_evaluated_, FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+                         "FunctionNonsmooth should have been evaluated, but wasn't.");
         return objective_nonsmooth_;
     };
 
     inline double objectiveAll() const
     {
-        ASSERT_EXCEPTION(
-            objective_smooth_evaluated_,
-            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
-            "FunctionSmooth should have been evaluated, but wasn't.");
-        ASSERT_EXCEPTION(
-            objective_nonsmooth_evaluated_,
-            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
-            "FunctionNonsmooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(objective_smooth_evaluated_, FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+                         "FunctionSmooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(objective_nonsmooth_evaluated_, FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+                         "FunctionNonsmooth should have been evaluated, but wasn't.");
         return objective_smooth_ + objective_nonsmooth_;
     }
 
@@ -218,19 +197,15 @@ class Point
      */
     inline double objectiveSmoothUnscaled() const
     {
-        ASSERT_EXCEPTION(
-            objective_smooth_evaluated_,
-            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
-            "Function Smooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(objective_smooth_evaluated_, FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+                         "Function Smooth should have been evaluated, but wasn't.");
         return objective_smooth_ / scale_;
     };
 
     inline double objectiveNonsmoothUnscaled() const
     {
-        ASSERT_EXCEPTION(
-            objective_nonsmooth_evaluated_,
-            FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
-            "Function Nonsmooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(objective_nonsmooth_evaluated_, FARSA_FUNCTION_EVALUATION_ASSERT_EXCEPTION,
+                         "Function Nonsmooth should have been evaluated, but wasn't.");
         return objective_nonsmooth_ / scale_;
     };
     /**
@@ -239,18 +214,14 @@ class Point
      */
     inline std::shared_ptr<Vector> gradientSmooth() const
     {
-        ASSERT_EXCEPTION(
-            gradient_smooth_evaluated_,
-            FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
-            "Gradient Smooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(gradient_smooth_evaluated_, FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
+                         "Gradient Smooth should have been evaluated, but wasn't.");
         return gradient_smooth_;
     };
     inline std::shared_ptr<Vector> gradientNonsmooth() const
     {
-        ASSERT_EXCEPTION(
-            gradient_smooth_evaluated_,
-            FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
-            "Gradient Nonsmooth should have been evaluated, but wasn't.");
+        ASSERT_EXCEPTION(gradient_smooth_evaluated_, FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
+                         "Gradient Nonsmooth should have been evaluated, but wasn't.");
         return gradient_nonsmooth_;
     };
     inline std::shared_ptr<Vector> proximalGraidentUpdate() const
@@ -261,24 +232,30 @@ class Point
                          "computed, but wasn't.");
         return proximal_gradient_update_;
     };
+    inline std::shared_ptr<Vector> proximalGraidentStep() const
+    {
+        ASSERT_EXCEPTION(proximal_gradient_update_evaluated_,
+                         FARSA_PROXIMAL_GRADIENT_COMPUTATION_ASSERT_EXCEPTION,
+                         "Proximal Gradient Update should have been "
+                         "computed, but wasn't.");
+        return proximal_gradient_step_;
+    };
 
     inline std::shared_ptr<Vector> hessianVectorProductSmooth() const
     {
-        ASSERT_EXCEPTION(
-            hessian_vector_product_smooth_evaluated_,
-            FARSA_HESSIAN_VECTOR_PRODUCT_EVALUATION_ASSERT_EXCEPTION,
-            "Hessian Vector Product Smooth part should have been "
-            "evaluated, but wasn't.");
+        ASSERT_EXCEPTION(hessian_vector_product_smooth_evaluated_,
+                         FARSA_HESSIAN_VECTOR_PRODUCT_EVALUATION_ASSERT_EXCEPTION,
+                         "Hessian Vector Product Smooth part should have been "
+                         "evaluated, but wasn't.");
         return hessian_vector_product_smooth_;
     };
 
     inline std::shared_ptr<Vector> hessianVectorProductNonsmooth() const
     {
-        ASSERT_EXCEPTION(
-            hessian_vector_product_nonsmooth_evaluated_,
-            FARSA_HESSIAN_VECTOR_PRODUCT_EVALUATION_ASSERT_EXCEPTION,
-            "Hessian Vector Product Nonsmooth part should have been "
-            "evaluated, but wasn't.");
+        ASSERT_EXCEPTION(hessian_vector_product_nonsmooth_evaluated_,
+                         FARSA_HESSIAN_VECTOR_PRODUCT_EVALUATION_ASSERT_EXCEPTION,
+                         "Hessian Vector Product Nonsmooth part should have been "
+                         "evaluated, but wasn't.");
         return hessian_vector_product_nonsmooth_;
     };
     /**
@@ -324,6 +301,7 @@ class Point
     std::shared_ptr<Vector>            gradient_smooth_;
     std::shared_ptr<Vector>            gradient_nonsmooth_;
     std::shared_ptr<Vector>            proximal_gradient_update_;
+    std::shared_ptr<Vector>            proximal_gradient_step_;
     std::shared_ptr<Vector>            hessian_vector_product_smooth_;
     std::shared_ptr<Vector>            hessian_vector_product_nonsmooth_;
     //@}
