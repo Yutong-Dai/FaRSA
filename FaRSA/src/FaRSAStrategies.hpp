@@ -12,6 +12,7 @@
 
 #include "FaRSADirectionComputation.hpp"
 #include "FaRSALineSearch.hpp"
+#include "FaRSAParameterUpdate.hpp"
 #include "FaRSASpacePartition.hpp"
 
 namespace FaRSA
@@ -22,6 +23,7 @@ namespace FaRSA
 class DirectionComputation;
 class LineSearch;
 class SpacePartition;
+class ParameterUpdate;
 
 /**
  * Strategies class
@@ -93,6 +95,14 @@ class Strategies
      */
     inline std::shared_ptr<LineSearch> lineSearch() { return line_search_; }
     /**
+     * Get pointer to Paramter Update
+     * \return pointer to ParamterUpdate object
+     */
+    inline std::shared_ptr<ParameterUpdate> parameterUpdatePGStepsize()
+    {
+        return parameter_update_pg_stepsize_;
+    }
+    /**
      * Get iteration header
      * \return iteration header as string
      */
@@ -142,6 +152,7 @@ class Strategies
     std::shared_ptr<DirectionComputation> direction_computation_first_order_;
     std::shared_ptr<DirectionComputation> direction_computation_second_order_;
     std::shared_ptr<LineSearch>           line_search_;
+    std::shared_ptr<ParameterUpdate>      parameter_update_pg_stepsize_;
     std::string                           iteration_header_;
     //@}
 

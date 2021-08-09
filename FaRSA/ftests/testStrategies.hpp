@@ -184,6 +184,35 @@ int testStrategiesImplementation(int option)
         }
     }
 
+    // perform parameter update
+    auto update_rule_pg = strategies.parameterUpdatePGStepsize();
+    reporter.printf(R_SOLVER, R_BASIC, "parameterUpdatePGStepsize: %s\n",
+                    update_rule_pg->method().c_str());
+    reporter.printf(R_SOLVER, R_BASIC, "stepsize pg before update: %3.3e",
+                    quantities.stepsizeProximalGradient());
+    update_rule_pg->update(&options, &quantities, &reporter, &strategies);
+    reporter.printf(R_SOLVER, R_BASIC, "stepsize pg after update: %3.3e\n",
+                    quantities.stepsizeProximalGradient());
+    // reset stepsize proximal gradient
+    quantities.setStepsizeProximalGradient(0.2);
+    update_rule_pg->setMethod("Heuristic");
+    reporter.printf(R_SOLVER, R_BASIC, "parameterUpdatePGStepsize: %s\n",
+                    update_rule_pg->method().c_str());
+    reporter.printf(R_SOLVER, R_BASIC, "stepsize pg before update: %3.3e",
+                    quantities.stepsizeProximalGradient());
+    update_rule_pg->update(&options, &quantities, &reporter, &strategies);
+    reporter.printf(R_SOLVER, R_BASIC, "stepsize pg after update: %3.3e\n",
+                    quantities.stepsizeProximalGradient());
+    // reset stepsize proximal gradient
+    quantities.setStepsizeProximalGradient(0.2);
+    update_rule_pg->setMethod("LipschitzEstimate");
+    reporter.printf(R_SOLVER, R_BASIC, "parameterUpdatePGStepsize: %s\n",
+                    update_rule_pg->method().c_str());
+    reporter.printf(R_SOLVER, R_BASIC, "stepsize pg before update: %3.3e",
+                    quantities.stepsizeProximalGradient());
+    update_rule_pg->update(&options, &quantities, &reporter, &strategies);
+    reporter.printf(R_SOLVER, R_BASIC, "stepsize pg after update: %3.3e\n",
+                    quantities.stepsizeProximalGradient());
     // Check option
     if (option == 1)
     {

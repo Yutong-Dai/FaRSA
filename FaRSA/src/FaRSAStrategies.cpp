@@ -8,6 +8,7 @@
 
 #include "FaRSADirectionComputationProximalGradient.hpp"
 #include "FaRSALineSearchBacktracking.hpp"
+#include "FaRSAParameterUpdatePGStepsize.hpp"
 #include "FaRSASpacePartitionFirstOrder.hpp"
 
 namespace FaRSA
@@ -50,6 +51,12 @@ void Strategies::addOptions(Options* options, const Reporter* reporter)
     line_search = std::make_shared<LineSearchBacktracking>();
     line_search->addOptions(options, reporter);
     // ADD NEW LINE SEARCH STRATEGIES HERE AND IN SWITCH BELOW //
+
+    // Add options for parameter update strategies
+    std::shared_ptr<ParameterUpdate> parameter_update;
+    parameter_update = std::make_shared<ParameterUpdatePGStepsize>();
+    parameter_update->addOptions(options, reporter);
+    // ADD NEW PARAMETER UPDATE STRATEGIES HERE AND IN SWITCH BELOW //
 
 }  // end addOptions
 
@@ -113,6 +120,8 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
         line_search_ = std::make_shared<LineSearchBacktracking>();
     }
 
+    parameter_update_pg_stepsize_ = std::make_shared<ParameterUpdatePGStepsize>();
+
     // Set direction computation options
     space_partition_->getOptions(options, reporter);
     // Set direction computation options
@@ -122,6 +131,8 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     // Set line search options
     line_search_->getOptions(options, reporter);
 
+    // set parameter update PG stepsize
+    parameter_update_pg_stepsize_->getOptions(options, reporter);
 }  // end getOptions
 
 // Initialize
@@ -136,7 +147,8 @@ void Strategies::initialize(const Options* options, Quantities* quantities,
 
     // Initialize line search
     line_search_->initialize(options, quantities, reporter);
-
+    // Initalize paramter update
+    parameter_update_pg_stepsize_->initialize(options, quantities, reporter);
 }  // end initialize
 
 // Set iteration header

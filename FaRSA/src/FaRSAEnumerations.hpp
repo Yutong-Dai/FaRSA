@@ -76,6 +76,16 @@ enum LS_Status
 };
 
 /**
+ * Parameter Update enumerations
+ */
+enum PU_Status
+{
+    PU_UNSET = -1,
+    PU_SUCCESS,
+    PU_EVALUATION_FAILURE,
+};
+
+/**
  * Report type enumerations
  */
 enum ReportType
