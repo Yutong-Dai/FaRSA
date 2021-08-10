@@ -7,6 +7,7 @@
 #include "FaRSAParameterUpdatePGStepsize.hpp"
 
 #include <cmath>
+#include <iostream>
 
 #include "FaRSADeclarations.hpp"
 #include "FaRSADefinitions.hpp"
@@ -128,6 +129,9 @@ void ParameterUpdatePGStepsize::update(const Options* options, Quantities* quant
             double new_stepsize_proximal_gradient = fmin(1 / Lipschitz_estimate_new, upper_bound_);
             if (isnan(new_stepsize_proximal_gradient))
             {
+                THROW_EXCEPTION(PU_EVALUATION_FAILURE_EXCEPTION,
+                                "Parameter Update unsuccessful. The estimation of the Lipschitz "
+                                "constant is nan.");
             }
             else
             {

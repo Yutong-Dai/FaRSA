@@ -188,7 +188,7 @@ bool Quantities::initialize(const std::shared_ptr<FunctionSmooth>    function_sm
     stepsize_prox_ = 1.0;
 
     // Evaluate smooth function at current iterate to get the scale
-    bool evaluation_success = initial_iterate->evaluateObjectiveSmooth(*this);
+    bool evaluation_success = initial_iterate->evaluateObjectiveAll(*this);
     // Check for success
     if (!evaluation_success)
     {
@@ -268,7 +268,7 @@ void Quantities::printIterationValues(const Reporter* reporter)
 {
     // Print iteration values
     reporter->printf(R_SOLVER, R_PER_ITERATION, " %6d %+.4e", iteration_counter_,
-                     current_iterate_->objectiveSmooth() + current_iterate_->objectiveNonsmooth());
+                     current_iterate_->objectiveAll());
 
 }  // end printIterationValues
 
