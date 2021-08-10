@@ -267,7 +267,7 @@ void Quantities::printHeader(const Reporter* reporter)
     // Print header
     reporter->printf(R_SOLVER, R_BASIC, "*************** Problem Summary **************\n");
     reporter->printf(R_SOLVER, R_BASIC, "Number of variables................ : %d\n", number_of_variables_);
-    reporter->printf(R_SOLVER, R_BASIC, "Number of Groups................... : %d\n", number_of_variables_);
+    reporter->printf(R_SOLVER, R_BASIC, "Number of Groups................... : %d\n", number_of_groups_);
     reporter->printf(R_SOLVER, R_BASIC, "Smooth Function.................... : %s\n", function_smooth_name_.c_str());
     reporter->printf(R_SOLVER, R_BASIC, "Nonsmooth Function................. : %s\n", function_nonsmooth_name_.c_str());
     reporter->printf(R_SOLVER, R_BASIC, "Dataset ........................... : %s  size: (%d, %d)\n",
