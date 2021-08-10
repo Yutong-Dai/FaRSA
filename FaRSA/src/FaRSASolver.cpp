@@ -190,7 +190,7 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
                 THROW_EXCEPTION(FARSA_DIRECTION_COMPUTATION_FAILURE_EXCEPTION,
                                 "Direction computation for the second order group failed.");
             }
-
+            // quantities_.direction()->print(&reporter_, "\ndirection");
             // Run line search
             strategies_.lineSearch()->runLineSearch(&options_, &quantities_, &reporter_,
                                                     &strategies_);

@@ -81,20 +81,20 @@ int testSolverImplementation(int option)
     // Optimize
     farsa.optimize(f, r, *x);
 
-    // Check option
-    if (option == 1)
-    {
-        // Print final message
-        if (result == 0)
-        {
-            reporter.printf(R_SOLVER, R_BASIC, "TEST WAS SUCCESSFUL.\n");
-        }
-        else
-        {
-            reporter.printf(R_SOLVER, R_BASIC, "TEST FAILED.\n");
-        }
+    // // Check option
+    // if (option == 1)
+    // {
+    //     // Print final message
+    //     if (result == 0)
+    //     {
+    //         reporter.printf(R_SOLVER, R_BASIC, "TEST WAS SUCCESSFUL.\n");
+    //     }
+    //     else
+    //     {
+    //         reporter.printf(R_SOLVER, R_BASIC, "TEST FAILED.\n");
+    //     }
 
-    }  // end if
+    // }  // end if
     // Return
     return result;
 

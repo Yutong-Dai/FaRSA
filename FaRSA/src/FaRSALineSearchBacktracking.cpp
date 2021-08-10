@@ -7,6 +7,7 @@
 #include "FaRSALineSearchBacktracking.hpp"
 
 #include <cmath>
+#include <iostream>
 
 #include "FaRSADeclarations.hpp"
 #include "FaRSADefinitions.hpp"
@@ -138,7 +139,13 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
                          quantities->currentIterate()->objectiveAll() <=
                      stepsize_sufficient_decrease_threshold_ * quantities->stepsizeLineSearch() *
                          directional_derivative);
-
+                // auto LHS = quantities->trialIterate()->objectiveAll() -
+                //            quantities->currentIterate()->objectiveAll();
+                // auto RHS = stepsize_sufficient_decrease_threshold_ *
+                //            quantities->stepsizeLineSearch() * directional_derivative;
+                // std::cout << "\n bak:" << number_of_backtrack_ << " LHS : " << LHS
+                //           << " RHS : " << RHS << " LHS<=RHS: " << sufficient_decrease <<
+                //           std::endl;
                 // Check Armijo condition
                 if (sufficient_decrease)
                 {

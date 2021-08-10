@@ -7,6 +7,7 @@
 #include "FaRSAPoint.hpp"
 
 #include <cmath>
+
 namespace FaRSA
 {
 // Constructor, copy elements from input vector
@@ -24,6 +25,8 @@ Point::Point(const std::shared_ptr<FunctionSmooth>    function_smooth,
       function_smooth_(function_smooth),
       function_nonsmooth_(function_nonsmooth)
 {
+    objective_smooth_ = FARSA_DOUBLE_INFINITY;
+    objective_nonsmooth_ = FARSA_DOUBLE_INFINITY;
     number_of_variables_ = function_smooth_->numberOfVariables();
     number_of_groups_ = function_nonsmooth_->numberOfGroups();
     // Declare new vector

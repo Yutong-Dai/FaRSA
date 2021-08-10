@@ -70,6 +70,7 @@ bool GroupL1::scalePenalty(double scale)
 // evaluateObjective
 bool GroupL1::evaluateObjective(const Vector& x, double& f)
 {
+    float temp = 0.0;
     for (int i = 0; i < groups_->size(); i++)
     {
         double group_i_norm;
@@ -81,10 +82,10 @@ bool GroupL1::evaluateObjective(const Vector& x, double& f)
             group_i_norm = group_i_norm + pow(x.values()[j], 2);
         }
         group_i_norm = sqrt(group_i_norm);
-        f = f + group_i_norm * (*weights_)[i];
+        temp += group_i_norm * (*weights_)[i];
         per_group_norm_[i] = group_i_norm;
     }
-
+    f = temp;
     return !isnan(f);
 }  // end  evaluateObjective
 

@@ -85,20 +85,20 @@ class ParameterUpdatePGStepsize : public ParameterUpdate
      * \return string with name of strategy
      */
     std::string name() { return "ParameterUpdatePGStepsize"; };
-    /**
-     * Get status
-     * \return current status of line search strategy
-     */
-    inline PU_Status status() { return status_; };
+    // /**
+    //  * Get status
+    //  * \return current status of line search strategy
+    //  */
+    // inline PU_Status status() { return status_; };
     //@}
 
     /** @name Set method */
     //@{
-    /**
-     * Set status
-     * \param[in] status is new status to be set
-     */
-    inline void setStatus(PU_Status status) { status_ = status; };
+    // /**
+    //  * Set status
+    //  * \param[in] status is new status to be set
+    //  */
+    // inline void setStatus(PU_Status status) { status_ = status; };
     //@}
 
     /** @name Update method */
@@ -131,10 +131,10 @@ class ParameterUpdatePGStepsize : public ParameterUpdate
 
     /** @name Private members */
     //@{
-    PU_Status status_;
-    double    decrease_factor_;
-    double    increase_factor_;
-    double    upper_bound_;
+    // PU_Status status_;
+    double decrease_factor_;
+    double increase_factor_;
+    double upper_bound_;
     //@}
 
 };  // end ParameterUpdatePGStepsize

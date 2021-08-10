@@ -11,6 +11,7 @@
 #include <string>
 
 #include "FaRSADeclarations.hpp"
+#include "FaRSADefinitions.hpp"
 #include "FaRSAFunctionNonsmooth.hpp"
 #include "FaRSAFunctionSmooth.hpp"
 #include "FaRSAQuantities.hpp"
