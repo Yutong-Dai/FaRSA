@@ -104,11 +104,6 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Get method</div></td></tr>
 <tr class="memitem:a593706ed4b76b472c3f8d9bff79c2ade"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_parameter_update_p_g_stepsize.html#a593706ed4b76b472c3f8d9bff79c2ade">name</a> ()</td></tr>
 <tr class="separator:a593706ed4b76b472c3f8d9bff79c2ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62bded96e727091ed4bdf36b30bc4cde"><td class="memItemLeft" align="right" valign="top">PU_Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_parameter_update_p_g_stepsize.html#a62bded96e727091ed4bdf36b30bc4cde">status</a> ()</td></tr>
-<tr class="separator:a62bded96e727091ed4bdf36b30bc4cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Set method</div></td></tr>
-<tr class="memitem:a8bbcd2446ed095be4d1b5eb1933e9b4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_parameter_update_p_g_stepsize.html#a8bbcd2446ed095be4d1b5eb1933e9b4d">setStatus</a> (PU_Status <a class="el" href="class_fa_r_s_a_1_1_parameter_update_p_g_stepsize.html#a62bded96e727091ed4bdf36b30bc4cde">status</a>)</td></tr>
-<tr class="separator:a8bbcd2446ed095be4d1b5eb1933e9b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Update method</div></td></tr>
 <tr class="memitem:a77c4aaba7bf407886c345e7b14b9a0bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_parameter_update_p_g_stepsize.html#a77c4aaba7bf407886c345e7b14b9a0bb">update</a> (const <a class="el" href="class_fa_r_s_a_1_1_options.html">Options</a> *options, <a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> *quantities, const <a class="el" href="class_fa_r_s_a_1_1_reporter.html">Reporter</a> *reporter, <a class="el" href="class_fa_r_s_a_1_1_strategies.html">Strategies</a> *strategies)</td></tr>
 <tr class="separator:a77c4aaba7bf407886c345e7b14b9a0bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,9 +141,6 @@ Private Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Private members</div></td></tr>
-<tr class="memitem:a6dc280fc1fb57f85476d4dafc713e01b"><td class="memItemLeft" align="right" valign="top"><a id="a6dc280fc1fb57f85476d4dafc713e01b"></a>
-PU_Status&#160;</td><td class="memItemRight" valign="bottom"><b>status_</b></td></tr>
-<tr class="separator:a6dc280fc1fb57f85476d4dafc713e01b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd9b29776163486dda5f9ab3efca0b00"><td class="memItemLeft" align="right" valign="top"><a id="abd9b29776163486dda5f9ab3efca0b00"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>decrease_factor_</b></td></tr>
 <tr class="separator:abd9b29776163486dda5f9ab3efca0b00"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -443,64 +435,6 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>method_</b></t
 </table>
 </div><div class="memdoc">
 <p>Overloaded equals operator </p>
-
-</div>
-</div>
-<a id="a8bbcd2446ed095be4d1b5eb1933e9b4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bbcd2446ed095be4d1b5eb1933e9b4d">&#9670;&nbsp;</a></span>setStatus()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void FaRSA::ParameterUpdatePGStepsize::setStatus </td>
-          <td>(</td>
-          <td class="paramtype">PU_Status&#160;</td>
-          <td class="paramname"><em>status</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Set status </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">status</td><td>is new status to be set </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a62bded96e727091ed4bdf36b30bc4cde"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62bded96e727091ed4bdf36b30bc4cde">&#9670;&nbsp;</a></span>status()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">PU_Status FaRSA::ParameterUpdatePGStepsize::status </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get status </p><dl class="section return"><dt>Returns</dt><dd>current status of line search strategy </dd></dl>
 
 </div>
 </div>

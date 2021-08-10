@@ -6,16 +6,16 @@ Last Modified: 2020-12-22 17:07
 --------------------------------------------
 Description:
 '''
+import time
+import numpy as np
+from src.params import params
+import src.utils as utils
 import sys
 import os
 
-SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+SCRIPT_DIR = os.path.dirname(os.path.realpath(
+    os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, '..')))
-
-import src.utils as utils
-from src.params import params
-import numpy as np
-import time
 
 
 class PGSOLVER():
@@ -53,7 +53,8 @@ class PGSOLVER():
         else:
             bak = 0
             while True:
-                Xtrial, zeroGroup, nonZeroGroup = self.prob.proximal(X, gradfX, alpha)
+                Xtrial, zeroGroup, nonZeroGroup = self.prob.proximal(
+                    X, gradfX, alpha)
                 fval_trial = self.prob.eval_fun_f(Xtrial)
                 d = Xtrial - X
                 dirder = np.dot(gradfX.T, d)[0][0]
@@ -80,7 +81,8 @@ class PGSOLVER():
             if utils.l2_norm(y - x) > 1e-8:
                 _ = self.prob.eval_fun_f(y)
                 gradfy = self.prob.eval_grad_f(y)
-                alpha = utils.l2_norm(x - y) / (1 * utils.l2_norm(gradfx - gradfy))
+                alpha = utils.l2_norm(
+                    x - y) / (1 * utils.l2_norm(gradfx - gradfy))
                 break
             else:
                 s *= 10
@@ -97,8 +99,8 @@ class PGSOLVER():
             code = 0
         elif tc == "PROX":
             diff = Xtrial - X
-            optim = np.sqrt(np.dot(diff.T, diff))[0][0] / self.s0_norm
-            termination = optim <= tol * max(1, 1 / self.s0_norm)
+            optim = np.sqrt(np.dot(diff.T, diff))[0][0]
+            termination = optim <= tol * max(self.s0_norm, 1)
             code = 0
         else:
             raise ValueError("Invalid termination conditions!")
@@ -128,12 +130,15 @@ class PGSOLVER():
         if not options:
             options = params
             print("Default options:")
-        zeta, maxbak, maxtime, maxiters = options['zeta'], options['maxback'], options['max_time'], options['max_iter']
+        zeta, maxbak, maxtime, maxiters = options['zeta'], options[
+            'maxback'], options['max_time'], options['max_iter']
         stepsizeRule = options['stepsizeRule']
         stepsizeStrategy = options['stepsizeStrategy']
         print(" tol:{} | maxtime:{} | maxiter:{}".format(tol, maxtime, maxiters))
-        print(" beta:{:3.3e} | zeta:{:3.3e} | eta:{:3.3e}".format(options['beta'], zeta, options['eta']))
-        print(" stepsizeRule:{} | stepsizeStrategy:{}".format(stepsizeRule, stepsizeStrategy))
+        print(" beta:{:3.3e} | zeta:{:3.3e} | eta:{:3.3e}".format(
+            options['beta'], zeta, options['eta']))
+        print(" stepsizeRule:{} | stepsizeStrategy:{}".format(
+            stepsizeRule, stepsizeStrategy))
         try:
             outID = self.prob.f.datasetName
         except AttributeError:
@@ -146,7 +151,8 @@ class PGSOLVER():
             X = X_initial
             provide_initial = True
         if alpha is None:
-            print(' alpha is [None]; Set up by {}'.format("LipschitzEstimation"))
+            print(' alpha is [None]; Set up by {}'.format(
+                "LipschitzEstimation"))
             alpha = self.set_init_alpha(X)
         else:
             print(' proxStepsize is [{:3.3e}]'.format(alpha))
@@ -174,11 +180,13 @@ class PGSOLVER():
             print(" use tfocs t seq:{}".format(tfocs_t))
         extra_time = 0
         if log:
-            utils.print_problem(self.method, provide_initial, self.version, self.prob.r.Lambda, self.prob.K, outID)
+            utils.print_problem(self.method, provide_initial,
+                                self.version, self.prob.r.Lambda, self.prob.K, outID)
             utils.print_header_PG_NZZ(outID)
         while True:
             if log and iteration % options['printevery'] == 0:
-                utils.print_iterates_PG_NZZ(iteration, FvalX, optim, nnz, nz, outID)
+                utils.print_iterates_PG_NZZ(
+                    iteration, FvalX, optim, nnz, nz, outID)
             if stepsizeRule == "bkt":
                 if self.method == "ISTA":
                     Xtrial, fvalXtrial, alpha, bak, zeroGroup, nonZeroGroup = self.update_backtracking_stepsize(X, gradfX, fvalX,
@@ -194,9 +202,11 @@ class PGSOLVER():
                     self.s0_norm = np.sqrt(np.dot(s0.T, s0))[0][0]
             elif stepsizeRule == "cst":
                 if self.method == "ISTA":
-                    Xtrial, fvalXtrial, alpha, bak, zeroGroup, nonZeroGroup = self.update_constant_stepsize(X, gradfX, alpha)
+                    Xtrial, fvalXtrial, alpha, bak, zeroGroup, nonZeroGroup = self.update_constant_stepsize(
+                        X, gradfX, alpha)
                 elif self.method == "FISTA":
-                    Xtrial, fvalXtrial, alpha, bak, zeroGroup, nonZeroGroup = self.update_constant_stepsize(y, gradfy, alpha)
+                    Xtrial, fvalXtrial, alpha, bak, zeroGroup, nonZeroGroup = self.update_constant_stepsize(
+                        y, gradfy, alpha)
                 else:
                     raise ValueError("Invalid method!")
             else:
@@ -210,7 +220,8 @@ class PGSOLVER():
             fevals += bak + 1
             baks += bak
             time_so_far = time.time() - start_time
-            optim, termination, code = self.check_termination(tc, X, Xtrial, tol, bak, maxbak, time_so_far, maxtime, iteration, maxiters)
+            optim, termination, code = self.check_termination(
+                tc, X, Xtrial, tol, bak, maxbak, time_so_far, maxtime, iteration, maxiters)
             # terminate algorithm and collect data
             if termination:
                 total_time = time.time() - start_time
@@ -221,10 +232,12 @@ class PGSOLVER():
                 }
                 if log:
                     if iteration % options['printevery'] != 0:
-                        utils.print_iterates_PG_NZZ(iteration, FvalXtrial, optim, self.prob.K - nz, nz, outID)
+                        utils.print_iterates_PG_NZZ(
+                            iteration, FvalXtrial, optim, self.prob.K - nz, nz, outID)
                     utils.print_exit(code, outID)
                     utils.print_result_NZZ(result, outID)
-                print("Time Elapsed:{:5.3f} | Iterations:{} | Extrapolation time:{:5.3f}\n".format(total_time, iteration, extra_time))
+                print("Time Elapsed:{:5.3f} | Iterations:{} | Extrapolation time:{:5.3f}\n".format(
+                    total_time, iteration, extra_time))
                 print("-" * 50)
                 return result
             # prepare for the next iteration
@@ -252,5 +265,3 @@ class PGSOLVER():
                 gradfX = self.prob.eval_grad_f(X)
                 gevals += 1
             alpha *= options['beta']
-
-

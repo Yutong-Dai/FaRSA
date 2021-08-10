@@ -76,8 +76,7 @@ class Quantities
      * \param[in] problem is pointer to Problem object
      */
     bool initialize(const std::shared_ptr<FunctionSmooth>    function_smooth,
-                    const std::shared_ptr<FunctionNonsmooth> function_nonsmooth,
-                    const Vector&                            initail_point);
+                    const std::shared_ptr<FunctionNonsmooth> function_nonsmooth, const Vector& initail_point);
     //@}
 
     /** @name Get methods */
@@ -135,10 +134,7 @@ class Quantities
      */
     inline int const gradientEvaluationLimit() const { return gradient_evaluation_limit_; };
 
-    inline int const hessianVectorProductEvaluationLimit() const
-    {
-        return hessian_vector_product_evaluation_limit_;
-    };
+    inline int const hessianVectorProductEvaluationLimit() const { return hessian_vector_product_evaluation_limit_; };
     /**
      * Iteration counter
      * \return iterations performed so far
@@ -190,24 +186,12 @@ class Quantities
     inline double const kappaIncreaseFactor() const { return kappa_increase_factor_; };
     inline double const kappaDecreaseFactor() const { return kappa_decrease_factor_; };
 
-    inline std::shared_ptr<std::vector<int>> const groupsFirstOrder() const
-    {
-        return groups_first_order_;
-    };
+    inline std::shared_ptr<std::vector<int>> const groupsFirstOrder() const { return groups_first_order_; };
 
-    inline std::shared_ptr<std::vector<int>> const groupsSecondOrder() const
-    {
-        return groups_second_order_;
-    };
+    inline std::shared_ptr<std::vector<int>> const groupsSecondOrder() const { return groups_second_order_; };
 
-    inline std::shared_ptr<std::vector<int>> const groupsWorking() const
-    {
-        return groups_working_;
-    };
-    inline std::shared_ptr<std::vector<int>> const indiciesWorking() const
-    {
-        return indicies_working_;
-    };
+    inline std::shared_ptr<std::vector<int>> const groupsWorking() const { return groups_working_; };
+    inline std::shared_ptr<std::vector<int>> const indiciesWorking() const { return indicies_working_; };
 
     inline int const numberOfGroups() const { return number_of_groups_; };
 
@@ -221,18 +205,12 @@ class Quantities
      * Set current iterate pointer
      * \param[in] iterate is pointer to Point to represent current iterate
      */
-    inline void setCurrentIterate(const std::shared_ptr<Point> iterate)
-    {
-        current_iterate_ = iterate;
-    };
+    inline void setCurrentIterate(const std::shared_ptr<Point> iterate) { current_iterate_ = iterate; };
     /**
      * Set trial iterate pointer
      * \param[in] trial_iterate is pointer to Point to represent trial iterate
      */
-    inline void setTrialIterate(const std::shared_ptr<Point> trial_iterate)
-    {
-        trial_iterate_ = trial_iterate;
-    };
+    inline void setTrialIterate(const std::shared_ptr<Point> trial_iterate) { trial_iterate_ = trial_iterate; };
     /**
      * Set trial iterate pointer to current iterate pointer
      */
@@ -265,16 +243,14 @@ class Quantities
         indicies_working_ = indicies_working;
     };
 
-    inline void setNumberOfVariables(int number_of_variables)
-    {
-        number_of_variables_ = number_of_variables;
-    };
+    inline void setNumberOfVariables(int number_of_variables) { number_of_variables_ = number_of_variables; };
 
     inline void setNumberOfGroups(int number_of_groups) { number_of_groups_ = number_of_groups; };
 
     inline void setScalingThreshold(double scale) { scaling_threshold_ = scale; };
     inline void setScaleApplied(double scale) { scale_applied_ = scale; };
     inline void setDirectionType(DC_Type direction_type) { direction_type_ = direction_type; };
+    inline void setOptimalityError(double optimality_error) { optimality_error_ = optimality_error; };
     //@}
 
     /** @name Increment methods */
@@ -284,10 +260,7 @@ class Quantities
      * \param[in] evaluation_time is amount to add to total problem function
      * evaluation time
      */
-    inline void incrementEvaluationTime(clock_t evaluation_time)
-    {
-        evaluation_time_ += evaluation_time;
-    };
+    inline void incrementEvaluationTime(clock_t evaluation_time) { evaluation_time_ += evaluation_time; };
     /**
      * Increment function evaluation counter
      */
@@ -375,12 +348,18 @@ class Quantities
     double                                         stepsize_ls_;
     double                                         stepsize_prox_;
     double                                         scale_applied_;
+    double                                         penalty_applied_;
+    double                                         optimality_error_;
     int                                            function_counter_;
     int                                            gradient_counter_;
     int                                            hessian_vector_counter_;
     int                                            iteration_counter_;
     int                                            number_of_variables_;
     int                                            number_of_groups_;
+    int                                            number_of_datapoints_;
+    std::string                                    function_smooth_name_;
+    std::string                                    function_nonsmooth_name_;
+    std::string                                    dataset_name_;
     std::shared_ptr<Point>                         current_iterate_;
     std::shared_ptr<Point>                         trial_iterate_;
     std::shared_ptr<Vector>                        direction_;

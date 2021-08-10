@@ -75,8 +75,7 @@ void FaRSASolver::solution(double vector[])
 
 // Optimize
 void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smooth,
-                           const std::shared_ptr<FunctionNonsmooth> function_nonsmooth,
-                           const Vector&                            initail_point)
+                           const std::shared_ptr<FunctionNonsmooth> function_nonsmooth, const Vector& initail_point)
 {
     // Initialize solver status
     setStatus(FARSA_UNSET);
@@ -88,8 +87,7 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
     try
     {
         // (Re)initialize quantities
-        bool initialization_success =
-            quantities_.initialize(function_smooth, function_nonsmooth, initail_point);
+        bool initialization_success = quantities_.initialize(function_smooth, function_nonsmooth, initail_point);
 
         // Check for initialization success
         if (!initialization_success)
@@ -116,8 +114,7 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
         double initial_iterate_norm = quantities_.currentIterate()->vector()->norm2();
         // Store norm of proximal gradient step at the initial point (for termination check)
         computeProximalGradientUpdateAtCurrentIterate();
-        double initial_proximal_gradient_step_norm =
-            quantities_.currentIterate()->proximalGraidentStep()->normInf();
+        double initial_proximal_gradient_step_norm = quantities_.currentIterate()->proximalGraidentStep()->normInf();
         // Initialize strategies
         strategies_.initialize(&options_, &quantities_, &reporter_);
 
@@ -143,38 +140,34 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
             computeProximalGradientUpdateAtCurrentIterate();
 
             if (quantities_.currentIterate()->proximalGraidentStep()->normInf() <=
-                quantities_.stationarityTolerance() *
-                    fmax(1.0, initial_proximal_gradient_step_norm))
+                quantities_.stationarityTolerance() * fmax(1.0, initial_proximal_gradient_step_norm))
             {
+                quantities_.setOptimalityError(quantities_.currentIterate()->proximalGraidentStep()->normInf());
                 THROW_EXCEPTION(FARSA_SUCCESS_EXCEPTION, "Stationary point found.");
             }
             if (quantities_.iterationCounter() >= quantities_.iterationLimit())
             {
-                THROW_EXCEPTION(FARSA_ITERATION_LIMIT_EXCEPTION,
-                                "Iteration limit has been reached.");
+                THROW_EXCEPTION(FARSA_ITERATION_LIMIT_EXCEPTION, "Iteration limit has been reached.");
             }
-            if ((clock() - quantities_.startTime()) / (double)CLOCKS_PER_SEC >=
-                quantities_.cpuTimeLimit())
+            if ((clock() - quantities_.startTime()) / (double)CLOCKS_PER_SEC >= quantities_.cpuTimeLimit())
             {
                 THROW_EXCEPTION(FARSA_CPU_TIME_LIMIT_EXCEPTION, "CPU time limit has been reached.");
             }
             if (quantities_.currentIterate()->vector()->norm2() >=
                 quantities_.iterateNormTolerance() * fmax(1.0, initial_iterate_norm))
             {
-                THROW_EXCEPTION(FARSA_ITERATE_NORM_LIMIT_EXCEPTION,
-                                "Iterates appear to be diverging.");
+                THROW_EXCEPTION(FARSA_ITERATE_NORM_LIMIT_EXCEPTION, "Iterates appear to be diverging.");
             }
             // Perform space partition
-            strategies_.spacePartition()->partitionSpace(&options_, &quantities_, &reporter_,
-                                                         &strategies_);
+            strategies_.spacePartition()->partitionSpace(&options_, &quantities_, &reporter_, &strategies_);
             // Check status
             if (strategies_.spacePartition()->status() != SP_SUCCESS)
             {
                 THROW_EXCEPTION(FARSA_SPACE_PARTITION_FAILURE_EXCEPTION, "Space partition failed.")
             }
             // Compute direction for the first order group of variables
-            strategies_.directionComputationFirstOrder()->computeDirection(
-                &options_, &quantities_, &reporter_, &strategies_);
+            strategies_.directionComputationFirstOrder()->computeDirection(&options_, &quantities_, &reporter_,
+                                                                           &strategies_);
             // Check status
             if (strategies_.directionComputationFirstOrder()->status() != DC_SUCCESS)
             {
@@ -182,8 +175,8 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
                                 "Direction computation for the first order group failed.");
             }
             // Compute direction for the second order group of variables
-            strategies_.directionComputationSecondOrder()->computeDirection(
-                &options_, &quantities_, &reporter_, &strategies_);
+            strategies_.directionComputationSecondOrder()->computeDirection(&options_, &quantities_, &reporter_,
+                                                                            &strategies_);
             // Check status
             if (strategies_.directionComputationFirstOrder()->status() != DC_SUCCESS)
             {
@@ -192,8 +185,7 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
             }
             // quantities_.direction()->print(&reporter_, "\ndirection");
             // Run line search
-            strategies_.lineSearch()->runLineSearch(&options_, &quantities_, &reporter_,
-                                                    &strategies_);
+            strategies_.lineSearch()->runLineSearch(&options_, &quantities_, &reporter_, &strategies_);
 
             // Check status
             if (strategies_.lineSearch()->status() != LS_SUCCESS)
@@ -202,8 +194,7 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
             }
 
             // Update Parameters (this has to be done before performing the iterate update)
-            strategies_.parameterUpdatePGStepsize()->update(&options_, &quantities_, &reporter_,
-                                                            &strategies_);
+            strategies_.parameterUpdatePGStepsize()->update(&options_, &quantities_, &reporter_, &strategies_);
             // Check status
             if (strategies_.parameterUpdatePGStepsize()->status() != PU_SUCCESS)
             {
@@ -364,23 +355,19 @@ void FaRSASolver::computeProximalGradientUpdateAtCurrentIterate()
     // Check for evaluation success
     if (!evaluation_success)
     {
-        THROW_EXCEPTION(FARSA_FUNCTION_EVALUATION_FAILURE_EXCEPTION,
-                        "Function smooth evaluation failed.");
+        THROW_EXCEPTION(FARSA_FUNCTION_EVALUATION_FAILURE_EXCEPTION, "Function smooth evaluation failed.");
     }
     evaluation_success = quantities_.currentIterate()->evaluateGradientSmooth(quantities_);
     // Check for evaluation success
     if (!evaluation_success)
     {
-        THROW_EXCEPTION(FARSA_FUNCTION_EVALUATION_FAILURE_EXCEPTION,
-                        "Graient smooth evaluation failed.");
+        THROW_EXCEPTION(FARSA_FUNCTION_EVALUATION_FAILURE_EXCEPTION, "Graient smooth evaluation failed.");
     }
-    bool computation_success =
-        quantities_.currentIterate()->computeProximalGradientUpdate(quantities_);
+    bool computation_success = quantities_.currentIterate()->computeProximalGradientUpdate(quantities_);
     // Check for computation success
     if (!computation_success)
     {
-        THROW_EXCEPTION(FARSA_PROXIMAL_GRADIENT_COMPUTATION_FAILURE_EXCEPTION,
-                        "Proximal gradient computation failed.");
+        THROW_EXCEPTION(FARSA_PROXIMAL_GRADIENT_COMPUTATION_FAILURE_EXCEPTION, "Proximal gradient computation failed.");
     }
 }
 
@@ -394,8 +381,7 @@ void FaRSASolver::printFooter()
     switch (status())
     {
         case FARSA_UNSET:
-            reporter_.printf(R_SOLVER, R_BASIC,
-                             "Exit status wasn't set! This wasn't supposed to happen!");
+            reporter_.printf(R_SOLVER, R_BASIC, "Exit status wasn't set! This wasn't supposed to happen!");
             break;
         case FARSA_SUCCESS:
             reporter_.printf(R_SOLVER, R_BASIC, "Stationary point found.");
@@ -419,16 +405,13 @@ void FaRSASolver::printFooter()
             reporter_.printf(R_SOLVER, R_BASIC, "Hessian-vector product evaluation limit reached.");
             break;
         case FARSA_INITIALIZATION_FAILURE:
-            reporter_.printf(R_SOLVER, R_BASIC,
-                             "Initialization failure! Check definition of problem.");
+            reporter_.printf(R_SOLVER, R_BASIC, "Initialization failure! Check definition of problem.");
             break;
         case FARSA_FUNCTION_EVALUATION_FAILURE:
-            reporter_.printf(R_SOLVER, R_BASIC,
-                             "Function evaluation failure! Check definition of function.");
+            reporter_.printf(R_SOLVER, R_BASIC, "Function evaluation failure! Check definition of function.");
             break;
         case FARSA_GRADIENT_EVALUATION_FAILURE:
-            reporter_.printf(R_SOLVER, R_BASIC,
-                             "Gradient evaluation failure! Check definition of function.");
+            reporter_.printf(R_SOLVER, R_BASIC, "Gradient evaluation failure! Check definition of function.");
             break;
         case FARSA_PROXIMAL_GRADIENT_COMPUTATION_FAILURE:
             reporter_.printf(R_SOLVER, R_BASIC,
@@ -436,16 +419,13 @@ void FaRSASolver::printFooter()
                              "function proximalGradientUpdate method.");
             break;
         case FARSA_HESSIAN_VECTOR_PRODUCT_EVALUATION_FAILURE:
-            reporter_.printf(R_SOLVER, R_BASIC,
-                             "Hessian-vector product failure! Check definition of function.");
+            reporter_.printf(R_SOLVER, R_BASIC, "Hessian-vector product failure! Check definition of function.");
             break;
         case FARSA_FUNCTION_EVALUATION_ASSERT:
-            reporter_.printf(R_SOLVER, R_BASIC,
-                             "Function evaluation assert failure! This wasn't supposed to happen!");
+            reporter_.printf(R_SOLVER, R_BASIC, "Function evaluation assert failure! This wasn't supposed to happen!");
             break;
         case FARSA_GRADIENT_EVALUATION_ASSERT:
-            reporter_.printf(R_SOLVER, R_BASIC,
-                             "Gradient evaluation assert failure! This wasn't supposed to happen!");
+            reporter_.printf(R_SOLVER, R_BASIC, "Gradient evaluation assert failure! This wasn't supposed to happen!");
             break;
         case FARSA_SPACE_PARTITION_FAILURE:
             reporter_.printf(R_SOLVER, R_BASIC, "Space Decomposition failure.");
@@ -460,8 +440,7 @@ void FaRSASolver::printFooter()
             reporter_.printf(R_SOLVER, R_BASIC, "Parameter update failure.");
             break;
         default:
-            reporter_.printf(R_SOLVER, R_BASIC,
-                             "Unknown exit status! This wasn't supposed to happen!");
+            reporter_.printf(R_SOLVER, R_BASIC, "Unknown exit status! This wasn't supposed to happen!");
             break;
     }  // end switch
 
@@ -498,6 +477,8 @@ void FaRSASolver::printHeader()
     // Print strategies header
     strategies_.printHeader(&reporter_);
 
+    // Print quantities statistics
+    quantities_.print(&reporter_);
 }  // end printHeader
 
 // Print iteration header
@@ -509,12 +490,9 @@ void FaRSASolver::printIterationHeader()
     }
     if (quantities_.iterationCounter() % 20 == 0)
     {
-        std::string b(
-            quantities_.iterationHeader().length() + strategies_.iterationHeader().length(), '-');
-        reporter_.printf(
-            R_SOLVER, R_PER_ITERATION, "%s\n",
-            (b + "\n" + quantities_.iterationHeader() + strategies_.iterationHeader() + "\n" + b)
-                .c_str());
+        std::string b(quantities_.iterationHeader().length() + strategies_.iterationHeader().length(), '-');
+        reporter_.printf(R_SOLVER, R_PER_ITERATION, "%s\n",
+                         (b + "\n" + quantities_.iterationHeader() + strategies_.iterationHeader() + "\n" + b).c_str());
     }  // end if
 
 }  // end printIterationHeader

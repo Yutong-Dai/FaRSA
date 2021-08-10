@@ -16,12 +16,16 @@ namespace FaRSA
 Quantities::Quantities()
     : evaluation_time_(0),
       stepsize_ls_(0.0),
-      stepsize_prox_(1.0),
+      stepsize_prox_(0.0),
+      scale_applied_(FARSA_DOUBLE_INFINITY),
+      penalty_applied_(FARSA_DOUBLE_INFINITY),
+      optimality_error_(FARSA_DOUBLE_INFINITY),
       function_counter_(0),
       gradient_counter_(0),
       hessian_vector_counter_(0),
       iteration_counter_(0),
       number_of_variables_(0),
+      number_of_datapoints_(0),
       scaling_threshold_(1.0),
       cpu_time_limit_(FARSA_DOUBLE_INFINITY),
       function_evaluation_limit_(1),
@@ -29,9 +33,18 @@ Quantities::Quantities()
 {
     start_time_ = clock();
     end_time_ = start_time_;
+    function_smooth_name_ = "Unknown";
+    function_nonsmooth_name_ = "Unknown";
+    dataset_name_ = "Unknown";
     current_iterate_.reset();
     trial_iterate_.reset();
     direction_.reset();
+    groups_first_order_.reset();
+    groups_second_order_.reset();
+    groups_working_.reset();
+    indicies_working_.reset();
+    groups_.reset();
+    direction_type_ = DC_UNSPECIFIED;
 }
 
 // Destructor
@@ -57,21 +70,19 @@ void Quantities::addOptions(Options* options, const Reporter* reporter)
                              "              is scaled so that the initial gradient norm is at this "
                              "value.\n"
                              "Default     : 1e+02.");
-    options->addDoubleOption(
-        reporter, "iterate_norm_tolerance", 1e+20, 0.0, FARSA_DOUBLE_INFINITY,
-        "Tolerance for determining divergence of the algorithm iterates.\n"
-        "              If the norm of an iterate is larger than this tolerance "
-        "times\n"
-        "              the maximum of 1.0 and the norm of the initial iterate, "
-        "then\n"
-        "              the algorithm terminates with a message of divergence.\n"
-        "Default     : 1e+20.");
-    options->addDoubleOption(
-        reporter, "stationarity_tolerance", 1e-04, 0.0, FARSA_DOUBLE_INFINITY,
-        "Tolerance for determining stationarity.  If the stationarity\n"
-        "              measure falls below this tolerance, then the algorithm\n"
-        "              terminates with a message of stationarity.\n"
-        "Default     : 1e-04.");
+    options->addDoubleOption(reporter, "iterate_norm_tolerance", 1e+20, 0.0, FARSA_DOUBLE_INFINITY,
+                             "Tolerance for determining divergence of the algorithm iterates.\n"
+                             "              If the norm of an iterate is larger than this tolerance "
+                             "times\n"
+                             "              the maximum of 1.0 and the norm of the initial iterate, "
+                             "then\n"
+                             "              the algorithm terminates with a message of divergence.\n"
+                             "Default     : 1e+20.");
+    options->addDoubleOption(reporter, "stationarity_tolerance", 1e-04, 0.0, FARSA_DOUBLE_INFINITY,
+                             "Tolerance for determining stationarity.  If the stationarity\n"
+                             "              measure falls below this tolerance, then the algorithm\n"
+                             "              terminates with a message of stationarity.\n"
+                             "Default     : 1e-04.");
 
     options->addDoubleOption(reporter, "kappa1_max", 1e+06, 0.0, FARSA_DOUBLE_INFINITY,
                              "kappa1_max.\n"
@@ -105,11 +116,10 @@ void Quantities::addOptions(Options* options, const Reporter* reporter)
                               "              Note that each iteration might involve inner "
                               "iterations.\n"
                               "Default     : 1e+04.");
-    options->addIntegerOption(
-        reporter, "hessian_vector_product_evaluation_limit", 1e+08, 0, FARSA_INT_INFINITY,
-        "Limit on the number of hessian vector product evaluation that will be "
-        "performed.\n"
-        "Default     : 1e+08.");
+    options->addIntegerOption(reporter, "hessian_vector_product_evaluation_limit", 1e+08, 0, FARSA_INT_INFINITY,
+                              "Limit on the number of hessian vector product evaluation that will be "
+                              "performed.\n"
+                              "Default     : 1e+08.");
 
 }  // end addOptions
 
@@ -141,8 +151,7 @@ void Quantities::getOptions(const Options* options, const Reporter* reporter)
 
 // Initialization
 bool Quantities::initialize(const std::shared_ptr<FunctionSmooth>    function_smooth,
-                            const std::shared_ptr<FunctionNonsmooth> function_nonsmooth,
-                            const Vector&                            initail_point)
+                            const std::shared_ptr<FunctionNonsmooth> function_nonsmooth, const Vector& initail_point)
 {
     // Start clock
     start_time_ = clock();
@@ -207,6 +216,12 @@ bool Quantities::initialize(const std::shared_ptr<FunctionSmooth>    function_sm
     // gradient properly at the initial point; it will also scale the penalty
     // for the nonsmooth function and set the scale_applied_ with proper value
     initial_iterate->determineScale(*this);
+
+    function_smooth_name_ = function_smooth->name();
+    function_nonsmooth_name_ = function_nonsmooth->name();
+    dataset_name_ = function_smooth->datasetName();
+    number_of_datapoints_ = function_smooth->numberOfDataPoints();
+    penalty_applied_ = function_nonsmooth->penalty();
     // Return
     return success;
 
@@ -221,10 +236,8 @@ std::string Quantities::iterationNullValues() { return " ------ -----------"; }
 // Print all values of private memebers set by the Option class
 void Quantities::print(const Reporter* reporter)
 {
-    reporter->printf(R_SOLVER, R_BASIC,
-                     "---------------------- Termination Conditions -----------------\n");
-    reporter->printf(R_SOLVER, R_BASIC, "cpu time limit (seconds)...................... : %+.4e\n",
-                     cpu_time_limit_);
+    reporter->printf(R_SOLVER, R_BASIC, "\n************************ Termination Conditions ******************\n");
+    reporter->printf(R_SOLVER, R_BASIC, "cpu time limit (seconds)...................... : %+.4e\n", cpu_time_limit_);
     reporter->printf(R_SOLVER, R_BASIC, "iterate norm tolerance........................ : %+.4e\n",
                      iterate_norm_tolerance_);
     reporter->printf(R_SOLVER, R_BASIC, "stationarity tolerance........................ : %+.4e\n",
@@ -233,24 +246,18 @@ void Quantities::print(const Reporter* reporter)
                      function_evaluation_limit_);
     reporter->printf(R_SOLVER, R_BASIC, "gradient evaluation limit..................... : %d\n",
                      gradient_evaluation_limit_);
-    reporter->printf(R_SOLVER, R_BASIC, "iteration limit............................... : %d\n",
-                     iteration_limit_);
-    reporter->printf(R_SOLVER, R_BASIC,
-                     "---------------------- Algorithmic Choices ---------------------\n");
-    reporter->printf(R_SOLVER, R_BASIC, "scaling threshold............................. : %+.4e\n",
-                     scaling_threshold_);
-    reporter->printf(R_SOLVER, R_BASIC, "kappa1 max.................................... : %+.4e\n",
-                     kappa1_max_);
-    reporter->printf(R_SOLVER, R_BASIC, "kappa1 min.................................... : %+.4e\n",
-                     kappa1_min_);
-    reporter->printf(R_SOLVER, R_BASIC, "kappa2 max.................................... : %+.4e\n",
-                     kappa2_max_);
-    reporter->printf(R_SOLVER, R_BASIC, "kappa2 min.................................... : %+.4e\n",
-                     kappa2_min_);
-    reporter->printf(R_SOLVER, R_BASIC, "kappa increase factor......................... : %+.4e\n",
-                     kappa_increase_factor_);
-    reporter->printf(R_SOLVER, R_BASIC, "kappa decrease factor......................... : %+.4e\n",
-                     kappa_decrease_factor_);
+    reporter->printf(R_SOLVER, R_BASIC, "iteration limit............................... : %d\n", iteration_limit_);
+    // reporter->printf(R_SOLVER, R_BASIC, "---------------------- Algorithmic Choices ---------------------\n");
+    // reporter->printf(R_SOLVER, R_BASIC, "scaling threshold............................. : %+.4e\n",
+    // scaling_threshold_); reporter->printf(R_SOLVER, R_BASIC, "kappa1 max.................................... :
+    // %+.4e\n", kappa1_max_); reporter->printf(R_SOLVER, R_BASIC, "kappa1 min.................................... :
+    // %+.4e\n", kappa1_min_); reporter->printf(R_SOLVER, R_BASIC, "kappa2 max.................................... :
+    // %+.4e\n", kappa2_max_); reporter->printf(R_SOLVER, R_BASIC, "kappa2 min.................................... :
+    // %+.4e\n", kappa2_min_); reporter->printf(R_SOLVER, R_BASIC, "kappa increase factor......................... :
+    // %+.4e\n",
+    //                  kappa_increase_factor_);
+    // reporter->printf(R_SOLVER, R_BASIC, "kappa decrease factor......................... : %+.4e\n",
+    //                  kappa_decrease_factor_);
 
 }  // end print
 
@@ -258,8 +265,15 @@ void Quantities::print(const Reporter* reporter)
 void Quantities::printHeader(const Reporter* reporter)
 {
     // Print header
-    reporter->printf(R_SOLVER, R_BASIC, "Number of variables................ : %d\n",
-                     number_of_variables_);
+    reporter->printf(R_SOLVER, R_BASIC, "*************** Problem Summary **************\n");
+    reporter->printf(R_SOLVER, R_BASIC, "Number of variables................ : %d\n", number_of_variables_);
+    reporter->printf(R_SOLVER, R_BASIC, "Number of Groups................... : %d\n", number_of_variables_);
+    reporter->printf(R_SOLVER, R_BASIC, "Smooth Function.................... : %s\n", function_smooth_name_.c_str());
+    reporter->printf(R_SOLVER, R_BASIC, "Nonsmooth Function................. : %s\n", function_nonsmooth_name_.c_str());
+    reporter->printf(R_SOLVER, R_BASIC, "Dataset ........................... : %s  size: (%d, %d)\n",
+                     dataset_name_.c_str(), number_of_datapoints_, number_of_variables_);
+    reporter->printf(R_SOLVER, R_BASIC, "Penalty ........................... : %3.3e\n", penalty_applied_);
+    reporter->printf(R_SOLVER, R_BASIC, "Scale applied ..................... : %3.3e\n", scale_applied_);
 
 }  // end printHeader
 
@@ -267,8 +281,7 @@ void Quantities::printHeader(const Reporter* reporter)
 void Quantities::printIterationValues(const Reporter* reporter)
 {
     // Print iteration values
-    reporter->printf(R_SOLVER, R_PER_ITERATION, " %6d %+.4e", iteration_counter_,
-                     current_iterate_->objectiveAll());
+    reporter->printf(R_SOLVER, R_PER_ITERATION, " %6d %+.4e", iteration_counter_, current_iterate_->objectiveAll());
 
 }  // end printIterationValues
 
@@ -280,6 +293,7 @@ void Quantities::printFooter(const Reporter* reporter)
                      "\n\n"
                      "Objective.......................... : %e\n"
                      "Objective (unscaled)............... : %e\n"
+                     "Optimality error:.................. : %e\n"
                      "\n"
                      "Number of iterations............................. : %d\n"
                      "Number of function evaluations................... : %d\n"
@@ -290,9 +304,8 @@ void Quantities::printFooter(const Reporter* reporter)
                      "CPU seconds in FaRSA............... : %f\n"
                      "CPU seconds in evaluations......... : %f\n",
                      current_iterate_->objectiveSmooth() + current_iterate_->objectiveNonsmooth(),
-                     current_iterate_->objectiveSmoothUnscaled() +
-                         current_iterate_->objectiveNonsmoothUnscaled(),
-                     iteration_counter_, function_counter_, gradient_counter_,
+                     current_iterate_->objectiveSmoothUnscaled() + current_iterate_->objectiveNonsmoothUnscaled(),
+                     optimality_error_, iteration_counter_, function_counter_, gradient_counter_,
                      hessian_vector_counter_, (end_time_ - start_time_) / (double)CLOCKS_PER_SEC,
                      (end_time_ - start_time_ - evaluation_time_) / (double)CLOCKS_PER_SEC,
                      evaluation_time_ / (double)CLOCKS_PER_SEC);

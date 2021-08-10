@@ -72,10 +72,8 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     // Read integer options
     options->valueAsString(reporter, "space_partition", space_partition_name);
     options->valueAsString(reporter, "line_search", line_search_name);
-    options->valueAsString(reporter, "direction_computation_first_order",
-                           direction_computation_first_order_name);
-    options->valueAsString(reporter, "direction_computation_second_order",
-                           direction_computation_first_order_name);
+    options->valueAsString(reporter, "direction_computation_first_order", direction_computation_first_order_name);
+    options->valueAsString(reporter, "direction_computation_second_order", direction_computation_first_order_name);
     options->valueAsString(reporter, "line_search", line_search_name);
     // Set space patiton strategy
     if (space_partition_name.compare("FirstOrderPartition") == 0)
@@ -90,24 +88,20 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     // Set direction computation strategy
     if (direction_computation_first_order_name.compare("ProximalGradient") == 0)
     {
-        direction_computation_first_order_ =
-            std::make_shared<DirectionComputationProximalGradient>();
+        direction_computation_first_order_ = std::make_shared<DirectionComputationProximalGradient>();
     }
     else
     {
-        direction_computation_first_order_ =
-            std::make_shared<DirectionComputationProximalGradient>();
+        direction_computation_first_order_ = std::make_shared<DirectionComputationProximalGradient>();
     }
 
     if (direction_computation_first_order_name.compare("TruncatedNewton") == 0)
     {
-        direction_computation_second_order_ =
-            std::make_shared<DirectionComputationProximalGradient>();
+        direction_computation_second_order_ = std::make_shared<DirectionComputationProximalGradient>();
     }
     else
     {
-        direction_computation_second_order_ =
-            std::make_shared<DirectionComputationProximalGradient>();
+        direction_computation_second_order_ = std::make_shared<DirectionComputationProximalGradient>();
     }
 
     // Set line search strategy
@@ -136,8 +130,7 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
 }  // end getOptions
 
 // Initialize
-void Strategies::initialize(const Options* options, Quantities* quantities,
-                            const Reporter* reporter)
+void Strategies::initialize(const Options* options, Quantities* quantities, const Reporter* reporter)
 {
     // Initialize space partition
     space_partition_->initialize(options, quantities, reporter);
@@ -173,14 +166,18 @@ void Strategies::setIterationHeader()
 void Strategies::printHeader(const Reporter* reporter)
 {
     // Print header
+    bool use_second_order_direction = (space_partition_->name().compare("FirstOrderPartition") == 0);
+    use_second_order_direction = !use_second_order_direction;
+    reporter->printf(R_SOLVER, R_BASIC, "\n*************** Strategies Summary **************\n");
     reporter->printf(
         R_SOLVER, R_BASIC,
-        "\nSpace Partition strategy ...................... : %s\n"
+        "Space Partition strategy ...................... : %s\n"
         "Direction computation strategy (1st order)..... : %s\n"
         "Direction computation strategy (2nd order)..... : %s\n"
         "Line search strategy........................... : %s\n",
         space_partition_->name().c_str(), direction_computation_first_order_->name().c_str(),
-        direction_computation_second_order_->name().c_str(), line_search_->name().c_str());
+        use_second_order_direction ? direction_computation_second_order_->name().c_str() : "Not applicable",
+        line_search_->name().c_str());
 
 }  // end printHeader
 

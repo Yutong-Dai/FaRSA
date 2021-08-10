@@ -35,15 +35,14 @@ class FunctionNonsmooth : public Function
     // /** @name Get methods */
     // //@{
     inline int const numberOfGroups() const { return number_of_groups_; };
+
+    inline double const penalty() const { return penalty_; };
     /**
      * @brief Get a 2-d vector specifies the group structure.
      *
      * \return std::vector<std::vector<int>>&
      */
-    inline std::shared_ptr<std::vector<std::vector<int>>> const groups() const
-    {
-        return groups_;
-    };
+    inline std::shared_ptr<std::vector<std::vector<int>>> const groups() const { return groups_; };
     // //@}
 
     /** @name Evaluate methods */
@@ -56,10 +55,8 @@ class FunctionNonsmooth : public Function
 
     /** @name Compute methods */
     //@{
-    virtual bool computeProximalGradientUpdate(const Vector& x,
-                                               const Vector& gradfx,
-                                               Quantities&   quantities,
-                                               Vector&       proxgrad) = 0;
+    virtual bool computeProximalGradientUpdate(const Vector& x, const Vector& gradfx,
+                                               Quantities& quantities, Vector& proxgrad) = 0;
     //@}
 
    protected:

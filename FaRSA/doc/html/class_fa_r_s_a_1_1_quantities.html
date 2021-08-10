@@ -218,6 +218,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setScaleApplied</b> (
 <tr class="memitem:ae589034ce5b7dd17efd761736bce4143"><td class="memItemLeft" align="right" valign="top"><a id="ae589034ce5b7dd17efd761736bce4143"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setDirectionType</b> (DC_Type direction_type)</td></tr>
 <tr class="separator:ae589034ce5b7dd17efd761736bce4143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bc8af56a8a987abd571bc0f44e26c2f"><td class="memItemLeft" align="right" valign="top"><a id="a7bc8af56a8a987abd571bc0f44e26c2f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setOptimalityError</b> (double optimality_error)</td></tr>
+<tr class="separator:a7bc8af56a8a987abd571bc0f44e26c2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Increment methods</div></td></tr>
 <tr class="memitem:a0b2f8fa28e443701e7663a796a07f951"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_quantities.html#a0b2f8fa28e443701e7663a796a07f951">incrementEvaluationTime</a> (clock_t evaluation_time)</td></tr>
 <tr class="separator:a0b2f8fa28e443701e7663a796a07f951"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -279,6 +282,12 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>stepsize_prox_</b><
 <tr class="memitem:abf25972bab5bd8f6f87ba8a9214d9ba9"><td class="memItemLeft" align="right" valign="top"><a id="abf25972bab5bd8f6f87ba8a9214d9ba9"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>scale_applied_</b></td></tr>
 <tr class="separator:abf25972bab5bd8f6f87ba8a9214d9ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55dbe7ea7882b54dc6f7bc04fdaf7727"><td class="memItemLeft" align="right" valign="top"><a id="a55dbe7ea7882b54dc6f7bc04fdaf7727"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>penalty_applied_</b></td></tr>
+<tr class="separator:a55dbe7ea7882b54dc6f7bc04fdaf7727"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b5e8159a32ea74f2205ef720f8e3d3c"><td class="memItemLeft" align="right" valign="top"><a id="a1b5e8159a32ea74f2205ef720f8e3d3c"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>optimality_error_</b></td></tr>
+<tr class="separator:a1b5e8159a32ea74f2205ef720f8e3d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7f01ddebb7f9a6a157c1d89eeadcbfa"><td class="memItemLeft" align="right" valign="top"><a id="ac7f01ddebb7f9a6a157c1d89eeadcbfa"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>function_counter_</b></td></tr>
 <tr class="separator:ac7f01ddebb7f9a6a157c1d89eeadcbfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -297,6 +306,18 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>number_of_variables_</
 <tr class="memitem:ad3bbe360421775090788d2d4425ceecb"><td class="memItemLeft" align="right" valign="top"><a id="ad3bbe360421775090788d2d4425ceecb"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>number_of_groups_</b></td></tr>
 <tr class="separator:ad3bbe360421775090788d2d4425ceecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a687933b61a11f69ba6c750ee06ec6fb6"><td class="memItemLeft" align="right" valign="top"><a id="a687933b61a11f69ba6c750ee06ec6fb6"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>number_of_datapoints_</b></td></tr>
+<tr class="separator:a687933b61a11f69ba6c750ee06ec6fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad05725cabe13677890d4e9591bda98a6"><td class="memItemLeft" align="right" valign="top"><a id="ad05725cabe13677890d4e9591bda98a6"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>function_smooth_name_</b></td></tr>
+<tr class="separator:ad05725cabe13677890d4e9591bda98a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60c48e68457d29510e9cdb8d19b53e01"><td class="memItemLeft" align="right" valign="top"><a id="a60c48e68457d29510e9cdb8d19b53e01"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>function_nonsmooth_name_</b></td></tr>
+<tr class="separator:a60c48e68457d29510e9cdb8d19b53e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c894e3cd1384e07dae57c5121478962"><td class="memItemLeft" align="right" valign="top"><a id="a1c894e3cd1384e07dae57c5121478962"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>dataset_name_</b></td></tr>
+<tr class="separator:a1c894e3cd1384e07dae57c5121478962"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af581820917b032a9ced08e250e29ad57"><td class="memItemLeft" align="right" valign="top"><a id="af581820917b032a9ced08e250e29ad57"></a>
 std::shared_ptr&lt; <a class="el" href="class_fa_r_s_a_1_1_point.html">Point</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>current_iterate_</b></td></tr>
 <tr class="separator:af581820917b032a9ced08e250e29ad57"><td class="memSeparator" colspan="2">&#160;</td></tr>

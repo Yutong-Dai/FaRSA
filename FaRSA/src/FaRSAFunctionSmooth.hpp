@@ -36,6 +36,8 @@ class FunctionSmooth : public Function
 
     /** @name Get methods */
     //@{
+    std::string const datasetName() const { return dataset_name_; };
+    int const         numberOfDataPoints() const { return number_of_data_points_; };
     //@}
 
     /** @name Evaluate methods */
