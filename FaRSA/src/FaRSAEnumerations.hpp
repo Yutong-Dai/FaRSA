@@ -57,6 +57,7 @@ enum DC_Status
 {
     DC_UNSET = -1,
     DC_SUCCESS,
+    DC_SKIPPED,
     DC_EVALUATION_FAILURE,
     DC_ITERATION_LIMIT
 };

@@ -171,17 +171,23 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
             // Check status
             if (strategies_.directionComputationFirstOrder()->status() != DC_SUCCESS)
             {
-                THROW_EXCEPTION(FARSA_DIRECTION_COMPUTATION_FAILURE_EXCEPTION,
-                                "Direction computation for the first order group failed.");
+                if (strategies_.directionComputationFirstOrder()->status() != DC_SKIPPED)
+                {
+                    THROW_EXCEPTION(FARSA_DIRECTION_COMPUTATION_FAILURE_EXCEPTION,
+                                    "Direction computation for the first order group failed.");
+                }
             }
             // Compute direction for the second order group of variables
             strategies_.directionComputationSecondOrder()->computeDirection(&options_, &quantities_, &reporter_,
                                                                             &strategies_);
             // Check status
-            if (strategies_.directionComputationFirstOrder()->status() != DC_SUCCESS)
+            if (strategies_.directionComputationSecondOrder()->status() != DC_SUCCESS)
             {
-                THROW_EXCEPTION(FARSA_DIRECTION_COMPUTATION_FAILURE_EXCEPTION,
-                                "Direction computation for the second order group failed.");
+                if (strategies_.directionComputationSecondOrder()->status() != DC_SKIPPED)
+                {
+                    THROW_EXCEPTION(FARSA_DIRECTION_COMPUTATION_FAILURE_EXCEPTION,
+                                    "Direction computation for the second order group failed.");
+                }
             }
             // quantities_.direction()->print(&reporter_, "\ndirection");
             // Run line search

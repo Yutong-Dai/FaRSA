@@ -159,7 +159,11 @@ class Quantities
      * Get direction
      * \return pointer to Vector representing search direction
      */
-    inline std::shared_ptr<Vector> direction() { return direction_; };
+    inline std::shared_ptr<Vector> directionSearch() { return direction_search_; };
+
+    inline std::shared_ptr<Vector> directionFirstOrder() { return direction_first_order_; };
+
+    inline std::shared_ptr<Vector> directionSecondOrder() { return direction_second_order_; };
 
     /**
      * @brief Get stationarity tolerance
@@ -249,7 +253,7 @@ class Quantities
 
     inline void setScalingThreshold(double scale) { scaling_threshold_ = scale; };
     inline void setScaleApplied(double scale) { scale_applied_ = scale; };
-    inline void setDirectionType(DC_Type direction_type) { direction_type_ = direction_type; };
+    // inline void setDirectionType(DC_Type direction_type) { direction_type_ = direction_type; };
     inline void setOptimalityError(double optimality_error) { optimality_error_ = optimality_error; };
     //@}
 
@@ -362,7 +366,9 @@ class Quantities
     std::string                                    dataset_name_;
     std::shared_ptr<Point>                         current_iterate_;
     std::shared_ptr<Point>                         trial_iterate_;
-    std::shared_ptr<Vector>                        direction_;
+    std::shared_ptr<Vector>                        direction_first_order_;
+    std::shared_ptr<Vector>                        direction_second_order_;
+    std::shared_ptr<Vector>                        direction_search_;
     std::shared_ptr<std::vector<int>>              groups_first_order_;
     std::shared_ptr<std::vector<int>>              groups_second_order_;
     std::shared_ptr<std::vector<int>>              groups_working_;

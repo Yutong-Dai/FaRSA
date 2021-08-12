@@ -12,18 +12,14 @@
 namespace FaRSA
 {
 // Add options
-void DirectionComputationProximalGradient::addOptions(Options* options, const Reporter* reporter) {
-}  // end addOptions
+void DirectionComputationProximalGradient::addOptions(Options* options, const Reporter* reporter) {}  // end addOptions
 
 // Set options
-void DirectionComputationProximalGradient::getOptions(const Options*  options,
-                                                      const Reporter* reporter)
-{
+void DirectionComputationProximalGradient::getOptions(const Options* options, const Reporter* reporter) {
 }  // end getOptions
 
 // Initialize
-void DirectionComputationProximalGradient::initialize(const Options*  options,
-                                                      Quantities*     quantities,
+void DirectionComputationProximalGradient::initialize(const Options* options, Quantities* quantities,
                                                       const Reporter* reporter)
 {
 }
@@ -35,10 +31,8 @@ std::string DirectionComputationProximalGradient::iterationHeader() { return "  
 std::string DirectionComputationProximalGradient::iterationNullValues() { return "---------"; }
 
 // Compute direction
-void DirectionComputationProximalGradient::computeDirection(const Options*  options,
-                                                            Quantities*     quantities,
-                                                            const Reporter* reporter,
-                                                            Strategies*     strategies)
+void DirectionComputationProximalGradient::computeDirection(const Options* options, Quantities* quantities,
+                                                            const Reporter* reporter, Strategies* strategies)
 {
     // Initialize values
     setStatus(DC_UNSET);
@@ -72,8 +66,7 @@ void DirectionComputationProximalGradient::computeDirection(const Options*  opti
                                 "Smooth Evaluation failed.");
             }
             // Compute proximal graident
-            evaluation_success =
-                quantities->currentIterate()->computeProximalGradientUpdate(*quantities);
+            evaluation_success = quantities->currentIterate()->computeProximalGradientUpdate(*quantities);
             if (!evaluation_success)
             {
                 THROW_EXCEPTION(DC_EVALUATION_FAILURE_EXCEPTION,
@@ -84,23 +77,15 @@ void DirectionComputationProximalGradient::computeDirection(const Options*  opti
             // non-working indicies
             // directon = proximalGradientUpdate - currentIterate
             Vector search_direction_actual(quantities->numberOfVariables());
-            // auto   prox_ptr = quantities->currentIterate()->proximalGraidentUpdate();
-            // for (auto i : *(quantities->indiciesWorking()))
-            // {
-            //     search_direction_actual.valuesModifiable()[i] =
-            //         (*prox_ptr).values()[i] -
-            //         quantities->currentIterate()->vector()->values()[i];
-            // }
-            auto step_ptr = quantities->currentIterate()->proximalGraidentStep();
+            auto   step_ptr = quantities->currentIterate()->proximalGraidentStep();
             for (auto i : *(quantities->indiciesWorking()))
             {
                 search_direction_actual.valuesModifiable()[i] = (*step_ptr).values()[i];
             }
-            quantities->direction()->copy(search_direction_actual);
+            quantities->directionFirstOrder()->copy(search_direction_actual);
 
             // Set status
             setStatus(DC_SUCCESS);
-            quantities->setDirectionType(DC_PROXIMAL_GRADIENT);
             // Check for success
             THROW_EXCEPTION(DC_SUCCESS_EXCEPTION, "Direction computation successful.")
 
@@ -116,7 +101,11 @@ void DirectionComputationProximalGradient::computeDirection(const Options*  opti
             setStatus(DC_EVALUATION_FAILURE);
         }
         // Print iteration information
-        reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->direction()->normInf());
+        // reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->direction()->normInf());
+    }
+    else
+    {
+        setStatus(DC_SKIPPED);
     }
 
 }  // end computeDirection

@@ -115,12 +115,18 @@ class LineSearchBacktracking : public LineSearch
 
     /** @name Private members */
     //@{
-    bool   fail_on_small_stepsize_;
-    double stepsize_initial_;
-    double stepsize_minimum_;
-    double stepsize_sufficient_decrease_threshold_;
-    double stepsize_sufficient_decrease_fudge_factor_;
-    double stepsize_decrease_factor_;
+    bool        fail_on_small_stepsize_;
+    double      stepsize_initial_;
+    double      stepsize_minimum_;
+    double      stepsize_sufficient_decrease_threshold_;
+    double      stepsize_sufficient_decrease_fudge_factor_;
+    double      stepsize_decrease_factor_;
+    std::string direction_search_type_;
+    std::string directional_derivative_first_order_type_;
+    std::string directional_derivative_second_order_type_;
+    std::string method_pure_first_order_;
+    std::string method_pure_second_order_;
+    std::string method_hybrid_;
     // int    max_backtrack_;
     int number_of_backtrack_;
     //@}

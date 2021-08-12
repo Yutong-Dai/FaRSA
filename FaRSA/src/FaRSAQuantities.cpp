@@ -38,13 +38,14 @@ Quantities::Quantities()
     dataset_name_ = "Unknown";
     current_iterate_.reset();
     trial_iterate_.reset();
-    direction_.reset();
+    direction_first_order_.reset();
+    direction_second_order_.reset();
+    direction_search_.reset();
     groups_first_order_.reset();
     groups_second_order_.reset();
     groups_working_.reset();
     indicies_working_.reset();
     groups_.reset();
-    direction_type_ = DC_UNSPECIFIED;
 }
 
 // Destructor
@@ -189,9 +190,10 @@ bool Quantities::initialize(const std::shared_ptr<FunctionSmooth>    function_sm
     // Set initial point
     current_iterate_ = initial_iterate;
 
-    // Initialize direction
-    direction_ = std::make_shared<Vector>(number_of_variables_);
-    direction_type_ = DC_UNSPECIFIED;
+    // Initialize directions
+    direction_first_order_ = std::make_shared<Vector>(number_of_variables_);
+    direction_second_order_ = std::make_shared<Vector>(number_of_variables_);
+    direction_search_ = std::make_shared<Vector>(number_of_variables_);
     // Initialize stepsize
     stepsize_ls_ = 0.0;
     stepsize_prox_ = 1.0;
