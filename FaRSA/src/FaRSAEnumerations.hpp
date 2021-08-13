@@ -86,6 +86,7 @@ enum PU_Status
 {
     PU_UNSET = -1,
     PU_SUCCESS,
+    PU_UPDATE_FAILURE,
     PU_EVALUATION_FAILURE,
 };
 

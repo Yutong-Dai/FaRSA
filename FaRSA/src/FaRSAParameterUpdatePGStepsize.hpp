@@ -40,7 +40,7 @@ class ParameterUpdatePGStepsize : public ParameterUpdate
     /**
      * Constructor
      */
-    ParameterUpdatePGStepsize(){};
+    ParameterUpdatePGStepsize() { name_ = "PGStepsize"; };
     //@}
 
     /** @name Destructor */
@@ -79,12 +79,6 @@ class ParameterUpdatePGStepsize : public ParameterUpdate
 
     /** @name Get method */
     //@{
-
-    /**
-     * Get name of strategy
-     * \return string with name of strategy
-     */
-    std::string name() { return "ParameterUpdatePGStepsize"; };
     // /**
     //  * Get status
     //  * \return current status of line search strategy
@@ -110,8 +104,7 @@ class ParameterUpdatePGStepsize : public ParameterUpdate
      * \param[in] reporter is pointer to Reporter object from FaRSA
      * \param[in,out] strategies is pointer to Strategies object from FaRSA
      */
-    void update(const Options* options, Quantities* quantities, const Reporter* reporter,
-                Strategies* strategies);
+    void update(const Options* options, Quantities* quantities, const Reporter* reporter, Strategies* strategies);
     //@}
 
    private:

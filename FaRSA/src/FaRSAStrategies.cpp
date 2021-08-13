@@ -6,8 +6,11 @@
 
 #include "FaRSAStrategies.hpp"
 
+#include <stdlib.h>  // for terminateing the program
+
 #include "FaRSADirectionComputationProximalGradient.hpp"
 #include "FaRSALineSearchBacktracking.hpp"
+#include "FaRSAParameterUpdate.hpp"
 #include "FaRSAParameterUpdatePGStepsize.hpp"
 #include "FaRSASpacePartitionFirstOrder.hpp"
 
@@ -30,6 +33,10 @@ void Strategies::addOptions(Options* options, const Reporter* reporter)
     options->addStringOption(reporter, "line_search", "Backtracking",
                              "Line search strategy to use.\n"
                              "Default     : Backtracking.");
+    options->addStringOption(reporter, "parameter_updates", "PGstepsize",
+                             "A set of parameter update strategies to use. Sepearate by \";\"\n"
+                             "Sample usages: PGstepsize;ProjectionL2BallRadius"
+                             "Default     : PGstepsize.");
 
     // Add options for space partition strategies
     std::shared_ptr<SpacePartition> space_partition;
@@ -68,6 +75,7 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     std::string direction_computation_first_order_name;
     std::string direction_computation_second_order_name;
     std::string line_search_name;
+    std::string parameter_updates_names;
 
     // Read integer options
     options->valueAsString(reporter, "space_partition", space_partition_name);
@@ -75,6 +83,8 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     options->valueAsString(reporter, "direction_computation_first_order", direction_computation_first_order_name);
     options->valueAsString(reporter, "direction_computation_second_order", direction_computation_first_order_name);
     options->valueAsString(reporter, "line_search", line_search_name);
+    options->valueAsString(reporter, "parameter_updates", parameter_updates_names);
+
     // Set space patiton strategy
     if (space_partition_name.compare("FirstOrderPartition") == 0)
     {
@@ -84,6 +94,8 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     {
         space_partition_ = std::make_shared<SpacePartitionFirstOrder>();
     }
+    // Set direction computation options
+    space_partition_->getOptions(options, reporter);
 
     // Set direction computation strategy
     if (direction_computation_first_order_name.compare("ProximalGradient") == 0)
@@ -94,7 +106,8 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     {
         direction_computation_first_order_ = std::make_shared<DirectionComputationProximalGradient>();
     }
-
+    // Set direction computation options
+    direction_computation_first_order_->getOptions(options, reporter);
     if (direction_computation_first_order_name.compare("TruncatedNewton") == 0)
     {
         direction_computation_second_order_ = std::make_shared<DirectionComputationProximalGradient>();
@@ -103,6 +116,8 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     {
         direction_computation_second_order_ = std::make_shared<DirectionComputationProximalGradient>();
     }
+    // Set direction computation options
+    direction_computation_second_order_->getOptions(options, reporter);
 
     // Set line search strategy
     if (line_search_name.compare("Backtracking") == 0)
@@ -113,20 +128,48 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     {
         line_search_ = std::make_shared<LineSearchBacktracking>();
     }
-
-    parameter_update_pg_stepsize_ = std::make_shared<ParameterUpdatePGStepsize>();
-
-    // Set direction computation options
-    space_partition_->getOptions(options, reporter);
-    // Set direction computation options
-    direction_computation_first_order_->getOptions(options, reporter);
-    direction_computation_second_order_->getOptions(options, reporter);
-
     // Set line search options
     line_search_->getOptions(options, reporter);
 
-    // set parameter update PG stepsize
-    parameter_update_pg_stepsize_->getOptions(options, reporter);
+    // Set a collection of parameter update strategies
+    // parse the parameter_updates_set_of_names
+    std::vector<std::string> parameter_update_lst;
+    std::stringstream        s_stream(parameter_updates_names);
+    while (s_stream.good())
+    {
+        std::string parameter_update;
+        // get first string delimited by ;
+        std::getline(s_stream, parameter_update, ';');
+        parameter_update_lst.push_back(parameter_update);
+    }
+    parameter_updates_ = std::make_shared<ParameterUpdates>();
+    for (std::string parameter_update : parameter_update_lst)
+    {
+        if (parameter_update.compare("PGstepsize") == 0)
+        {
+            auto temp = std::make_shared<ParameterUpdatePGStepsize>();
+            // set parameter update PG stepsize
+            temp->getOptions(options, reporter);
+            bool is_success = parameter_updates_->add(temp);
+            if (!is_success)
+            {
+                reporter->printf(R_SOLVER, R_BASIC,
+                                 "Attempted to add parameter update strategy \"%s\", but failed. Terminate the "
+                                 "program, which is not supposed to happen.\n",
+                                 parameter_update.c_str());
+                exit(EXIT_FAILURE);
+            }
+        }
+        else
+        {
+            reporter->printf(
+                R_SOLVER, R_BASIC,
+                "Attempted to add un-recognized parameter update strategy \"%s\". Terminate the program.\n",
+                parameter_update.c_str());
+            exit(EXIT_FAILURE);
+        }
+    }
+
 }  // end getOptions
 
 // Initialize
@@ -140,8 +183,8 @@ void Strategies::initialize(const Options* options, Quantities* quantities, cons
 
     // Initialize line search
     line_search_->initialize(options, quantities, reporter);
-    // Initalize paramter update
-    parameter_update_pg_stepsize_->initialize(options, quantities, reporter);
+    // Initalize paramter updates
+    parameter_updates_->initialize(options, quantities, reporter);
 }  // end initialize
 
 // Set iteration header
@@ -174,10 +217,16 @@ void Strategies::printHeader(const Reporter* reporter)
         "Space Partition strategy ...................... : %s\n"
         "Direction computation strategy (1st order)..... : %s\n"
         "Direction computation strategy (2nd order)..... : %s\n"
-        "Line search strategy........................... : %s\n",
+        "Line search strategy........................... : %s\n"
+        "Parameter update strategies: .................. : %d strategy(ies) used.\n",
         space_partition_->name().c_str(), direction_computation_first_order_->name().c_str(),
         use_second_order_direction ? direction_computation_second_order_->name().c_str() : "Not applicable",
-        line_search_->name().c_str());
+        line_search_->name().c_str(), parameter_updates_->size());
+    reporter->printf(R_SOLVER, R_BASIC,
+                     "\n------------------ Deatils ----------------\n"
+                     "Line search strategy:\n%s"
+                     "Parameter update strategies:\n%s",
+                     line_search_->details().c_str(), parameter_updates_->details().c_str());
 
 }  // end printHeader
 

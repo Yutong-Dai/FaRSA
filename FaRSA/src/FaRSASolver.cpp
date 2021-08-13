@@ -200,12 +200,11 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
             }
 
             // Update Parameters (this has to be done before performing the iterate update)
-            strategies_.parameterUpdatePGStepsize()->update(&options_, &quantities_, &reporter_, &strategies_);
+            strategies_.parameterUpdates()->update(&options_, &quantities_, &reporter_, &strategies_);
             // Check status
-            if (strategies_.parameterUpdatePGStepsize()->status() != PU_SUCCESS)
+            if (strategies_.parameterUpdates()->statusOverall() != PU_SUCCESS)
             {
-                THROW_EXCEPTION(FARSA_PARAMETER_UPDATE_FAILURE_EXCEPTION,
-                                "Parameter Update for the proximal gradient computation failed.")
+                THROW_EXCEPTION(FARSA_PARAMETER_UPDATE_FAILURE_EXCEPTION, "Parameter Updates failed.")
             }
             // Update iterate
             quantities_.setCurrentIterate(quantities_.trialIterate());

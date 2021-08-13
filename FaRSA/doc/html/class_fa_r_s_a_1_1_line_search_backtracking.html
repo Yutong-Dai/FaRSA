@@ -123,6 +123,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> ()</td></tr
 <tr class="separator:a9cca941b3bed91cab66a183e0ad096ed inherit pub_methods_class_fa_r_s_a_1_1_line_search"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6f3d3845415f64cd1a7f66afaae5ffc inherit pub_methods_class_fa_r_s_a_1_1_line_search"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_line_search.html#ae6f3d3845415f64cd1a7f66afaae5ffc">~LineSearch</a> ()</td></tr>
 <tr class="separator:ae6f3d3845415f64cd1a7f66afaae5ffc inherit pub_methods_class_fa_r_s_a_1_1_line_search"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a94fc7d65da1bfdd0e69c0661509aba inherit pub_methods_class_fa_r_s_a_1_1_line_search"><td class="memItemLeft" align="right" valign="top"><a id="a1a94fc7d65da1bfdd0e69c0661509aba"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>details</b> () const</td></tr>
+<tr class="separator:a1a94fc7d65da1bfdd0e69c0661509aba inherit pub_methods_class_fa_r_s_a_1_1_line_search"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abadb405930be6f4cdc91faf18ce5df23 inherit pub_methods_class_fa_r_s_a_1_1_line_search"><td class="memItemLeft" align="right" valign="top">LS_Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_line_search.html#abadb405930be6f4cdc91faf18ce5df23">status</a> ()</td></tr>
 <tr class="separator:abadb405930be6f4cdc91faf18ce5df23 inherit pub_methods_class_fa_r_s_a_1_1_line_search"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91d267f6f03113e6f3460b91af088e3d inherit pub_methods_class_fa_r_s_a_1_1_line_search"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_line_search.html#a91d267f6f03113e6f3460b91af088e3d">setStatus</a> (LS_Status <a class="el" href="class_fa_r_s_a_1_1_line_search.html#abadb405930be6f4cdc91faf18ce5df23">status</a>)</td></tr>
@@ -164,9 +167,34 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>stepsize_sufficient
 <tr class="memitem:abdeecb7dfff16f933225b001d1d74079"><td class="memItemLeft" align="right" valign="top"><a id="abdeecb7dfff16f933225b001d1d74079"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>stepsize_decrease_factor_</b></td></tr>
 <tr class="separator:abdeecb7dfff16f933225b001d1d74079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af68897781bb1c58efaf42713e6308b90"><td class="memItemLeft" align="right" valign="top"><a id="af68897781bb1c58efaf42713e6308b90"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>direction_search_type_</b></td></tr>
+<tr class="separator:af68897781bb1c58efaf42713e6308b90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a6f056666d9212de8c142c6a29a0c8b"><td class="memItemLeft" align="right" valign="top"><a id="a4a6f056666d9212de8c142c6a29a0c8b"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>directional_derivative_first_order_type_</b></td></tr>
+<tr class="separator:a4a6f056666d9212de8c142c6a29a0c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c8fc83bff5a9de9ecf982bf5acf6ad6"><td class="memItemLeft" align="right" valign="top"><a id="a6c8fc83bff5a9de9ecf982bf5acf6ad6"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>directional_derivative_second_order_type_</b></td></tr>
+<tr class="separator:a6c8fc83bff5a9de9ecf982bf5acf6ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1800d50a35e1810c2f26f5b89befa974"><td class="memItemLeft" align="right" valign="top"><a id="a1800d50a35e1810c2f26f5b89befa974"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>method_pure_first_order_</b></td></tr>
+<tr class="separator:a1800d50a35e1810c2f26f5b89befa974"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7040ba062210c106aa211ab78e22ce6c"><td class="memItemLeft" align="right" valign="top"><a id="a7040ba062210c106aa211ab78e22ce6c"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>method_pure_second_order_</b></td></tr>
+<tr class="separator:a7040ba062210c106aa211ab78e22ce6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a597a0859180fa06f0e83dd8a8a943dfb"><td class="memItemLeft" align="right" valign="top"><a id="a597a0859180fa06f0e83dd8a8a943dfb"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>method_hybrid_</b></td></tr>
+<tr class="separator:a597a0859180fa06f0e83dd8a8a943dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a741d7d23774307a778e85874014a35b9"><td class="memItemLeft" align="right" valign="top"><a id="a741d7d23774307a778e85874014a35b9"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>number_of_backtrack_</b></td></tr>
 <tr class="separator:a741d7d23774307a778e85874014a35b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_attribs_class_fa_r_s_a_1_1_line_search"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_fa_r_s_a_1_1_line_search')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_fa_r_s_a_1_1_line_search.html">FaRSA::LineSearch</a></td></tr>
+<tr class="memitem:a44e9f7e7eb512e831f7d1aaa2c629b98 inherit pro_attribs_class_fa_r_s_a_1_1_line_search"><td class="memItemLeft" align="right" valign="top"><a id="a44e9f7e7eb512e831f7d1aaa2c629b98"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>details_</b></td></tr>
+<tr class="separator:a44e9f7e7eb512e831f7d1aaa2c629b98 inherit pro_attribs_class_fa_r_s_a_1_1_line_search"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_fa_r_s_a_1_1_line_search_backtracking.html">LineSearchBacktracking</a> class </p>

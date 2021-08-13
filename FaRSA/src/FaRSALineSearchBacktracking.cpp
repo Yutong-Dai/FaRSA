@@ -118,6 +118,27 @@ void LineSearchBacktracking::getOptions(const Options* options, const Reporter* 
 void LineSearchBacktracking::initialize(const Options* options, Quantities* quantities, const Reporter* reporter)
 {
     quantities->setStepsizeLineSearch(fmax(stepsize_minimum_, stepsize_initial_));
+    details_ = "";
+    details_ += "|-- search direction type: " + direction_search_type_ + "\n";
+    details_ += "|-- directional derivative first order type: " + directional_derivative_first_order_type_ + "\n";
+    details_ += "|-- directional derivative second order type: " + directional_derivative_second_order_type_ + "\n";
+    if (direction_search_type_.compare("pure") == 0)
+    {
+        details_ += "|-- Line search method first order direction: " + method_pure_first_order_ + "\n";
+        details_ += "|-- Line search method second order direction: " + method_pure_second_order_ + "\n";
+    }
+    else if (direction_search_type_.compare("hybrid") == 0)
+    {
+        details_ += "|-- Line search method: " + method_hybrid_ + "\n";
+        THROW_EXCEPTION(LS_EVALUATION_FAILURE_EXCEPTION,
+                        "No implementation for the LSB_direction_search_type being set to hybrid yet\n");
+    }
+    else
+    {
+        details_ += "|-- Line search method: UNKNOWN\n";
+        std::string msg = "Invalid option for direction_search_type: " + direction_search_type_ + "\n";
+        THROW_EXCEPTION(LS_EVALUATION_FAILURE_EXCEPTION, msg);
+    }  // end if
 }
 
 // Run line search - get the acceptable trial iterate; move from current iterate to the trial
@@ -151,6 +172,7 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
         double      directional_derivative = 0.0;
         auto        direction_search = quantities->directionSearch();
         std::string search_method = "UNKNOWN";
+
         if (direction_search_type_.compare("pure") == 0)
         {
             if ((strategies->directionComputationFirstOrder()->status() == DC_SUCCESS) and
@@ -328,6 +350,7 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
         setStatus(LS_STEPSIZE_TOO_SMALL);
     }  // end catch
 
+    reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->directionSearch()->norm2());
     // Print iteration information
     reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->stepsizeLineSearch());
 
