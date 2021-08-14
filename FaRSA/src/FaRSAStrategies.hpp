@@ -151,6 +151,7 @@ class Strategies
     std::shared_ptr<LineSearch>           line_search_;
     std::shared_ptr<ParameterUpdates>     parameter_updates_;
     std::string                           iteration_header_;
+    bool                                  verbose_;
     //@}
 
 };  // end Strategies

@@ -49,6 +49,11 @@ void FaRSASolver::addOptions()
 
     // Add options for strategies
     strategies_.addOptions(&options_, &reporter_);
+
+    // solver specific options
+    options_.addBoolOption(&reporter_, "solver_verbose", true,
+                           "A parameter controls whether should print more details.\n"
+                           "Default     : true.");
 }  // end addOptions
 
 // Set options
@@ -59,7 +64,8 @@ void FaRSASolver::getOptions()
 
     // Set strategies options
     strategies_.getOptions(&options_, &reporter_);
-
+    // Set Solver specific options
+    options_.valueAsBool(&reporter_, "solver_verbose", verbose_);
 }  // end getOptions
 
 // Solution
@@ -482,7 +488,10 @@ void FaRSASolver::printHeader()
     strategies_.printHeader(&reporter_);
 
     // Print quantities statistics
-    quantities_.print(&reporter_);
+    if (verbose_)
+    {
+        quantities_.print(&reporter_);
+    }
 }  // end printHeader
 
 // Print iteration header

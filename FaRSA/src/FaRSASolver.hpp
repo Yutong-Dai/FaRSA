@@ -91,10 +91,7 @@ class FaRSASolver
      * Get time in evaluations
      * \return seconds to perform problem function evaluations
      */
-    inline double const timeEvaluations() const
-    {
-        return quantities_.evaluationTime() / (double)CLOCKS_PER_SEC;
-    };
+    inline double const timeEvaluations() const { return quantities_.evaluationTime() / (double)CLOCKS_PER_SEC; };
     /**
      * Get time in FaRSA
      * \return seconds between start and end time not including problem function evaluation time
@@ -142,8 +139,7 @@ class FaRSASolver
      * \param[in] problem is a pointer to a Problem object
      */
     void optimize(const std::shared_ptr<FunctionSmooth>    function_smooth,
-                  const std::shared_ptr<FunctionNonsmooth> function_nonsmooth,
-                  const Vector&                            initail_point);
+                  const std::shared_ptr<FunctionNonsmooth> function_nonsmooth, const Vector& initail_point);
     //@}
 
    private:
@@ -172,6 +168,7 @@ class FaRSASolver
     Quantities quantities_;
     Reporter   reporter_;
     Strategies strategies_;
+    bool       verbose_;
     //@}
 
     /** @name Private methods */

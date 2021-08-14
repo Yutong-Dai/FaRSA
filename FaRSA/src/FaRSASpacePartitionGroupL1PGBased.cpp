@@ -33,6 +33,11 @@ void SpacePartitionGroupL1PGBased::addOptions(Options* options, const Reporter* 
         "larger than 1.0, then algorithm tends to take more second order direction computation. Please refer "
         "to the FaRSA-Group paper for details.\n"
         "Default     : 1.0.");
+
+    options->addBoolOption(reporter, "SPGL1_verbose", true,
+                           "A parameter controls whether should print more details.\n"
+                           "Default     : true.");
+
 }  // end addOptions
 
 // Set options
@@ -42,6 +47,7 @@ void SpacePartitionGroupL1PGBased::getOptions(const Options* options, const Repo
     options->valueAsDouble(reporter, "SPGL1_kappa1", kappa1_);
     options->valueAsDouble(reporter, "SPGL1_kappa2", kappa2_);
     options->valueAsDouble(reporter, "SPGL1_gamma", gamma_);
+    options->valueAsBool(reporter, "SPGL1_verbose", verbose_);
 }  // end getOptions
 
 // Initialize
@@ -213,10 +219,18 @@ void SpacePartitionGroupL1PGBased::partitionSpace(const Options* options, Quanti
     {
         setStatus(SP_PG_BASED_PARTITION_FAILURE);
     }
-    reporter->printf(R_SOLVER, R_PER_ITERATION, "  %+.2e    %6d   %6d %+.2e %+.2e",
-                     quantities->stepsizeProximalGradient(),
-                     quantities->numberOfGroups() - quantities->groupsWorking()->size(),
-                     quantities->groupsWorking()->size(), optimality_first_order, optimality_second_order);
+    if (verbose_)
+    {
+        reporter->printf(R_SOLVER, R_PER_ITERATION, "  %+.2e    %6d   %6d %+.2e %+.2e",
+                         quantities->stepsizeProximalGradient(),
+                         quantities->numberOfGroups() - quantities->groupsWorking()->size(),
+                         quantities->groupsWorking()->size(), optimality_first_order, optimality_second_order);
+    }
+    else
+    {
+        reporter->printf(R_SOLVER, R_PER_ITERATION, "  %+.2e  %+.2e %+.2e", quantities->stepsizeProximalGradient(),
+                         optimality_first_order, optimality_second_order);
+    }
 }
 
 }  // namespace FaRSA

@@ -35,7 +35,8 @@ class SpacePartitionGroupL1PGBased : public SpacePartition
         : p_(FARSA_DOUBLE_INFINITY),
           kappa1_(FARSA_DOUBLE_INFINITY),
           kappa2_(FARSA_DOUBLE_INFINITY),
-          gamma_(FARSA_DOUBLE_INFINITY){};
+          gamma_(FARSA_DOUBLE_INFINITY),
+          verbose_(true){};
     //@}
 
     /** @name Destructor */
@@ -78,12 +79,32 @@ class SpacePartitionGroupL1PGBased : public SpacePartition
      * Get iteration header string
      * \return string of header values
      */
-    std::string iterationHeader() { return "ProxStepsize #1stGrps #2ndGrps 1stOptim. 2ndOptim."; };
+    std::string iterationHeader()
+    {
+        if (verbose_)
+        {
+            return "ProxStepsize #1stGrps #2ndGrps 1stOptim. 2ndOptim.";
+        }
+        else
+        {
+            return "ProxStepsize 1stOptim. 2ndOptim.";
+        }
+    };
     /**
      * Get iteration null values string
      * \return string of null values
      */
-    std::string iterationNullValues() { return " ---------  --------- --------- --------- ---------"; };
+    std::string iterationNullValues()
+    {
+        if (verbose_)
+        {
+            return " ---------  --------- --------- --------- ---------";
+        }
+        else
+        {
+            return " ---------  --------- ---------";
+        };
+    }
     /**
      * Get name of strategy
      * \return string with name of strategy
@@ -127,6 +148,7 @@ class SpacePartitionGroupL1PGBased : public SpacePartition
     double                            gamma_;
     std::shared_ptr<std::vector<int>> groups_full_indices_;
     std::shared_ptr<std::vector<int>> variables_full_indices_;
+    bool                              verbose_;
 
     //@}
 };  // end SpacePartitionGroupL1PGBased

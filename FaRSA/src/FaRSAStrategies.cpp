@@ -38,6 +38,10 @@ void Strategies::addOptions(Options* options, const Reporter* reporter)
                              "A set of parameter update strategies to use. Sepearate by \";\"\n"
                              "Sample usages: PGstepsize;ProjectionL2BallRadius"
                              "Default     : PGstepsize.");
+    // Add bool options
+    options->addBoolOption(reporter, "strategies_verbose", true,
+                           "A parameter controls whether should print more details.\n"
+                           "Default     : true.");
 
     // Add options for space partition strategies
     std::shared_ptr<SpacePartition> space_partition;
@@ -73,6 +77,8 @@ void Strategies::addOptions(Options* options, const Reporter* reporter)
 // Set options
 void Strategies::getOptions(const Options* options, const Reporter* reporter)
 {
+    options->valueAsBool(reporter, "strategies_verbose", verbose_);
+
     // Declare strategy names
     std::string space_partition_name;
     std::string direction_computation_first_order_name;
@@ -231,11 +237,14 @@ void Strategies::printHeader(const Reporter* reporter)
         space_partition_->name().c_str(), direction_computation_first_order_->name().c_str(),
         use_second_order_direction ? direction_computation_second_order_->name().c_str() : "Not applicable",
         line_search_->name().c_str(), parameter_updates_->size());
-    reporter->printf(R_SOLVER, R_BASIC,
-                     "\n------------------ Deatils ----------------\n"
-                     "Line search strategy:\n%s"
-                     "Parameter update strategies:\n%s",
-                     line_search_->details().c_str(), parameter_updates_->details().c_str());
+    if (verbose_)
+    {
+        reporter->printf(R_SOLVER, R_BASIC,
+                         "\n------------------ Deatils ----------------\n"
+                         "Line search strategy:\n%s"
+                         "Parameter update strategies:\n%s",
+                         line_search_->details().c_str(), parameter_updates_->details().c_str());
+    }
 
 }  // end printHeader
 
