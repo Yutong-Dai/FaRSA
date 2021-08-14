@@ -230,7 +230,7 @@ bool Quantities::initialize(const std::shared_ptr<FunctionSmooth>    function_sm
 }  // end initialize
 
 // Iteration header string
-std::string Quantities::iterationHeader() { return "  Iter.  Objective "; }
+std::string Quantities::iterationHeader() { return "  Iter.  Objective"; }
 
 // Iteration null values
 std::string Quantities::iterationNullValues() { return " ------ -----------"; }

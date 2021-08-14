@@ -196,6 +196,11 @@ void Strategies::setIterationHeader()
 {
     // Set iteration header string based on strategy objects
     iteration_header_ = "";
+    if (space_partition_->iterationHeader().length() > 0)
+    {
+        iteration_header_ += " ";
+        iteration_header_ += space_partition_->iterationHeader();
+    }  // end if
     if (direction_computation_first_order_->iterationHeader().length() > 0)
     {
         iteration_header_ += " ";

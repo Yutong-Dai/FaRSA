@@ -12,22 +12,17 @@
 namespace FaRSA
 {
 // Add options
-void SpacePartitionFirstOrder::addOptions(Options* options, const Reporter* reporter) {
-}  // end addOptions
+void SpacePartitionFirstOrder::addOptions(Options* options, const Reporter* reporter) {}  // end addOptions
 
 // Set options
-void SpacePartitionFirstOrder::getOptions(const Options* options, const Reporter* reporter) {
-}  // end getOptions
+void SpacePartitionFirstOrder::getOptions(const Options* options, const Reporter* reporter) {}  // end getOptions
 
 // Initialize
-void SpacePartitionFirstOrder::initialize(const Options* options, Quantities* quantities,
-                                          const Reporter* reporter)
-{
-}
+void SpacePartitionFirstOrder::initialize(const Options* options, Quantities* quantities, const Reporter* reporter) {}
 
 // Partition Space
-void SpacePartitionFirstOrder::partitionSpace(const Options* options, Quantities* quantities,
-                                              const Reporter* reporter, Strategies* strategies)
+void SpacePartitionFirstOrder::partitionSpace(const Options* options, Quantities* quantities, const Reporter* reporter,
+                                              Strategies* strategies)
 {
     if (!is_partitioned_)
     {
@@ -35,8 +30,7 @@ void SpacePartitionFirstOrder::partitionSpace(const Options* options, Quantities
         try
         {
             // all variables should be seen as the first order variables
-            auto group_first_order =
-                std::make_shared<std::vector<int>>(quantities->numberOfGroups());
+            auto group_first_order = std::make_shared<std::vector<int>>(quantities->numberOfGroups());
             auto group_second_order = std::make_shared<std::vector<int>>();
 
             auto indicies_working = std::make_shared<std::vector<int>>();
@@ -56,8 +50,7 @@ void SpacePartitionFirstOrder::partitionSpace(const Options* options, Quantities
             quantities->setGroupsWorking(group_first_order);
             quantities->setIndiciesWorking(indicies_working);
 
-            if (quantities->groupsFirstOrder()->size() == 0 or
-                quantities->groupsSecondOrder()->size() != 0)
+            if (quantities->groupsFirstOrder()->size() == 0 or quantities->groupsSecondOrder()->size() != 0)
             {
                 THROW_EXCEPTION(SP_FIRST_ORDER_PARTITION_EXCEPTION,
                                 "Space Partition unsuccessful. The groups_first_order "
@@ -81,6 +74,8 @@ void SpacePartitionFirstOrder::partitionSpace(const Options* options, Quantities
         {
             setStatus(SP_FIRST_ORDER_PARTITION_FAILURE);
         }
+        // print proximal gradient stepsize
+        reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->stepsizeProximalGradient());
     }
 }
 

@@ -25,7 +25,7 @@ void DirectionComputationProximalGradient::initialize(const Options* options, Qu
 }
 
 // Iteration header
-std::string DirectionComputationProximalGradient::iterationHeader() { return "  |Step| "; }
+std::string DirectionComputationProximalGradient::iterationHeader() { return "|Direction|"; }
 
 // Iteration null values string
 std::string DirectionComputationProximalGradient::iterationNullValues() { return "---------"; }

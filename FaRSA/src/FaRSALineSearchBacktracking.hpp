@@ -65,7 +65,7 @@ class LineSearchBacktracking : public LineSearch
      * Get iteration header values
      * \return string of header values
      */
-    std::string iterationHeader() { return " Stepsize"; };
+    std::string iterationHeader() { return "LSStepsize"; };
     /**
      * Get iteration null values string
      * \return string of null values

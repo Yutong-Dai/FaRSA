@@ -350,9 +350,9 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
         setStatus(LS_STEPSIZE_TOO_SMALL);
     }  // end catch
 
-    reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->directionSearch()->norm2());
+    reporter->printf(R_SOLVER, R_PER_ITERATION, "  %+.2e", quantities->directionSearch()->norm2());
     // Print iteration information
-    reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->stepsizeLineSearch());
+    reporter->printf(R_SOLVER, R_PER_ITERATION, "  %+.2e", quantities->stepsizeLineSearch());
 
 }  // end runLineSearch
 

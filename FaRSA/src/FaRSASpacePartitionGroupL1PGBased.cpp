@@ -67,6 +67,8 @@ void SpacePartitionGroupL1PGBased::partitionSpace(const Options* options, Quanti
                                                   const Reporter* reporter, Strategies* strategies)
 {
     setStatus(SP_UNSET);
+    double optimality_second_order = 0.0;
+    double optimality_first_order = 0.0;
     try
     {
         auto group_first_order = std::make_shared<std::vector<int>>();
@@ -158,18 +160,16 @@ void SpacePartitionGroupL1PGBased::partitionSpace(const Options* options, Quanti
         // compute optimality measure
         auto   s = current_iterate->proximalGraidentStep();
         double s_norm2 = s->norm2();
-        double chi_second_order = 0.0;
-        double chi_first_order = 0.0;
         for (auto i : *indicies_second_order)
         {
-            chi_second_order += pow(s->values()[i], 2.0);
+            optimality_second_order += pow(s->values()[i], 2.0);
         }
-        chi_first_order = sqrt(pow(s_norm2, 2.0) - chi_second_order);
-        chi_second_order = sqrt(chi_second_order);
-        // std::cout << "\ns_norm2: " << s_norm2 << " chi_first_order: " << chi_first_order
-        //           << " chi_second_order: " << chi_second_order << std::endl;
+        optimality_first_order = sqrt(pow(s_norm2, 2.0) - optimality_second_order);
+        optimality_second_order = sqrt(optimality_second_order);
+        // std::cout << "\ns_norm2: " << s_norm2 << " optimality_first_order: " << optimality_first_order
+        //           << " optimality_second_order: " << optimality_second_order << std::endl;
         // decide which direction should be computed
-        if (chi_first_order <= gamma_ * chi_second_order)
+        if (optimality_first_order <= gamma_ * optimality_second_order)
         {
             strategies->directionComputationFirstOrder()->setPerformComputation(false);
             strategies->directionComputationSecondOrder()->setPerformComputation(true);
@@ -213,6 +213,10 @@ void SpacePartitionGroupL1PGBased::partitionSpace(const Options* options, Quanti
     {
         setStatus(SP_PG_BASED_PARTITION_FAILURE);
     }
+    reporter->printf(R_SOLVER, R_PER_ITERATION, "  %+.2e    %6d   %6d %+.2e %+.2e",
+                     quantities->stepsizeProximalGradient(),
+                     quantities->numberOfGroups() - quantities->groupsWorking()->size(),
+                     quantities->groupsWorking()->size(), optimality_first_order, optimality_second_order);
 }
 
 }  // namespace FaRSA

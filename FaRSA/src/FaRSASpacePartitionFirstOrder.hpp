@@ -71,6 +71,16 @@ class SpacePartitionFirstOrder : public SpacePartition
     /** @name Get methods */
     //@{
     /**
+     * Get iteration header string
+     * \return string of header values
+     */
+    std::string iterationHeader() { return "ProxStepsize"; };
+    /**
+     * Get iteration null values string
+     * \return string of null values
+     */
+    std::string iterationNullValues() { return "---------"; };
+    /**
      * Get name of strategy
      * \return string with name of strategy
      */
