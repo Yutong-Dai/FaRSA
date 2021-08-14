@@ -9,6 +9,7 @@
 #include <stdlib.h>  // for terminateing the program
 
 #include "FaRSADirectionComputationProximalGradient.hpp"
+#include "FaRSADirectionComputationTruncatedNewton.hpp"
 #include "FaRSALineSearchBacktracking.hpp"
 #include "FaRSAParameterUpdate.hpp"
 #include "FaRSAParameterUpdatePGStepsize.hpp"
@@ -56,7 +57,7 @@ void Strategies::addOptions(Options* options, const Reporter* reporter)
     direction_computation_first_order = std::make_shared<DirectionComputationProximalGradient>();
     direction_computation_first_order->addOptions(options, reporter);
     std::shared_ptr<DirectionComputation> direction_computation_second_order;
-    direction_computation_second_order = std::make_shared<DirectionComputationProximalGradient>();
+    direction_computation_second_order = std::make_shared<DirectionComputationTruncatedNewton>();
     direction_computation_second_order->addOptions(options, reporter);
     // ADD NEW DIRECTION COMPUTATION STRATEGIES HERE AND IN SWITCH BELOW //
 
@@ -77,6 +78,7 @@ void Strategies::addOptions(Options* options, const Reporter* reporter)
 // Set options
 void Strategies::getOptions(const Options* options, const Reporter* reporter)
 {
+    // get verbose_ values
     options->valueAsBool(reporter, "strategies_verbose", verbose_);
 
     // Declare strategy names
@@ -88,9 +90,8 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
 
     // Read integer options
     options->valueAsString(reporter, "space_partition", space_partition_name);
-    options->valueAsString(reporter, "line_search", line_search_name);
     options->valueAsString(reporter, "direction_computation_first_order", direction_computation_first_order_name);
-    options->valueAsString(reporter, "direction_computation_second_order", direction_computation_first_order_name);
+    options->valueAsString(reporter, "direction_computation_second_order", direction_computation_second_order_name);
     options->valueAsString(reporter, "line_search", line_search_name);
     options->valueAsString(reporter, "parameter_updates", parameter_updates_names);
 
@@ -99,9 +100,16 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     {
         space_partition_ = std::make_shared<SpacePartitionFirstOrder>();
     }
-    else
+    else if (space_partition_name.compare("GroupL1PGBased") == 0)
     {
         space_partition_ = std::make_shared<SpacePartitionGroupL1PGBased>();
+    }
+    else
+    {
+        reporter->printf(R_SOLVER, R_BASIC,
+                         "Attempted to add un-recognized space partition strategy \"%s\". Terminate the program.\n",
+                         space_partition_name.c_str());
+        exit(EXIT_FAILURE);
     }
     // Set space partition computation options
     space_partition_->getOptions(options, reporter);
@@ -113,18 +121,26 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     }
     else
     {
-        direction_computation_first_order_ = std::make_shared<DirectionComputationProximalGradient>();
+        reporter->printf(
+            R_SOLVER, R_BASIC,
+            "Attempted to add un-recognized direction computation strategy \"%s\". Terminate the program.\n",
+            direction_computation_first_order_name.c_str());
+        exit(EXIT_FAILURE);
     }
     // Set direction computation options
     direction_computation_first_order_->getOptions(options, reporter);
 
-    if (direction_computation_first_order_name.compare("TruncatedNewton") == 0)
+    if (direction_computation_second_order_name.compare("TruncatedNewton") == 0)
     {
-        direction_computation_second_order_ = std::make_shared<DirectionComputationProximalGradient>();
+        direction_computation_second_order_ = std::make_shared<DirectionComputationTruncatedNewton>();
     }
     else
     {
-        direction_computation_second_order_ = std::make_shared<DirectionComputationProximalGradient>();
+        reporter->printf(
+            R_SOLVER, R_BASIC,
+            "Attempted to add un-recognized direction computation strategy \"%s\". Terminate the program.\n",
+            direction_computation_second_order_name.c_str());
+        exit(EXIT_FAILURE);
     }
     // Set direction computation options
     direction_computation_second_order_->getOptions(options, reporter);
@@ -136,7 +152,10 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     }
     else
     {
-        line_search_ = std::make_shared<LineSearchBacktracking>();
+        reporter->printf(R_SOLVER, R_BASIC,
+                         "Attempted to add un-recognized line search strategy \"%s\". Terminate the program.\n",
+                         line_search_name.c_str());
+        exit(EXIT_FAILURE);
     }
     // Set line search options
     line_search_->getOptions(options, reporter);
@@ -211,6 +230,11 @@ void Strategies::setIterationHeader()
     {
         iteration_header_ += " ";
         iteration_header_ += direction_computation_first_order_->iterationHeader();
+    }  // end if
+    if (direction_computation_second_order_->iterationHeader().length() > 0)
+    {
+        iteration_header_ += " ";
+        iteration_header_ += direction_computation_second_order_->iterationHeader();
     }  // end if
     if (line_search_->iterationHeader().length() > 0)
     {

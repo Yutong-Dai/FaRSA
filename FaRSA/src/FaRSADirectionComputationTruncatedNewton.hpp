@@ -4,17 +4,17 @@
 //
 // Author(s) : Frank E. Curtis, Daniel P. Robinson
 
-#ifndef __FARSADIRECTIONCOMPUTATIONPROXIMALGRADIENT_HPP__
-#define __FARSADIRECTIONCOMPUTATIONPROXIMALGRADIENT_HPP__
+#ifndef __FARSADIRECTIONCOMPUTATIONTRUNCATEDNEWTON_HPP__
+#define __FARSADIRECTIONCOMPUTATIONTRUNCATEDNEWTON_HPP__
 
 #include "FaRSADirectionComputation.hpp"
 
 namespace FaRSA
 {
 /**
- * DirectionComputationProximalGradient class
+ * DirectionComputationTruncatedNewton class
  */
-class DirectionComputationProximalGradient : public DirectionComputation
+class DirectionComputationTruncatedNewton : public DirectionComputation
 {
    public:
     /** @name Constructors */
@@ -22,7 +22,7 @@ class DirectionComputationProximalGradient : public DirectionComputation
     /**
      * Constructor
      */
-    DirectionComputationProximalGradient(){};
+    DirectionComputationTruncatedNewton(){};
     //@}
 
     /** @name Destructor */
@@ -30,7 +30,7 @@ class DirectionComputationProximalGradient : public DirectionComputation
     /**
      * Destructor
      */
-    ~DirectionComputationProximalGradient(){};
+    ~DirectionComputationTruncatedNewton(){};
 
     /** @name Options handling methods */
     //@{
@@ -65,17 +65,37 @@ class DirectionComputationProximalGradient : public DirectionComputation
      * Get iteration header string
      * \return string of header values
      */
-    std::string iterationHeader() { return ""; };
+    std::string iterationHeader()
+    {
+        if (verbose_)
+        {
+            return " nVar   |gradF|  flag   its     Res     tarRes";
+        }
+        else
+        {
+            return "";
+        }
+    };
     /**
      * Get iteration null values string
      * \return string of null values
      */
-    std::string iterationNullValues() { return ""; };
+    std::string iterationNullValues()
+    {
+        if (verbose_)
+        {
+            return "---------";
+        }
+        else
+        {
+            return "";
+        }
+    }
     /**
      * Get name of strategy
      * \return string with name of strategy
      */
-    std::string name() { return "Proximal Gradient"; };
+    std::string name() { return "Truncated Newton"; };
     //@}
 
     /** @name Set methods */
@@ -104,19 +124,22 @@ class DirectionComputationProximalGradient : public DirectionComputation
     /**
      * Copy constructor
      */
-    DirectionComputationProximalGradient(const DirectionComputationProximalGradient&);
+    DirectionComputationTruncatedNewton(const DirectionComputationTruncatedNewton&);
     /**
      * Overloaded equals operator
      */
-    void operator=(const DirectionComputationProximalGradient&);
+    void operator=(const DirectionComputationTruncatedNewton&);
     //@}
 
     /** @name Private members */
     //@{
+    double max_CG_iters_;
+    double cg_big_factor_;
+    bool   verbose_;
     //@}
 
-};  // end DirectionComputationProximalGradient
+};  // end DirectionComputationTruncatedNewton
 
 }  // namespace FaRSA
 
-#endif /* __FARSADIRECTIONCOMPUTATIONPROXIMALGRADIENT_HPP__ */
+#endif /* __FARSADIRECTIONCOMPUTATIONTRUNCATEDNEWTON_HPP__ */

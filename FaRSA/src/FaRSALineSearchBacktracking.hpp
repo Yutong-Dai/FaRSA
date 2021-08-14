@@ -65,12 +65,12 @@ class LineSearchBacktracking : public LineSearch
      * Get iteration header values
      * \return string of header values
      */
-    std::string iterationHeader() { return "LSStepsize"; };
+    std::string iterationHeader() { return " |Direction| LSStepsize"; };
     /**
      * Get iteration null values string
      * \return string of null values
      */
-    std::string iterationNullValues() { return "---------"; };
+    std::string iterationNullValues() { return "--------- ---------"; };
     /**
      * Get name of strategy
      * \return string with name of strategy

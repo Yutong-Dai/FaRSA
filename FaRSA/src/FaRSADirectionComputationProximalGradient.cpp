@@ -24,12 +24,6 @@ void DirectionComputationProximalGradient::initialize(const Options* options, Qu
 {
 }
 
-// Iteration header
-std::string DirectionComputationProximalGradient::iterationHeader() { return "|Direction|"; }
-
-// Iteration null values string
-std::string DirectionComputationProximalGradient::iterationNullValues() { return "---------"; }
-
 // Compute direction
 void DirectionComputationProximalGradient::computeDirection(const Options* options, Quantities* quantities,
                                                             const Reporter* reporter, Strategies* strategies)
