@@ -4,7 +4,7 @@
 //
 // Author(s) : Frank E. Curtis, Daniel P. Robinson
 
-#include "testSolver.hpp"
+#include "testSolverSecondOrder.hpp"
 
 // Main function
-int main() { return testSolverImplementation(1); }
+int main() { return testSolverSecondOrderImplementation(1); }

@@ -190,17 +190,15 @@ class Quantities
     inline double const kappaIncreaseFactor() const { return kappa_increase_factor_; };
     inline double const kappaDecreaseFactor() const { return kappa_decrease_factor_; };
 
-    inline std::shared_ptr<std::vector<int>> const groupsFirstOrder() const { return groups_first_order_; };
+    inline const std::shared_ptr<std::vector<std::vector<int>>> groups() const { return groups_; };
+    inline const std::string                                    groupsFormat() const { return groups_format_; };
+    inline const std::shared_ptr<std::vector<int>> groupsFirstOrder() const { return groups_first_order_; };
+    inline const std::shared_ptr<std::vector<int>> groupsSecondOrder() const { return groups_second_order_; };
+    inline const std::shared_ptr<std::vector<int>> groupsWorking() const { return groups_working_; };
+    inline const std::shared_ptr<std::vector<int>> indiciesWorking() const { return indicies_working_; };
+    inline const int                               numberOfGroups() const { return number_of_groups_; };
+    inline const double                            scaleApplied() const { return scale_applied_; };
 
-    inline std::shared_ptr<std::vector<int>> const groupsSecondOrder() const { return groups_second_order_; };
-
-    inline std::shared_ptr<std::vector<int>> const groupsWorking() const { return groups_working_; };
-    inline std::shared_ptr<std::vector<int>> const indiciesWorking() const { return indicies_working_; };
-
-    inline int const numberOfGroups() const { return number_of_groups_; };
-
-    inline float const scaleApplied() const { return scale_applied_; };
-    inline DC_Type     directionType() { return direction_type_; };
     //@}
 
     /** @name Set methods */
@@ -255,6 +253,7 @@ class Quantities
     inline void setScaleApplied(double scale) { scale_applied_ = scale; };
     // inline void setDirectionType(DC_Type direction_type) { direction_type_ = direction_type; };
     inline void setOptimalityError(double optimality_error) { optimality_error_ = optimality_error; };
+    // inline void setGroupFormat(std::string group_format) { group_format_ = group_format; };
     //@}
 
     /** @name Increment methods */
@@ -364,6 +363,7 @@ class Quantities
     std::string                                    function_smooth_name_;
     std::string                                    function_nonsmooth_name_;
     std::string                                    dataset_name_;
+    std::string                                    groups_format_;
     std::shared_ptr<Point>                         current_iterate_;
     std::shared_ptr<Point>                         trial_iterate_;
     std::shared_ptr<Vector>                        direction_first_order_;
@@ -374,7 +374,6 @@ class Quantities
     std::shared_ptr<std::vector<int>>              groups_working_;
     std::shared_ptr<std::vector<int>>              indicies_working_;
     std::shared_ptr<std::vector<std::vector<int>>> groups_;
-    DC_Type                                        direction_type_;
 
     /** @name Private members (set by options) */
     //@{

@@ -13,6 +13,7 @@
 #include "FaRSAParameterUpdate.hpp"
 #include "FaRSAParameterUpdatePGStepsize.hpp"
 #include "FaRSASpacePartitionFirstOrder.hpp"
+#include "FaRSASpacePartitionGroupL1PGBased.hpp"
 
 namespace FaRSA
 {
@@ -41,6 +42,8 @@ void Strategies::addOptions(Options* options, const Reporter* reporter)
     // Add options for space partition strategies
     std::shared_ptr<SpacePartition> space_partition;
     space_partition = std::make_shared<SpacePartitionFirstOrder>();
+    space_partition->addOptions(options, reporter);
+    space_partition = std::make_shared<SpacePartitionGroupL1PGBased>();
     space_partition->addOptions(options, reporter);
     // ADD NEW SPACE PARTITION STRATEGIES HERE AND IN SWITCH BELOW //
 
@@ -92,9 +95,9 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     }
     else
     {
-        space_partition_ = std::make_shared<SpacePartitionFirstOrder>();
+        space_partition_ = std::make_shared<SpacePartitionGroupL1PGBased>();
     }
-    // Set direction computation options
+    // Set space partition computation options
     space_partition_->getOptions(options, reporter);
 
     // Set direction computation strategy
@@ -108,6 +111,7 @@ void Strategies::getOptions(const Options* options, const Reporter* reporter)
     }
     // Set direction computation options
     direction_computation_first_order_->getOptions(options, reporter);
+
     if (direction_computation_first_order_name.compare("TruncatedNewton") == 0)
     {
         direction_computation_second_order_ = std::make_shared<DirectionComputationProximalGradient>();

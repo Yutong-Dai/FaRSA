@@ -7,13 +7,12 @@
 #include "FaRSAPoint.hpp"
 
 #include <cmath>
-
+#include <iostream>
 namespace FaRSA
 {
 // Constructor, copy elements from input vector
 Point::Point(const std::shared_ptr<FunctionSmooth>    function_smooth,
-             const std::shared_ptr<FunctionNonsmooth> function_nonsmooth,
-             std::shared_ptr<Vector> vector, double scale)
+             const std::shared_ptr<FunctionNonsmooth> function_nonsmooth, std::shared_ptr<Vector> vector, double scale)
     : objective_smooth_evaluated_(false),
       objective_nonsmooth_evaluated_(false),
       gradient_smooth_evaluated_(false),
@@ -44,26 +43,23 @@ Point::Point(const std::shared_ptr<FunctionSmooth>    function_smooth,
     proximal_gradient_update_.reset();
     hessian_vector_product_smooth_.reset();
     hessian_vector_product_nonsmooth_.reset();
+    per_group_2norm_.reset();
+    per_group_gradient_all_2norm_.reset();
+    per_group_proximal_gradient_update_2norm_.reset();
 }  // end constructor
 
 // Print
-void Point::print(const Reporter* reporter, std::string name) const
-{
-    vector_->print(reporter, name);
-}
+void Point::print(const Reporter* reporter, std::string name) const { vector_->print(reporter, name); }
 
 // Make new Point by adding "scalar1" times this Point's vector to "scalar2"
 // times other Vector
-std::shared_ptr<Point> Point::makeNewLinearCombination(double scalar1, double scalar2,
-                                                       const Vector& other_vector) const
+std::shared_ptr<Point> Point::makeNewLinearCombination(double scalar1, double scalar2, const Vector& other_vector) const
 {
     // Create new Vector
-    std::shared_ptr<Vector> new_vector =
-        vector_->makeNewLinearCombination(scalar1, scalar2, other_vector);
+    std::shared_ptr<Vector> new_vector = vector_->makeNewLinearCombination(scalar1, scalar2, other_vector);
 
     // Create new Point
-    std::shared_ptr<Point> new_point(
-        new Point(function_smooth_, function_nonsmooth_, new_vector, scale_));
+    std::shared_ptr<Point> new_point(new Point(function_smooth_, function_nonsmooth_, new_vector, scale_));
 
     // Return
     return new_point;
@@ -106,8 +102,7 @@ bool Point::evaluateObjectiveSmooth(Quantities& quantities)
         // Evaluate objective value for smooth function
         // deference a shared pointer
         // https://stackoverflow.com/questions/11347111/dereferencing-a-pointer-when-passing-by-reference
-        objective_smooth_evaluated_ =
-            function_smooth_->evaluateObjective(*vector_, objective_smooth_);
+        objective_smooth_evaluated_ = function_smooth_->evaluateObjective(*vector_, objective_smooth_);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
@@ -127,8 +122,7 @@ bool Point::evaluateObjectiveSmooth(Quantities& quantities)
         // Check for function evaluation limit
         if (quantities.functionCounter() >= quantities.functionEvaluationLimit())
         {
-            THROW_EXCEPTION(FARSA_FUNCTION_EVALUATION_LIMIT_EXCEPTION,
-                            "Function evaluation limit reached.");
+            THROW_EXCEPTION(FARSA_FUNCTION_EVALUATION_LIMIT_EXCEPTION, "Function evaluation limit reached.");
         }
 
     }  // end if
@@ -150,8 +144,7 @@ bool Point::evaluateObjectiveNonsmooth(Quantities& quantities)
         // Evaluate objective value
         // deference a shared pointer
         // https://stackoverflow.com/questions/11347111/dereferencing-a-pointer-when-passing-by-reference
-        objective_nonsmooth_evaluated_ =
-            function_nonsmooth_->evaluateObjective(*vector_, objective_nonsmooth_);
+        objective_nonsmooth_evaluated_ = function_nonsmooth_->evaluateObjective(*vector_, objective_nonsmooth_);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
@@ -225,8 +218,7 @@ bool Point::evaluateGradientSmooth(Quantities& quantities)
 
         // Evaluate gradient value at the full space
         std::vector<int> full_indicies_vector(vector_->length());
-        gradient_smooth_evaluated_ =
-            function_smooth_->evaluateGradient(*vector_, full_indicies_vector, g);
+        gradient_smooth_evaluated_ = function_smooth_->evaluateGradient(*vector_, full_indicies_vector, g);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
@@ -253,8 +245,7 @@ bool Point::evaluateGradientSmooth(Quantities& quantities)
         // Check for gradient evaluation limit
         if (quantities.gradientCounter() >= quantities.gradientEvaluationLimit())
         {
-            THROW_EXCEPTION(FARSA_GRADIENT_EVALUATION_LIMIT_EXCEPTION,
-                            "Gradient evaluation limit reached.");
+            THROW_EXCEPTION(FARSA_GRADIENT_EVALUATION_LIMIT_EXCEPTION, "Gradient evaluation limit reached.");
         }
 
     }  // end if
@@ -330,8 +321,8 @@ bool Point::computeProximalGradientUpdate(Quantities& quantities)
         clock_t start_time = clock();
 
         // Evaluate gradient value at the full space
-        proximal_gradient_update_evaluated_ = function_nonsmooth_->computeProximalGradientUpdate(
-            *vector_, *gradient_smooth_, quantities, p);
+        proximal_gradient_update_evaluated_ =
+            function_nonsmooth_->computeProximalGradientUpdate(*vector_, *gradient_smooth_, quantities, p);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
@@ -362,11 +353,10 @@ bool Point::evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v, Quanti
 {
     if ((!hessian_vector_product_smooth_evaluated_))
     {
-        ASSERT_EXCEPTION(
-            gradient_smooth_evaluated_, FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
-            "(From Point::evaluateHessianVectorProductSmooth): Function Smooth Gradient value "
-            "should have been evaluated before evaluating the Hessian Vector product, but "
-            "wasn't.");
+        ASSERT_EXCEPTION(gradient_smooth_evaluated_, FARSA_GRADIENT_EVALUATION_ASSERT_EXCEPTION,
+                         "(From Point::evaluateHessianVectorProductSmooth): Function Smooth Gradient value "
+                         "should have been evaluated before evaluating the Hessian Vector product, but "
+                         "wasn't.");
         // Declare gradient vector
         std::shared_ptr<Vector> hv(new Vector(quantities.indiciesWorking()->size()));
 
@@ -380,8 +370,8 @@ bool Point::evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v, Quanti
         clock_t start_time = clock();
 
         // Evaluate gradient value at the full space
-        hessian_vector_product_smooth_evaluated_ = function_smooth_->evaluateHessianVectorProduct(
-            *vector_, *(quantities.indiciesWorking()), *v, temp);
+        hessian_vector_product_smooth_evaluated_ =
+            function_smooth_->evaluateHessianVectorProduct(*vector_, *(quantities.indiciesWorking()), *v, temp);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
@@ -430,8 +420,7 @@ bool Point::evaluateHessianVectorProductNonsmooth(std::shared_ptr<Vector> v, Qua
 
         // Evaluate gradient value at the full space
         hessian_vector_product_nonsmooth_evaluated_ =
-            function_nonsmooth_->evaluateHessianVectorProduct(
-                *vector_, *(quantities.indiciesWorking()), *v, temp);
+            function_nonsmooth_->evaluateHessianVectorProduct(*vector_, *(quantities.indiciesWorking()), *v, temp);
 
         // Increment evaluation time
         quantities.incrementEvaluationTime(clock() - start_time);
@@ -461,4 +450,85 @@ bool Point::evaluateHessianVectorProductNonsmooth(std::shared_ptr<Vector> v, Qua
     return hessian_vector_product_nonsmooth_evaluated_;
 }
 
+bool Point::evaluatePerGroupStatistics(Quantities& quantities)
+{
+    if ((!per_group_2norm_evaluated_) or (!per_group_gradient_all_2norm_evaluated_) or
+        (!per_group_proximal_gradient_update_2norm_evaluated_))
+    {
+        std::shared_ptr<Vector> per_group_2norm(new Vector(quantities.numberOfGroups()));
+        per_group_2norm_ = per_group_2norm;
+        std::shared_ptr<Vector> per_group_gradient_all_2norm(new Vector(quantities.numberOfGroups()));
+        per_group_gradient_all_2norm_ = per_group_gradient_all_2norm;
+        std::shared_ptr<Vector> per_group_proximal_gradient_update_2norm(new Vector(quantities.numberOfGroups()));
+        per_group_proximal_gradient_update_2norm_ = per_group_proximal_gradient_update_2norm;
+        if (quantities.groupsFormat().compare("C") == 0)
+        {
+            auto groups = quantities.groups();
+            // create working indicies (only need to evaluate gradient over these indices)
+            std::shared_ptr<std::vector<int>> indicies_working(new std::vector<int>());
+
+            // compute per_group_2norm_ and per_group_proximal_gradient_update_2norm_ and collect non-zero group
+            // indicies
+            for (int i = 0; i < quantities.numberOfGroups(); i++)
+            {
+                double group_i_norm = 0.0;
+                double group_i_proximal_gradient_update_norm = 0.0;
+                int    start = (*groups)[i][0];
+                int    end = (*groups)[i][1];
+                for (int j = start; j <= end; j++)
+                {
+                    group_i_norm += pow(vector_->values()[j], 2);
+                    group_i_proximal_gradient_update_norm += pow(proximalGraidentUpdate()->values()[j], 2);
+                }
+                per_group_2norm_->valuesModifiable()[i] = sqrt(group_i_norm);
+                per_group_proximal_gradient_update_2norm_->valuesModifiable()[i] =
+                    sqrt(group_i_proximal_gradient_update_norm);
+                per_group_gradient_all_2norm_->valuesModifiable()[i] = FARSA_DOUBLE_INFINITY;
+                // current group is non-zero group add all indices to the indicies vector
+                if (fabs(group_i_norm - 0.0) > 1e-16)
+                {
+                    for (int j = start; j <= end; j++)
+                    {
+                        indicies_working->push_back(j);
+                    }
+                }
+            }
+
+            // compute per_group_gradient_all_2norm_
+            quantities.setIndiciesWorking(indicies_working);
+            evaluateGradientSmooth(quantities);
+            evaluateGradientNonsmooth(quantities);
+            for (int i = 0; i < quantities.numberOfGroups(); i++)
+            {
+                // current group is non-zero group
+                if (fabs(per_group_2norm_->values()[i] - 0.0) > 1e-16)
+                {
+                    int    start = (*groups)[i][0];
+                    int    end = (*groups)[i][1];
+                    double group_i_gradient_all_norm = 0.0;
+                    for (int j = start; j <= end; j++)
+                    {
+                        group_i_gradient_all_norm +=
+                            pow(gradient_smooth_->values()[j] + gradient_nonsmooth_->values()[j], 2);
+                    }
+                    per_group_gradient_all_2norm_->valuesModifiable()[i] = sqrt(group_i_gradient_all_norm);
+                }
+            }
+            per_group_2norm_evaluated_ = true;
+            per_group_gradient_all_2norm_evaluated_ = true;
+            per_group_proximal_gradient_update_2norm_evaluated_ = true;
+        }
+        else if (quantities.groupsFormat().compare("NC") == 0)
+        {
+            THROW_EXCEPTION(FARSA_NO_IMPLEMENTATION_EXCEPTION, "No implementation for the group_format_!");
+        }
+        else
+        {
+            THROW_EXCEPTION(FARSA_NO_IMPLEMENTATION_EXCEPTION, "No implementation for the group_format_!");
+        }
+    }
+    // Return
+    return per_group_2norm_evaluated_ && per_group_gradient_all_2norm_evaluated_ &&
+           per_group_proximal_gradient_update_2norm_evaluated_;
+}
 }  // namespace FaRSA

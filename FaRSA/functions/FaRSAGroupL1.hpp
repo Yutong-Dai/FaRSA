@@ -26,8 +26,8 @@ class GroupL1 : public FunctionNonsmooth
     /**
      * Constructor
      */
-    GroupL1(std::shared_ptr<std::vector<std::vector<int>>> groups,
-            std::shared_ptr<std::vector<double>> weights, double penalty);
+    GroupL1(std::shared_ptr<std::vector<std::vector<int>>> groups, std::shared_ptr<std::vector<double>> weights,
+            double penalty);
     //@}
 
     /** @name Destructor */
@@ -39,12 +39,10 @@ class GroupL1 : public FunctionNonsmooth
 
     /** @name Get methods */
     //@{
-    double const                         penalty() const { return penalty_; };
-    std::shared_ptr<std::vector<double>> weights() { return weights_; };
-    std::shared_ptr<std::vector<std::vector<int>>> const groups() const
-    {
-        return groups_;
-    };
+    inline const double                               penalty() const { return penalty_; };
+    inline const std::shared_ptr<std::vector<double>> weights() { return weights_; };
+    /*continuous representation of the group format */
+    const std::string groupsFormat() const { return "C"; };
     //@}
 
     /** @name Evaluate methods */
@@ -67,8 +65,7 @@ class GroupL1 : public FunctionNonsmooth
      * \param[out] g is the gradient value at "x", a double array (return value)
      * \return indicator of success (true) or failure (false)
      */
-    bool evaluateGradient(const Vector& x, const std::vector<int>& indicies,
-                          Vector& g);
+    bool evaluateGradient(const Vector& x, const std::vector<int>& indicies, Vector& g);
     /**
      * Evaluates gradient in subspace defined by variables
      * in subgroups.
@@ -78,9 +75,7 @@ class GroupL1 : public FunctionNonsmooth
      * \param[out] Hv is the product of the Hessian and "v", a double array
      * (return value) \return indicator of success (true) or failure (false)
      */
-    bool evaluateHessianVectorProduct(const Vector&           x,
-                                      const std::vector<int>& indicies,
-                                      const Vector& v, Vector& Hv);
+    bool evaluateHessianVectorProduct(const Vector& x, const std::vector<int>& indicies, const Vector& v, Vector& Hv);
     /**
      * @brief Evaluator proximal operator at u
      *
@@ -89,9 +84,7 @@ class GroupL1 : public FunctionNonsmooth
      * \return true
      * \return false
      */
-    bool computeProximalGradientUpdate(const Vector& x, const Vector& gradfx,
-                                       Quantities& quantities,
-                                       Vector&     proxgrad);
+    bool computeProximalGradientUpdate(const Vector& x, const Vector& gradfx, Quantities& quantities, Vector& proxgrad);
 
     //@}
 

@@ -217,7 +217,6 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
 
             // Print end of line
             reporter_.printf(R_SOLVER, R_PER_ITERATION, "\n");
-
         }  // end while
 
     }  // end try

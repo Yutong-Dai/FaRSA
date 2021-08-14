@@ -74,8 +74,7 @@ class Point
      * \param[in] other_vector is reference to other Vector
      * \return pointer to new Point
      */
-    std::shared_ptr<Point> makeNewLinearCombination(double scalar1, double scalar2,
-                                                    const Vector& other_vector) const;
+    std::shared_ptr<Point> makeNewLinearCombination(double scalar1, double scalar2, const Vector& other_vector) const;
     //@}
 
     /** @name Set methods */
@@ -113,7 +112,10 @@ class Point
     bool evaluateGradientNonsmooth(Quantities& quantities);
     bool evaluateHessianVectorProductSmooth(std::shared_ptr<Vector> v, Quantities& quantities);
     bool evaluateHessianVectorProductNonsmooth(std::shared_ptr<Vector> v, Quantities& quantities);
-
+    // bool evaluatePerGroup2Norm(Quantities& quantities);
+    // bool evaluatePerGroupGradientAll2Norm(Quantities& quantities);
+    // bool evaluatePerGroupProximalGradientUpdate2Norm(Quantities& quantities);
+    bool evaluatePerGroupStatistics(Quantities& quantities);
     // set both proximal gradient update and proximal gradient step
     bool computeProximalGradientUpdate(Quantities& quantities);
 
@@ -156,10 +158,7 @@ class Point
      * \return is pointer to Problem corresponding to point
      */
     inline std::shared_ptr<FunctionSmooth>    funcion_smooth() const { return function_smooth_; };
-    inline std::shared_ptr<FunctionNonsmooth> funcion_nonsmooth() const
-    {
-        return function_nonsmooth_;
-    };
+    inline std::shared_ptr<FunctionNonsmooth> funcion_nonsmooth() const { return function_nonsmooth_; };
     /**
      * Get pointer to vector
      * \return is pointer to Vector defining point
@@ -227,16 +226,14 @@ class Point
     };
     inline std::shared_ptr<Vector> proximalGraidentUpdate() const
     {
-        ASSERT_EXCEPTION(proximal_gradient_update_evaluated_,
-                         FARSA_PROXIMAL_GRADIENT_COMPUTATION_ASSERT_EXCEPTION,
+        ASSERT_EXCEPTION(proximal_gradient_update_evaluated_, FARSA_PROXIMAL_GRADIENT_COMPUTATION_ASSERT_EXCEPTION,
                          "Proximal Gradient Update should have been "
                          "computed, but wasn't.");
         return proximal_gradient_update_;
     };
     inline std::shared_ptr<Vector> proximalGraidentStep() const
     {
-        ASSERT_EXCEPTION(proximal_gradient_update_evaluated_,
-                         FARSA_PROXIMAL_GRADIENT_COMPUTATION_ASSERT_EXCEPTION,
+        ASSERT_EXCEPTION(proximal_gradient_update_evaluated_, FARSA_PROXIMAL_GRADIENT_COMPUTATION_ASSERT_EXCEPTION,
                          "Proximal Gradient Update should have been "
                          "computed, but wasn't.");
         return proximal_gradient_step_;
@@ -258,6 +255,27 @@ class Point
                          "Hessian Vector Product Nonsmooth part should have been "
                          "evaluated, but wasn't.");
         return hessian_vector_product_nonsmooth_;
+    };
+    inline std::shared_ptr<Vector> perGroup2Norm() const
+    {
+        ASSERT_EXCEPTION(per_group_2norm_evaluated_, FARSA_NO_EVALUATION_EXCEPTION,
+                         "per_group_2norm_ should have been "
+                         "evaluated, but wasn't.");
+        return per_group_2norm_;
+    };
+    inline std::shared_ptr<Vector> perGroupGradientAll2Norm() const
+    {
+        ASSERT_EXCEPTION(per_group_gradient_all_2norm_evaluated_, FARSA_NO_EVALUATION_EXCEPTION,
+                         "per_group_gradient_all_2norm_ should have been "
+                         "evaluated, but wasn't.");
+        return per_group_gradient_all_2norm_;
+    };
+    inline std::shared_ptr<Vector> perGroupProximalGradientUpdate2Norm() const
+    {
+        ASSERT_EXCEPTION(per_group_proximal_gradient_update_2norm_evaluated_, FARSA_NO_EVALUATION_EXCEPTION,
+                         "per_group_proximal_gradient_update_2norm_ should have been "
+                         "evaluated, but wasn't.");
+        return per_group_proximal_gradient_update_2norm_;
     };
     /**
      * Get scale
@@ -283,14 +301,16 @@ class Point
 
     /** @name Private members */
     //@{
-    bool objective_smooth_evaluated_;
-    bool objective_nonsmooth_evaluated_;
-    bool gradient_smooth_evaluated_;
-    bool gradient_nonsmooth_evaluated_;
-    bool proximal_gradient_update_evaluated_;
-    bool hessian_vector_product_smooth_evaluated_;
-    bool hessian_vector_product_nonsmooth_evaluated_;
-
+    bool                               objective_smooth_evaluated_;
+    bool                               objective_nonsmooth_evaluated_;
+    bool                               gradient_smooth_evaluated_;
+    bool                               gradient_nonsmooth_evaluated_;
+    bool                               proximal_gradient_update_evaluated_;
+    bool                               hessian_vector_product_smooth_evaluated_;
+    bool                               hessian_vector_product_nonsmooth_evaluated_;
+    bool                               per_group_2norm_evaluated_;
+    bool                               per_group_gradient_all_2norm_evaluated_;
+    bool                               per_group_proximal_gradient_update_2norm_evaluated_;
     double                             objective_smooth_;
     double                             objective_nonsmooth_;
     double                             scale_;
@@ -305,6 +325,10 @@ class Point
     std::shared_ptr<Vector>            proximal_gradient_step_;
     std::shared_ptr<Vector>            hessian_vector_product_smooth_;
     std::shared_ptr<Vector>            hessian_vector_product_nonsmooth_;
+    std::shared_ptr<Vector>            per_group_2norm_;
+    /* gradient of the smooth+ nonsmooth */
+    std::shared_ptr<Vector> per_group_gradient_all_2norm_;
+    std::shared_ptr<Vector> per_group_proximal_gradient_update_2norm_;
     //@}
 
 };  // end Point

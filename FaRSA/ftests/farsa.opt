@@ -1,0 +1,3 @@
+space_partition GroupL1PGBased
+PU_PGStepsize_method LipschitzEstimate
+iteration_limit 10

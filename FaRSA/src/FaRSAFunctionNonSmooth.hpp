@@ -34,15 +34,16 @@ class FunctionNonsmooth : public Function
 
     // /** @name Get methods */
     // //@{
-    inline int const numberOfGroups() const { return number_of_groups_; };
+    inline const int numberOfGroups() const { return number_of_groups_; };
 
-    inline double const penalty() const { return penalty_; };
+    inline const double penalty() const { return penalty_; };
     /**
      * @brief Get a 2-d vector specifies the group structure.
      *
      * \return std::vector<std::vector<int>>&
      */
-    inline std::shared_ptr<std::vector<std::vector<int>>> const groups() const { return groups_; };
+    inline const std::shared_ptr<std::vector<std::vector<int>>> groups() const { return groups_; };
+    virtual const std::string                                   groupsFormat() const = 0;
     // //@}
 
     /** @name Evaluate methods */
@@ -55,8 +56,8 @@ class FunctionNonsmooth : public Function
 
     /** @name Compute methods */
     //@{
-    virtual bool computeProximalGradientUpdate(const Vector& x, const Vector& gradfx,
-                                               Quantities& quantities, Vector& proxgrad) = 0;
+    virtual bool computeProximalGradientUpdate(const Vector& x, const Vector& gradfx, Quantities& quantities,
+                                               Vector& proxgrad) = 0;
     //@}
 
    protected:
@@ -72,10 +73,9 @@ class FunctionNonsmooth : public Function
      *      the first element is the statring position of the i-th group
      *      the second element is the ending position of the i-th group
      *  Overlapping:
-     *      group1: [0,1,2]; group2: [2,3,4]; group3:[1,3]
-     *      the groups_ is set as [[0,1,2], [2,3,4], [1,3]].
-     *  The smooth function's groups_ is determined by the nonmooth function's
-     * group_
+     *      group1: [0,1,3]; group2: [2,3,4]; group3:[0,2,4]
+     *      the groups_ is set as [[0,1,3], [2,3,4], [0,2,4]].
+     * Within each group, the indicies have to be ordered. The code doesn't check this.
      */
     std::shared_ptr<std::vector<std::vector<int>>> groups_;
     double                                         penalty_;

@@ -4,8 +4,8 @@
 //
 // Author(s) : Frank E. Curtis, Daniel P. Robinson
 
-#ifndef __TESTSOLVER_HPP__
-#define __TESTSOLVER_HPP__
+#ifndef __TESTSOLVERSECONDORDER_HPP__
+#define __TESTSOLVERSECONDORDER_HPP__
 
 #include <iostream>
 
@@ -15,7 +15,7 @@
 using namespace FaRSA;
 
 // Implementation of test
-int testSolverImplementation(int option)
+int testSolverSecondOrderImplementation(int option)
 {
     // Initialize output
     int result = 0;
@@ -39,44 +39,45 @@ int testSolverImplementation(int option)
 
     // create smooth function
     std::shared_ptr<LinearRegressionLoss> f(
-        new LinearRegressionLoss((char*)"./data/lsMatrix.txt", M_COORDINATE_LIST,
-                                 (char*)"./data/lsLabel.txt", "stdNormal106"));
+        new LinearRegressionLoss((char*)"./data/python_impl/FaRSAGroup/test/lsMatrix.txt", M_COORDINATE_LIST,
+                                 (char*)"./data/python_impl/FaRSAGroup/test/lsLabel.txt", "bodyfat"));
 
     // create non-smooth funciton
     // set-up groups
     std::shared_ptr<std::vector<std::vector<int>>> groups(new std::vector<std::vector<int>>);
     std::vector<int>                               temp;
     temp.push_back(0);
-    temp.push_back(1);
+    temp.push_back(5);
     groups->push_back(temp);
     temp.clear();
-    temp.push_back(2);
-    temp.push_back(4);
+    temp.push_back(6);
+    temp.push_back(7);
     groups->push_back(temp);
     temp.clear();
-    temp.push_back(5);
-    temp.push_back(5);
+    temp.push_back(8);
+    temp.push_back(12);
+    groups->push_back(temp);
+    temp.clear();
+    temp.push_back(13);
+    temp.push_back(13);
     groups->push_back(temp);
     std::shared_ptr<std::vector<double>> weights(new std::vector<double>);
+    weights->push_back(sqrt(6.0));
     weights->push_back(sqrt(2.0));
-    weights->push_back(sqrt(3.0));
+    weights->push_back(sqrt(5.0));
     weights->push_back(sqrt(1.0));
-    double                   penaty = 1.23;
+    double                   penaty = 0.1;
     std::shared_ptr<GroupL1> r(new GroupL1(groups, weights, penaty));
 
     // create a starting point
     std::shared_ptr<Vector> x(new Vector(6));
-    x->valuesModifiable()[2] = 1.1;
-    x->valuesModifiable()[3] = 0.0;
-    x->valuesModifiable()[4] = 2.2;
-    x->valuesModifiable()[5] = 3.3;
     // tests begins here
     // Vector ans;
     // Declare solver object
     FaRSASolver farsa;
 
     // Modify options from file
-    // farsa.options()->modifyOptionsFromFile("nonopt.opt");
+    farsa.options()->modifyOptionsFromFile(&reporter, "farsa.opt");
 
     // Optimize
     farsa.optimize(f, r, *x);
@@ -98,6 +99,6 @@ int testSolverImplementation(int option)
     // Return
     return result;
 
-}  // end testSolverImplementation
+}  // end testSolverSecondOrderImplementation
 
-#endif /* __TESTSOLVER_HPP__ */
+#endif /* __TESTSOLVERSECONDORDER_HPP__ */

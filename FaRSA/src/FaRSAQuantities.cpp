@@ -45,7 +45,6 @@ Quantities::Quantities()
     groups_second_order_.reset();
     groups_working_.reset();
     indicies_working_.reset();
-    groups_.reset();
 }
 
 // Destructor
@@ -179,6 +178,7 @@ bool Quantities::initialize(const std::shared_ptr<FunctionSmooth>    function_sm
     number_of_variables_ = function_smooth->numberOfVariables();
     number_of_groups_ = function_nonsmooth->numberOfGroups();
     groups_ = function_nonsmooth->groups();
+    groups_format_ = function_nonsmooth->groupsFormat();
 
     // Declare vector
     std::shared_ptr<Vector> v(new Vector(number_of_variables_));

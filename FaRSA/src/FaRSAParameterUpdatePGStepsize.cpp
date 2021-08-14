@@ -100,7 +100,7 @@ void ParameterUpdatePGStepsize::update(const Options* options, Quantities* quant
                                 "the current iterate.");
             }
             double actual_decrease =
-                quantities->trialIterate()->objectiveAll() - quantities->currentIterate()->objectiveAll();
+                quantities->trialIterate()->objectiveSmooth() - quantities->currentIterate()->objectiveSmooth();
             auto step_taken = quantities->trialIterate()->vector()->makeNewLinearCombination(
                 1.0, -1.0, *quantities->currentIterate()->vector());
             double step_taken_norm_square = step_taken->innerProduct(*step_taken);
