@@ -170,7 +170,8 @@ void SpacePartitionGroupL1PGBased::partitionSpace(const Options* options, Quanti
         {
             optimality_second_order += pow(s->values()[i], 2.0);
         }
-        optimality_first_order = sqrt(pow(s_norm2, 2.0) - optimality_second_order);
+        // fmax is taken to add more numerical stability
+        optimality_first_order = sqrt(fmax(pow(s_norm2, 2.0) - optimality_second_order, 0));
         optimality_second_order = sqrt(optimality_second_order);
         // std::cout << "\ns_norm2: " << s_norm2 << " optimality_first_order: " << optimality_first_order
         //           << " optimality_second_order: " << optimality_second_order << std::endl;

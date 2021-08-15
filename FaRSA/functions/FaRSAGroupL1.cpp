@@ -11,8 +11,8 @@
 #include "FaRSADeclarations.hpp"
 #include "FaRSADefinitions.hpp"
 // constructor
-GroupL1::GroupL1(std::shared_ptr<std::vector<std::vector<int>>> groups,
-                 std::shared_ptr<std::vector<double>> weights, double penalty)
+GroupL1::GroupL1(std::shared_ptr<std::vector<std::vector<int>>> groups, std::shared_ptr<std::vector<double>> weights,
+                 double penalty)
 {
     name_ = "GroupL1";
     penalty_ = penalty;
@@ -70,7 +70,7 @@ bool GroupL1::scalePenalty(double scale)
 // evaluateObjective
 bool GroupL1::evaluateObjective(const Vector& x, double& f)
 {
-    float temp = 0.0;
+    double temp = 0.0;
     for (int i = 0; i < groups_->size(); i++)
     {
         double group_i_norm;
@@ -97,8 +97,7 @@ bool GroupL1::evaluateGradient(const Vector& x, const std::vector<int>& indicies
     for (int i : indicies)
     {
         group_idx = idx_to_group_[i];
-        g.valuesModifiable()[count] =
-            ((*weights_)[group_idx] / per_group_norm_[group_idx]) * x.values()[i];
+        g.valuesModifiable()[count] = ((*weights_)[group_idx] / per_group_norm_[group_idx]) * x.values()[i];
         if (isnan(g.values()[i]))
         {
             return false;
@@ -112,8 +111,8 @@ bool GroupL1::evaluateGradient(const Vector& x, const std::vector<int>& indicies
 /*
     weights_i( V_{Gi}/||X_{Gi}|| - (X_{Gi}.dot(V_{Gi})/||X_{Gi}||^3 * X_{Gi}))
 */
-bool GroupL1::evaluateHessianVectorProduct(const Vector& x, const std::vector<int>& indicies,
-                                           const Vector& v, Vector& Hv)
+bool GroupL1::evaluateHessianVectorProduct(const Vector& x, const std::vector<int>& indicies, const Vector& v,
+                                           Vector& Hv)
 {
     int                   group_idx;
     std::map<int, double> xgi_vgi_innerproduct;
@@ -136,10 +135,9 @@ bool GroupL1::evaluateHessianVectorProduct(const Vector& x, const std::vector<in
             xgi_vgi_innerproduct[group_idx] = inner_prod_Gi;
         }
 
-        Hv.valuesModifiable()[i] =
-            (*weights_)[group_idx] * (v.values()[i] / per_group_norm_[group_idx] -
-                                      xgi_vgi_innerproduct[group_idx] * x.values()[indicies[i]] /
-                                          pow(per_group_norm_[group_idx], 3));
+        Hv.valuesModifiable()[i] = (*weights_)[group_idx] * (v.values()[i] / per_group_norm_[group_idx] -
+                                                             xgi_vgi_innerproduct[group_idx] * x.values()[indicies[i]] /
+                                                                 pow(per_group_norm_[group_idx], 3));
 
         if (isnan(Hv.values()[i]))
         {
@@ -151,8 +149,8 @@ bool GroupL1::evaluateHessianVectorProduct(const Vector& x, const std::vector<in
 // end  evaluateHessianVectorProduct
 
 // evaluateProximalGradient
-bool GroupL1::computeProximalGradientUpdate(const Vector& x, const Vector& gradfx,
-                                            Quantities& quantities, Vector& proxgrad)
+bool GroupL1::computeProximalGradientUpdate(const Vector& x, const Vector& gradfx, Quantities& quantities,
+                                            Vector& proxgrad)
 {
     assert(proxgrad.length() == x.length());
     assert(proxgrad.length() == gradfx.length());
@@ -177,10 +175,9 @@ bool GroupL1::computeProximalGradientUpdate(const Vector& x, const Vector& gradf
 
             per_group_gradient_step_norm_[group_idx] = sqrt(gradient_step_Gi_norm);
         }
-        proxgrad.valuesModifiable()[i] =
-            fmax(0, 1 - (*weights_)[group_idx] * quantities.stepsizeProximalGradient() /
-                            per_group_gradient_step_norm_[group_idx]) *
-            gradient_step.values()[i];
+        proxgrad.valuesModifiable()[i] = fmax(0, 1 - (*weights_)[group_idx] * quantities.stepsizeProximalGradient() /
+                                                         per_group_gradient_step_norm_[group_idx]) *
+                                         gradient_step.values()[i];
         if (isnan(proxgrad.values()[i]))
         {
             return false;

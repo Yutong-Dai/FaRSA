@@ -202,7 +202,15 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
             // Check status
             if (strategies_.lineSearch()->status() != LS_SUCCESS)
             {
-                THROW_EXCEPTION(FARSA_LINE_SEARCH_FAILURE_EXCEPTION, "Line search failed.");
+                if (strategies_.lineSearch()->status() == LS_NO_FURTHUR_PROGRESS)
+                {
+                    THROW_EXCEPTION(FARSA_LINE_SEARCH_NO_FURTHER_PROGRESS_EXCEPTION,
+                                    "No further progress can be made. Early termination.");
+                }
+                else
+                {
+                    THROW_EXCEPTION(FARSA_LINE_SEARCH_FAILURE_EXCEPTION, "Line search failed.");
+                }
             }
 
             // Update Parameters (this has to be done before performing the iterate update)
@@ -299,6 +307,10 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
     catch (FARSA_LINE_SEARCH_FAILURE_EXCEPTION& exec)
     {
         setStatus(FARSA_LINE_SEARCH_FAILURE);
+    }
+    catch (FARSA_LINE_SEARCH_NO_FURTHER_PROGRESS_EXCEPTION& exec)
+    {
+        setStatus(FARSA_LINE_SEARCH_NO_FURTHER_PROGRESS);
     }
     catch (FARSA_PARAMETER_UPDATE_FAILURE_EXCEPTION& exec)
     {
@@ -445,6 +457,9 @@ void FaRSASolver::printFooter()
             break;
         case FARSA_LINE_SEARCH_FAILURE:
             reporter_.printf(R_SOLVER, R_BASIC, "Line search failure.");
+            break;
+        case FARSA_LINE_SEARCH_NO_FURTHER_PROGRESS:
+            reporter_.printf(R_SOLVER, R_BASIC, "Line search: No further progress can be made, early termination.");
             break;
         case FARSA_PARAMETER_UPDATE_FAILURE:
             reporter_.printf(R_SOLVER, R_BASIC, "Parameter update failure.");

@@ -71,7 +71,7 @@ class LineSearchBacktracking : public LineSearch
         {
             if (method_pure_second_order_.compare("projected_armijo_groupl1") == 0)
             {
-                return " type #newGrps |Direction| LSStepsize";
+                return " |Direction| type #newZG  dirder    bak   LSStepsize";
             }
             else
             {
