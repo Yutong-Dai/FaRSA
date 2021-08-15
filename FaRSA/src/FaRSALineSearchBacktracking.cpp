@@ -610,13 +610,13 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
         {
             if (search_method.compare("projected_armijo_groupl1") == 0)
             {
-                reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e  %s %6d %+.2e %2d/%2d",
+                reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e  %s %6d %+.2e  %2d/%2d",
                                  quantities->directionSecondOrder()->norm2(), iteration_type.c_str(), new_zero_groups,
                                  directional_derivative, projection_attemps, number_of_backtrack_);
             }
             else
             {
-                reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e  %s %s %+.2e %s/%2d",
+                reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e  %s %s %+.2e  %s/%2d",
                                  quantities->directionSearch()->norm2(), iteration_type.c_str(), "------",
                                  directional_derivative, "--", number_of_backtrack_);
             }
@@ -636,7 +636,7 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
     else
     {
         // Print iteration information
-        reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->directionSearch()->norm2());
+        reporter->printf(R_SOLVER, R_PER_ITERATION, "  %+.2e", quantities->directionSearch()->norm2());
     }
     reporter->printf(R_SOLVER, R_PER_ITERATION, "  %+.2e", quantities->stepsizeLineSearch());
 

@@ -71,16 +71,16 @@ class LineSearchBacktracking : public LineSearch
         {
             if (method_pure_second_order_.compare("projected_armijo_groupl1") == 0)
             {
-                return " |Direction| type #newZG  dirder    bak   LSStepsize";
+                return "|Direction| type #newZG  dirder    bak   LSStepsize";
             }
             else
             {
-                return " |Direction| LSStepsize";
+                return "|Direction| LSStepsize";
             }
         }
         else
         {
-            return " |Direction| LSStepsize";
+            return "|Direction| LSStepsize";
         }
     };
     /**

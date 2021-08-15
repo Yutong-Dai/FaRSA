@@ -74,7 +74,17 @@ class SpacePartitionFirstOrder : public SpacePartition
      * Get iteration header string
      * \return string of header values
      */
-    std::string iterationHeader() { return "ProxStepsize"; };
+    std::string iterationHeader()
+    {
+        if (verbose_)
+        {
+            return "ProxStepsize Optim.";
+        }
+        else
+        {
+            return "ProxStepsize";
+        }
+    };
     /**
      * Get iteration null values string
      * \return string of null values
@@ -118,6 +128,7 @@ class SpacePartitionFirstOrder : public SpacePartition
     //@{
     bool is_partitioned_; /* this space partition strategy needs only be done
                              once; so create a boolean to track  */
+    bool verbose_;
     //@}
 };  // end SpacePartition
 

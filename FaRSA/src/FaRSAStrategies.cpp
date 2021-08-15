@@ -214,6 +214,11 @@ void Strategies::initialize(const Options* options, Quantities* quantities, cons
     line_search_->initialize(options, quantities, reporter);
     // Initalize paramter updates
     parameter_updates_->initialize(options, quantities, reporter);
+
+    if (space_partition_->name().compare("FirstOrderPartition") == 0)
+    {
+        direction_computation_second_order_->setVerbose(false);
+    }
 }  // end initialize
 
 // Set iteration header

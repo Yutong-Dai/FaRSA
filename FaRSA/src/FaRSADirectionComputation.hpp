@@ -73,8 +73,7 @@ class DirectionComputation : public Strategy
      * \param[in,out] quantities is pointer to Quantities object from FaRSA
      * \param[in] reporter is pointer to Reporter object from FaRSA
      */
-    virtual void initialize(const Options* options, Quantities* quantities,
-                            const Reporter* reporter) = 0;
+    virtual void initialize(const Options* options, Quantities* quantities, const Reporter* reporter) = 0;
     //@}
 
     /** @name Get methods */
@@ -110,10 +109,9 @@ class DirectionComputation : public Strategy
      */
     inline void setStatus(DC_Status status) { status_ = status; };
 
-    void setPerformComputation(bool perform_computation)
-    {
-        perform_computation_ = perform_computation;
-    }
+    void setPerformComputation(bool perform_computation) { perform_computation_ = perform_computation; }
+
+    inline void setVerbose(bool verbose) { verbose_ = verbose; };
     //@}
 
     /** @name Direction computation method */
@@ -125,14 +123,14 @@ class DirectionComputation : public Strategy
      * \param[in] reporter is pointer to Reporter object from FaRSA
      * \param[in,out] strategies is pointer to Strategies object from FaRSA
      */
-    virtual void computeDirection(const Options* options, Quantities* quantities,
-                                  const Reporter* reporter, Strategies* strategies) = 0;
+    virtual void computeDirection(const Options* options, Quantities* quantities, const Reporter* reporter,
+                                  Strategies* strategies) = 0;
     //@}
 
     //    protected:
     /** @name Protected members */
     //@{
-
+    bool verbose_;
     //@}
 
    private:

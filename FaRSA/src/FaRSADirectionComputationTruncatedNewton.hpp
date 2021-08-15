@@ -69,7 +69,7 @@ class DirectionComputationTruncatedNewton : public DirectionComputation
     {
         if (verbose_)
         {
-            return " nVar   |gradF|  flag   its     Res     tarRes";
+            return " nVar   |gradF|  flag   its     Res     tarRes  ";
         }
         else
         {
@@ -135,7 +135,6 @@ class DirectionComputationTruncatedNewton : public DirectionComputation
     //@{
     double max_CG_iters_;
     double cg_big_factor_;
-    bool   verbose_;
     //@}
 
 };  // end DirectionComputationTruncatedNewton

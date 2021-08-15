@@ -1,8 +1,11 @@
-space_partition GroupL1PGBased
+space_partition FirstOrderPartition
 PU_PGStepsize_method LipschitzEstimate
 iteration_limit 8
-SPGL1_verbose false
-strategies_verbose false
+strategies_verbose true
 solver_verbose false
+SP1stord_verbose true
+SPGL1_verbose true
 DCTN_verbose true
+LSB_verbose true
 stationarity_tolerance 1e-6
+#space_partition GroupL1PGBased

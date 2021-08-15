@@ -12,10 +12,18 @@
 namespace FaRSA
 {
 // Add options
-void SpacePartitionFirstOrder::addOptions(Options* options, const Reporter* reporter) {}  // end addOptions
+void SpacePartitionFirstOrder::addOptions(Options* options, const Reporter* reporter)
+{
+    options->addBoolOption(reporter, "SP1stord_verbose", true,
+                           "A parameter controls whether should print more details.\n"
+                           "Default     : true.");
+}  // end addOptions
 
 // Set options
-void SpacePartitionFirstOrder::getOptions(const Options* options, const Reporter* reporter) {}  // end getOptions
+void SpacePartitionFirstOrder::getOptions(const Options* options, const Reporter* reporter)
+{
+    options->valueAsBool(reporter, "SP1stord_verbose", verbose_);
+}  // end getOptions
 
 // Initialize
 void SpacePartitionFirstOrder::initialize(const Options* options, Quantities* quantities, const Reporter* reporter) {}
@@ -74,7 +82,15 @@ void SpacePartitionFirstOrder::partitionSpace(const Options* options, Quantities
         {
             setStatus(SP_FIRST_ORDER_PARTITION_FAILURE);
         }
-        // print proximal gradient stepsize
+    }
+    // print proximal gradient stepsize
+    if (verbose_)
+    {
+        reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e %+.2e", quantities->stepsizeProximalGradient(),
+                         quantities->currentIterate()->proximalGraidentStep()->norm2());
+    }
+    else
+    {
         reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->stepsizeProximalGradient());
     }
 }
