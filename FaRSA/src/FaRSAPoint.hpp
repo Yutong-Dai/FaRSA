@@ -282,6 +282,26 @@ class Point
      * \return is scale factor
      */
     inline double scale() const { return scale_; };
+
+    inline double normGradientAllIndicesWorking() const
+    {
+        ASSERT_EXCEPTION(norm_gradient_all_indices_working_evaluated_, FARSA_NO_EVALUATION_EXCEPTION,
+                         "norm_gradient_all_indices_working_ should have been "
+                         "evaluated, but wasn't.");
+        return norm_gradient_all_indices_working_;
+    };
+    //@}
+
+    /** @name Set methods */
+    //{@
+    inline void setNormGradientAllIndicesWorking(double norm_gradient_all_indices_working)
+    {
+        norm_gradient_all_indices_working_ = norm_gradient_all_indices_working;
+    };
+    inline void setNormGradientAllIndicesWorkingEvaluated(bool evaluated)
+    {
+        norm_gradient_all_indices_working_evaluated_ = evaluated;
+    };
     //@}
 
    private:
@@ -311,9 +331,11 @@ class Point
     bool                               per_group_2norm_evaluated_;
     bool                               per_group_gradient_all_2norm_evaluated_;
     bool                               per_group_proximal_gradient_update_2norm_evaluated_;
+    bool                               norm_gradient_all_indices_working_evaluated_;
     double                             objective_smooth_;
     double                             objective_nonsmooth_;
     double                             scale_;
+    double                             norm_gradient_all_indices_working_;
     int                                number_of_variables_;
     int                                number_of_groups_;
     std::shared_ptr<FunctionSmooth>    function_smooth_;

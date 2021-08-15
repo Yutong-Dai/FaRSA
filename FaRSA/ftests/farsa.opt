@@ -1,7 +1,7 @@
 space_partition GroupL1PGBased
 PU_PGStepsize_method LipschitzEstimate
-iteration_limit 3
-SPGL1_verbose true
+iteration_limit 5
+SPGL1_verbose false
 strategies_verbose false
 solver_verbose false
 DCTN_verbose true

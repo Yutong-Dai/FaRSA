@@ -21,6 +21,7 @@ Point::Point(const std::shared_ptr<FunctionSmooth>    function_smooth,
       hessian_vector_product_smooth_evaluated_(false),
       hessian_vector_product_nonsmooth_evaluated_(false),
       scale_(scale),
+      norm_gradient_all_indices_working_(FARSA_DOUBLE_INFINITY),
       function_smooth_(function_smooth),
       function_nonsmooth_(function_nonsmooth)
 {

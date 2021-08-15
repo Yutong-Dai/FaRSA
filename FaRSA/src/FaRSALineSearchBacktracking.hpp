@@ -65,12 +65,46 @@ class LineSearchBacktracking : public LineSearch
      * Get iteration header values
      * \return string of header values
      */
-    std::string iterationHeader() { return " |Direction| LSStepsize"; };
+    std::string iterationHeader()
+    {
+        if (verbose_)
+        {
+            if (method_pure_second_order_.compare("projected_armijo_groupl1") == 0)
+            {
+                return " type #newGrps |Direction| LSStepsize";
+            }
+            else
+            {
+                return " |Direction| LSStepsize";
+            }
+        }
+        else
+        {
+            return " |Direction| LSStepsize";
+        }
+    };
     /**
      * Get iteration null values string
      * \return string of null values
      */
-    std::string iterationNullValues() { return "--------- ---------"; };
+    std::string iterationNullValues()
+    {
+        if (verbose_)
+        {
+            if (method_pure_second_order_.compare("projected_armijo_groupl1") == 0)
+            {
+                return " ---- ----- --------- ---------";
+            }
+            else
+            {
+                return "--------- ---------";
+            }
+        }
+        else
+        {
+            return "--------- ---------";
+        }
+    };
     /**
      * Get name of strategy
      * \return string with name of strategy
@@ -116,6 +150,7 @@ class LineSearchBacktracking : public LineSearch
     /** @name Private members */
     //@{
     bool        fail_on_small_stepsize_;
+    bool        verbose_;
     double      stepsize_initial_;
     double      stepsize_minimum_;
     double      stepsize_sufficient_decrease_threshold_;

@@ -11,6 +11,7 @@
 
 #include "FaRSADeclarations.hpp"
 #include "FaRSADefinitions.hpp"
+#include "FaRSASpacePartitionGroupL1PGBased.hpp"
 
 namespace FaRSA
 {
@@ -21,6 +22,9 @@ void LineSearchBacktracking::addOptions(Options* options, const Reporter* report
     options->addBoolOption(reporter, "LSB_fail_on_small_stepsize", false,
                            "Indicator for whether to indicate failure on small stepsize.\n"
                            "Default     : false.");
+    options->addBoolOption(reporter, "LSB_verbose", true,
+                           "A parameter controls whether should print more details.\n"
+                           "Default     : true.");
 
     // Add double options
     options->addDoubleOption(reporter, "LSB_stepsize_initial", 1.0, 0.0, FARSA_DOUBLE_INFINITY,
@@ -92,7 +96,7 @@ void LineSearchBacktracking::getOptions(const Options* options, const Reporter* 
 {
     // Read bool options
     options->valueAsBool(reporter, "LSB_fail_on_small_stepsize", fail_on_small_stepsize_);
-
+    options->valueAsBool(reporter, "LSB_verbose", verbose_);
     // Read options
     options->valueAsDouble(reporter, "LSB_stepsize_initial", stepsize_initial_);
     options->valueAsDouble(reporter, "LSB_stepsize_minimum", stepsize_minimum_);
@@ -117,6 +121,13 @@ void LineSearchBacktracking::getOptions(const Options* options, const Reporter* 
 // Initialize
 void LineSearchBacktracking::initialize(const Options* options, Quantities* quantities, const Reporter* reporter)
 {
+    std::string partition_strategy;
+    options->valueAsString(reporter, "space_partition", partition_strategy);
+    if (partition_strategy.compare("FirstOrderPartition") == 0)
+    {
+        directional_derivative_second_order_type_ = "Not applicable";
+        method_pure_second_order_ = "Not applicable";
+    };
     quantities->setStepsizeLineSearch(fmax(stepsize_minimum_, stepsize_initial_));
     details_ = "";
     details_ += "|-- search direction type: " + direction_search_type_ + "\n";
@@ -150,6 +161,10 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
     setStatus(LS_UNSET);
     // set number_of_backtrack_ to zero;
     reset();
+    // declare some variables for printing purpose
+    std::string iteration_type = "----";
+    int         new_zero_groups = 0;
+    std::string search_method = "UNKNOWN";
     // try line search, terminate on any exception
     try
     {
@@ -169,9 +184,8 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
 
         // determine quantities->direction_search() from the search direction type
         // directional derivative and backtracking linesearch method are also be determined here
-        double      directional_derivative = 0.0;
-        auto        direction_search = quantities->directionSearch();
-        std::string search_method = "UNKNOWN";
+        double directional_derivative = 0.0;
+        auto   direction_search = quantities->directionSearch();
 
         if (direction_search_type_.compare("pure") == 0)
         {
@@ -198,14 +212,14 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
             else if ((strategies->directionComputationFirstOrder()->status() == DC_SKIPPED) and
                      (strategies->directionComputationSecondOrder()->status() == DC_SUCCESS))
             {
-                // compute the search direction
-                quantities->directionSearch()->copy(*(quantities->directionSecondOrder()));
                 // determine the directional derivative
                 if (directional_derivative_second_order_type_.compare("gradient") == 0)
                 {
-                    THROW_EXCEPTION(LS_EVALUATION_FAILURE_EXCEPTION,
-                                    "No implementation for the directional_derivative_second_order_type_ being set to "
-                                    "gradient yet\n");
+                    if (method_pure_second_order_.compare("armijo") == 0)
+                    {
+                        quantities->directionSearch()->copy(*(quantities->directionSecondOrder()));
+                        directional_derivative = direction_search->innerProduct(*direction_search);
+                    }
                 }
                 else
                 {
@@ -244,7 +258,8 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
             THROW_EXCEPTION(LS_EVALUATION_FAILURE_EXCEPTION,
                             "The search_method is not specified. This is not supposed to happen.\n");
         }
-        // perform the backtrack linesearch
+
+        // perform the Armijo-backtrack linesearch
         if (search_method.compare("armijo") == 0)
         {
             // Loop
@@ -316,13 +331,223 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
 
             }  // end while
         }
-        else if (search_method.compare("projected_armijo_groupl1"))
+        else if (search_method.compare("projected_armijo_groupl1") == 0)
         {
-            THROW_EXCEPTION(LS_EVALUATION_FAILURE_EXCEPTION,
-                            "No implementation for the search method being set to "
-                            "projected_armijo_groupl1 yet\n");
+            // determine the intersection of the search direction with the projection ball
+
+            // infity means the corresponding group will never be projected to zero
+            std::vector<double> tau_vec(quantities->numberOfGroups(), FARSA_DOUBLE_INFINITY);
+            auto   ptr = std::static_pointer_cast<SpacePartitionGroupL1PGBased>(strategies->spacePartition());
+            double kappa1 = ptr->kappa1();
+            double kappa2 = ptr->kappa2();
+            auto   d = quantities->directionSecondOrder();
+            auto   x = quantities->currentIterate()->vector();
+            float  norm_gradient_all_indices_working = quantities->currentIterate()->normGradientAllIndicesWorking();
+            auto   per_group_gradient_all_2norm = quantities->currentIterate()->perGroupGradientAll2Norm();
+            // auto   per_group_2norm = quantities->currentIterate()->perGroup2Norm();
+            double temp;
+            int    start;
+            int    end;
+            double norm_dGi_sq;
+            double dGiTxGi;
+            double xGiTxGi;
+            double rho_i;
+            double radius_i;
+            double a, b, c, delta;
+            double tau_min = FARSA_DOUBLE_INFINITY;
+
+            for (auto i : *quantities->groupsWorking())
+            {
+                start = (*quantities->groups())[i][0];
+                end = (*quantities->groups())[i][1];
+                norm_dGi_sq = 0.0;
+                dGiTxGi = 0.0;
+                xGiTxGi = 0.0;
+                // calcuate ||d_Gi||^2, d_Gi^T x_Gi, x_Gi^T x_Gi
+                for (int j = start; j <= end; j++)
+                {
+                    norm_dGi_sq += pow(d->values()[j], 2.0);
+                    dGiTxGi += d->values()[j] * x->values()[j];
+                    xGiTxGi += pow(x->values()[j], 2.0);
+                }
+                temp = fmin(1.0, kappa2 * norm_gradient_all_indices_working * (end - start + 1) /
+                                     quantities->groupsWorking()->size());
+                rho_i = fmax(kappa1 * per_group_gradient_all_2norm->values()[i], temp);
+                // radius_i = fmin(rho_i, sin(M_PI / 4) * per_group_2norm->values()[i]);
+                radius_i = fmin(rho_i, sin(M_PI / 4) * sqrt(xGiTxGi));
+                a = norm_dGi_sq;
+                b = 2 * dGiTxGi;
+                c = xGiTxGi - pow(radius_i, 2.0);
+                // compute the first intersection
+                delta = pow(b, 2.0) - 4 * a * c;
+                if (delta <= 0)
+                {
+                    tau_vec[i] = FARSA_DOUBLE_INFINITY;
+                }
+                else
+                {
+                    temp = fmin((-b + sqrt(delta)) / (2 * a), (-b - sqrt(delta)) / (2 * a));
+                    if (temp < 0)
+                    {
+                        tau_vec[i] = FARSA_DOUBLE_INFINITY;
+                    }
+                    else
+                    {
+                        tau_vec[i] = temp;
+                        tau_min = fmin(temp, tau_min);
+                    }
+                }
+            }
+            // begin backtracking
+            int projection_attemps = 0;
+            new_zero_groups = 0;
+
+            // projection stage: non-increasing
+            while (quantities->stepsizeLineSearch() >= tau_min)
+            {
+                new_zero_groups = 0;
+                // Declare new point
+                quantities->setTrialIterate(
+                    quantities->currentIterate()->makeNewLinearCombination(1.0, 0.0, *quantities->directionSearch()));
+                for (int i = 0; i < quantities->numberOfGroups(); i++)
+                {
+                    start = (*quantities->groups())[i][0];
+                    end = (*quantities->groups())[i][1];
+                    // current group is projected to 0
+                    if (quantities->stepsizeLineSearch() > tau_vec[i])
+                    {
+                        for (int j = start; j <= end; j++)
+                        {
+                            quantities->trialIterate()->vector()->valuesModifiable()[j] = 0.0;
+                        }
+                        new_zero_groups += 1;
+                    }
+                    else
+                    {
+                        // take a step along the second order direction
+                        for (int j = start; j <= end; j++)
+                        {
+                            quantities->trialIterate()->vector()->valuesModifiable()[j] =
+                                x->values()[j] + quantities->stepsizeLineSearch() * d->values()[j];
+                        }
+                    }
+                }
+                projection_attemps += 1;
+                // Evaluate trial objective for both smooth and nonsmooth function
+                evaluation_success = quantities->trialIterate()->evaluateObjectiveAll(*quantities);
+
+                // Check for successful evaluation
+                if (evaluation_success)
+                {
+                    // Check for sufficient decrease
+                    bool non_increasing =
+                        (quantities->trialIterate()->objectiveAll() - quantities->currentIterate()->objectiveAll() <=
+                         0);
+                    // std::cout << "\nnewall: " << quantities->trialIterate()->objectiveAll()
+                    //           << " oldall: " << quantities->currentIterate()->objectiveAll() << " diff: "
+                    //           << quantities->trialIterate()->objectiveAll() -
+                    //                  quantities->currentIterate()->objectiveAll()
+                    //           << std::endl;
+                    // Check Armijo condition
+                    if (non_increasing)
+                    {
+                        iteration_type = "proj";
+                        // actual direction taken with unit-stepsize
+                        auto search_direction = quantities->trialIterate()->vector()->makeNewLinearCombination(
+                            1.0, -1.0, *(quantities->currentIterate()->vector()));
+                        quantities->directionSearch()->copy(*(search_direction));
+                        quantities->setStepsizeLineSearch(1.0);
+                        THROW_EXCEPTION(LS_SUCCESS_EXCEPTION, "Line search successful.");
+                    }  // end if
+
+                }  // end if
+                quantities->setStepsizeLineSearch(stepsize_decrease_factor_ * quantities->stepsizeLineSearch());
+            }
+            // no further progress can be made due to small directional derivative along the second order direciton;
+            // terminate!
+            quantities->directionSearch()->copy(*d);
+            directional_derivative = direction_search->innerProduct(*direction_search);
+            double ratio = directional_derivative / (1 + quantities->currentIterate()->objectiveAll());
+            if (ratio < 1e-15)
+            {
+                iteration_type = "npgs";
+                quantities->setStepsizeLineSearch(1.0);
+                THROW_EXCEPTION(LS_SUCCESS_EXCEPTION, "Line search successful.");
+            }
+
+            // sufficient decrease stage
+            while (true)
+            {
+                // Declare new point
+                quantities->setTrialIterate(quantities->currentIterate()->makeNewLinearCombination(
+                    1.0, quantities->stepsizeLineSearch(), *quantities->directionSearch()));
+
+                // Evaluate trial objective for both smooth and nonsmooth function
+                evaluation_success = quantities->trialIterate()->evaluateObjectiveAll(*quantities);
+
+                // Check for successful evaluation
+                if (evaluation_success)
+                {
+                    // Check for sufficient decrease
+                    bool sufficient_decrease =
+                        (quantities->trialIterate()->objectiveAll() - quantities->currentIterate()->objectiveAll() <=
+                         stepsize_sufficient_decrease_threshold_ * quantities->stepsizeLineSearch() *
+                             directional_derivative);
+                    // Check Armijo condition
+                    if (sufficient_decrease)
+                    {
+                        iteration_type = "desc";
+                        THROW_EXCEPTION(LS_SUCCESS_EXCEPTION, "Line search successful.");
+                    }  // end if
+
+                }  // end if
+
+                // Check if stepsize below minimum
+                if (quantities->stepsizeLineSearch() <= stepsize_minimum_)
+                {
+                    // Check for failure on small stepsize
+                    if (fail_on_small_stepsize_)
+                    {
+                        THROW_EXCEPTION(LS_STEPSIZE_TOO_SMALL_EXCEPTION,
+                                        "Line search unsuccessful.  Stepsize too small.");
+                    }
+
+                    // Evaluate objective at trial iterate
+                    evaluation_success = quantities->trialIterate()->evaluateObjectiveAll(*quantities);
+
+                    // Check for evaluation success
+                    if (evaluation_success)
+                    {
+                        // Check for decrease
+                        if (quantities->trialIterate()->objectiveAll() < quantities->currentIterate()->objectiveAll())
+                        {
+                            iteration_type = "small";
+                            THROW_EXCEPTION(LS_SUCCESS_EXCEPTION, "Line search successful.");
+
+                        }  // end if
+
+                    }  // end if
+
+                    // Set null step
+                    quantities->setStepsizeLineSearch(0.0);
+
+                    // Set new point
+                    quantities->setTrialIterateToCurrentIterate();
+
+                    // Terminate
+                    iteration_type = "small";
+                    THROW_EXCEPTION(LS_SUCCESS_EXCEPTION, "Line search successful.");
+
+                }  // end if
+
+                // Update stepsize
+                quantities->setStepsizeLineSearch(stepsize_decrease_factor_ * quantities->stepsizeLineSearch());
+                // begin to backtrack
+                number_of_backtrack_ += 1;
+
+            }  // end while
         }
-        else if (search_method.compare("dogleg"))
+        else if (search_method.compare("dogleg") == 0)
         {
             THROW_EXCEPTION(LS_EVALUATION_FAILURE_EXCEPTION,
                             "No implementation for the search method being set to "
@@ -350,8 +575,31 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
         setStatus(LS_STEPSIZE_TOO_SMALL);
     }  // end catch
 
-    reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->directionSearch()->norm2());
-    // Print iteration information
+    if (verbose_)
+    {
+        if (strategies->spacePartition()->name().compare("GroupL1PGBasedPartition") == 0)
+        {
+            if (search_method.compare("projected_armijo_groupl1"))
+            {
+                reporter->printf(R_SOLVER, R_PER_ITERATION, " %s %5d %+.2e", iteration_type.c_str(), new_zero_groups,
+                                 quantities->directionSearch()->norm2());
+            }
+            else
+            {
+                reporter->printf(R_SOLVER, R_PER_ITERATION, " %s %s %+.2e", iteration_type.c_str(), "-----",
+                                 quantities->directionSearch()->norm2());
+            }
+        }
+        else
+        {
+            reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->directionSearch()->norm2());
+        }
+    }
+    else
+    {
+        // Print iteration information
+        reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e", quantities->directionSearch()->norm2());
+    }
     reporter->printf(R_SOLVER, R_PER_ITERATION, "  %+.2e", quantities->stepsizeLineSearch());
 
 }  // end runLineSearch

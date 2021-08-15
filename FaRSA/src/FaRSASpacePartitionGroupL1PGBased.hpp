@@ -109,7 +109,15 @@ class SpacePartitionGroupL1PGBased : public SpacePartition
      * Get name of strategy
      * \return string with name of strategy
      */
-    std::string name() { return "GroupL1PGBasedPartition"; };
+    std::string         name() { return "GroupL1PGBasedPartition"; };
+    inline const double kappa1() const { return kappa1_; };
+    inline const double kappa2() const { return kappa2_; };
+    //@}
+
+    /** @name set methods */
+    //@{
+    inline void setKappa1(double kappa1) { kappa1_ = kappa1; };
+    inline void setKappa2(double kappa2) { kappa2_ = kappa2; };
     //@}
 
     /** @name Space Partition method */

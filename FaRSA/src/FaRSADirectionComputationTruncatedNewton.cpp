@@ -76,22 +76,23 @@ void DirectionComputationTruncatedNewton::computeDirection(const Options* option
             }
             // form the gradient of smooth and nonsmooth at the subspace
             int    dimension = quantities->indiciesWorking()->size();
-            Vector gradF_indices_working(dimension);
+            Vector gradient_all_indices_working(dimension);
             auto   current_iterate = quantities->currentIterate();
             for (int i = 0; i < dimension; i++)
             {
                 auto idx = (*quantities->indiciesWorking())[i];
-                gradF_indices_working.valuesModifiable()[i] = current_iterate->gradientSmooth()->values()[idx] +
-                                                              current_iterate->gradientNonsmooth()->values()[idx];
+                gradient_all_indices_working.valuesModifiable()[i] =
+                    current_iterate->gradientSmooth()->values()[idx] +
+                    current_iterate->gradientNonsmooth()->values()[idx];
             }
             // initial residual
             Vector residual(dimension);
-            residual.copy(gradF_indices_working);
+            residual.copy(gradient_all_indices_working);
             double norm_residual = sqrt(residual.innerProduct(residual));
 
             // initialize conjugate direction p as the negative gradient
             std::shared_ptr<Vector> p(new Vector(dimension));
-            p->addScaledVector(-1.0, gradF_indices_working);
+            p->addScaledVector(-1.0, gradient_all_indices_working);
 
             // starting point
             Vector d(dimension);
@@ -99,7 +100,19 @@ void DirectionComputationTruncatedNewton::computeDirection(const Options* option
             // set up termination conditions
             int    max_iters = fmin(dimension, max_CG_iters_);
             double target_residual = fmax(1e-10, fmin(0.1, pow(norm_residual, 0.5)) * norm_residual);
-            double norm_gradF_indices_working = sqrt(gradF_indices_working.innerProduct(gradF_indices_working));
+            double norm_gradient_all_indices_working =
+                sqrt(gradient_all_indices_working.innerProduct(gradient_all_indices_working));
+            if (!isnan(norm_gradient_all_indices_working))
+            {
+                current_iterate->setNormGradientAllIndicesWorking(norm_gradient_all_indices_working);
+                current_iterate->setNormGradientAllIndicesWorkingEvaluated(true);
+            }
+            else
+            {
+                THROW_EXCEPTION(DC_EVALUATION_FAILURE_EXCEPTION,
+                                "Direction computation unsuccessful. "
+                                "Gradient all norm over working indicies evaluation failed.");
+            }
 
             // CG iterations
             int                     iterations = 0;
@@ -145,7 +158,7 @@ void DirectionComputationTruncatedNewton::computeDirection(const Options* option
                     flag = "CGtol";
                     termination = true;
                 }
-                else if (norm_d > cg_big_factor_ * fmin(1, norm_gradF_indices_working))
+                else if (norm_d > cg_big_factor_ * fmin(1, norm_gradient_all_indices_working))
                 {
                     flag = "CGbig";
                     termination = true;
@@ -175,7 +188,8 @@ void DirectionComputationTruncatedNewton::computeDirection(const Options* option
             if (verbose_)
             {
                 reporter->printf(R_SOLVER, R_PER_ITERATION, " %6d %+.2e %s %5d %+.2e %+.2e", dimension,
-                                 norm_gradF_indices_working, flag.c_str(), iterations, norm_residual, target_residual);
+                                 norm_gradient_all_indices_working, flag.c_str(), iterations, norm_residual,
+                                 target_residual);
             }
             // Check for success
             THROW_EXCEPTION(DC_SUCCESS_EXCEPTION, "Direction computation successful.")
@@ -197,7 +211,8 @@ void DirectionComputationTruncatedNewton::computeDirection(const Options* option
         setStatus(DC_SKIPPED);
         if (verbose_)
         {
-            reporter->printf(R_SOLVER, R_PER_ITERATION, " ------ --------- ----- ----- --------- ---------");
+            int dimension = quantities->indiciesWorking()->size();
+            reporter->printf(R_SOLVER, R_PER_ITERATION, " %6d --------- ----- ----- --------- ---------", dimension);
         }
     }
 

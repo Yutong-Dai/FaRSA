@@ -15,7 +15,6 @@
 
 namespace FaRSA
 {
-
 /**
  * Forward declarations
  */
@@ -28,80 +27,75 @@ class Reporter;
  */
 class Strategy
 {
+   public:
+    /** @name Constructors */
+    //@{
+    /**
+     * Constructor
+     */
+    Strategy(){};
+    //@}
 
-public:
-  /** @name Constructors */
-  //@{
-  /**
-   * Constructor
-   */
-  Strategy(){};
-  //@}
+    /** @name Destructor */
+    //@{
+    /**
+     * Destructor
+     */
+    virtual ~Strategy(){};
 
-  /** @name Destructor */
-  //@{
-  /**
-   * Destructor
-   */
-  virtual ~Strategy(){};
+    /** @name Options handling methods */
+    //@{
+    /**
+     * Add options
+     * \param[in,out] options is pointer to Options object from FaRSA
+     * \param[in] reporter is pointer to Reporter object from FaRSA
+     */
+    virtual void addOptions(Options* options, const Reporter* reporter) = 0;
+    /**
+     * Set options
+     * \param[in] options is pointer to Options object from FaRSA
+     * \param[in] reporter is pointer to Reporter object from FaRSA
+     */
+    virtual void getOptions(const Options* options, const Reporter* reporter) = 0;
+    //@}
 
-  /** @name Options handling methods */
-  //@{
-  /**
-   * Add options
-   * \param[in,out] options is pointer to Options object from FaRSA
-   * \param[in] reporter is pointer to Reporter object from FaRSA
-   */
-  virtual void addOptions(Options* options,
-                          const Reporter* reporter) = 0;
-  /**
-   * Set options
-   * \param[in] options is pointer to Options object from FaRSA
-   * \param[in] reporter is pointer to Reporter object from FaRSA
-   */
-  virtual void getOptions(const Options* options,
-                          const Reporter* reporter) = 0;
-  //@}
+    /** @name Initialization method */
+    //@{
+    /**
+     * Initialize strategy
+     * \param[in] options is pointer to Options object from FaRSA
+     * \param[in,out] quantities is pointer to Quantities object from FaRSA
+     * \param[in] reporter is pointer to Reporter object from FaRSA
+     */
+    virtual void initialize(const Options* options, Quantities* quantities, const Reporter* reporter) = 0;
+    //@}
 
-  /** @name Initialization method */
-  //@{
-  /**
-   * Initialize strategy
-   * \param[in] options is pointer to Options object from FaRSA
-   * \param[in,out] quantities is pointer to Quantities object from FaRSA
-   * \param[in] reporter is pointer to Reporter object from FaRSA
-   */
-  virtual void initialize(const Options* options,
-                          Quantities* quantities,
-                          const Reporter* reporter) = 0;
-  //@}
+    /** @name Get method */
+    //@{
+    /**
+     * Get name of strategy
+     * \return string with name of strategy
+     */
+    virtual std::string name() = 0;
+    //@}
 
-  /** @name Get method */
-  //@{
-  /**
-   * Get name of strategy
-   * \return string with name of strategy
-   */
-  virtual std::string name() = 0;
-  //@}
+   private:
+    /** @name Default compiler generated methods
+     * (Hidden to avoid implicit creation/calling.)
+     */
+    //@{
+    /**
+     * Copy constructor
+     */
+    Strategy(const Strategy&);
+    /**
+     * Overloaded equals operator
+     */
+    void operator=(const Strategy&);
+    //@}
 
-private:
-  /** @name Default compiler generated methods
-   * (Hidden to avoid implicit creation/calling.)
-   */
-  //@{
-  /**
-   * Copy constructor
-   */
-  Strategy(const Strategy&);
-  /**
-   * Overloaded equals operator
-   */
-  void operator=(const Strategy&);
-  //@}
+};  // end Strategy
 
-}; // end Strategy
-
-} // namespace FaRSA
+}  // namespace FaRSA
 
 #endif /* __FARSASTRATEGY_HPP__ */

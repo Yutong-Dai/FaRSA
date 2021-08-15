@@ -19,9 +19,7 @@ bool LinearRegressionLoss::evaluateObjective(const Vector& x, double& f)
     return !isnan(f);
 }  // end  evaluateObjective
 
-bool LinearRegressionLoss::evaluateGradient(const Vector&           x,
-                                            const std::vector<int>& indicies,
-                                            Vector&                 g)
+bool LinearRegressionLoss::evaluateGradient(const Vector& x, const std::vector<int>& indicies, Vector& g)
 {
     data_matrix_.matrixTransposeVectorProduct(residual_, g);
     g.scale(1.0 / number_of_data_points_);
@@ -35,17 +33,16 @@ bool LinearRegressionLoss::evaluateGradient(const Vector&           x,
     return true;
 }  // end  evaluateGradient
 
-bool LinearRegressionLoss::evaluateHessianVectorProduct(
-    const Vector& x, const std::vector<int>& indicies, const Vector& v,
-    Vector& Hv)
+bool LinearRegressionLoss::evaluateHessianVectorProduct(const Vector& x, const std::vector<int>& indicies,
+                                                        const Vector& v, Vector& Hv)
 {
-    Matrix submatrix(data_matrix_.numberOfRows(), indicies.size(),
-                     indicies.size() * data_matrix_.numberOfRows());
+    Matrix submatrix(data_matrix_.numberOfRows(), indicies.size(), indicies.size() * data_matrix_.numberOfRows());
     data_matrix_.col(indicies, submatrix);
     Vector temp(submatrix.numberOfRows());
     submatrix.matrixVectorProduct(v, temp);
     submatrix.matrixTransposeVectorProduct(temp, Hv);
     Hv.scale(1.0 / number_of_data_points_);
+    Hv.addScaledVector(1e-8, v);
     for (int i = 0; i < Hv.length(); i++)
     {
         if (isnan(Hv.values()[i]))
