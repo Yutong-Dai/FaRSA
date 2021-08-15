@@ -144,11 +144,10 @@ void FaRSASolver::optimize(const std::shared_ptr<FunctionSmooth>    function_smo
 
             // Check termination conditions
             computeProximalGradientUpdateAtCurrentIterate();
-
+            quantities_.setOptimalityError(quantities_.currentIterate()->proximalGraidentStep()->normInf());
             if (quantities_.currentIterate()->proximalGraidentStep()->normInf() <=
                 quantities_.stationarityTolerance() * fmax(1.0, initial_proximal_gradient_step_norm))
             {
-                quantities_.setOptimalityError(quantities_.currentIterate()->proximalGraidentStep()->normInf());
                 THROW_EXCEPTION(FARSA_SUCCESS_EXCEPTION, "Stationary point found.");
             }
             if (quantities_.iterationCounter() >= quantities_.iterationLimit())
