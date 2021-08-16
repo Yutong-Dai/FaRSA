@@ -91,15 +91,18 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Destructor</div></td></tr>
 <tr class="memitem:aa387f33937b7ba67254f9ce3f98feada"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html#aa387f33937b7ba67254f9ce3f98feada">~FunctionNonsmooth</a> ()</td></tr>
 <tr class="separator:aa387f33937b7ba67254f9ce3f98feada"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe2c9737f63832895a9f07f39e5adbc4"><td class="memItemLeft" align="right" valign="top"><a id="abe2c9737f63832895a9f07f39e5adbc4"></a>
-int const&#160;</td><td class="memItemRight" valign="bottom"><b>numberOfGroups</b> () const</td></tr>
-<tr class="separator:abe2c9737f63832895a9f07f39e5adbc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae073125d7c5f019c9ec9e87d97252459"><td class="memItemLeft" align="right" valign="top"><a id="ae073125d7c5f019c9ec9e87d97252459"></a>
-double const&#160;</td><td class="memItemRight" valign="bottom"><b>penalty</b> () const</td></tr>
-<tr class="separator:ae073125d7c5f019c9ec9e87d97252459"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51ed02ba58018e2f2dd6aec03f1ed58f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; std::vector&lt; std::vector&lt; int &gt; &gt; &gt; const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html#a51ed02ba58018e2f2dd6aec03f1ed58f">groups</a> () const</td></tr>
-<tr class="memdesc:a51ed02ba58018e2f2dd6aec03f1ed58f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a 2-d vector specifies the group structure.  <a href="class_fa_r_s_a_1_1_function_nonsmooth.html#a51ed02ba58018e2f2dd6aec03f1ed58f">More...</a><br /></td></tr>
-<tr class="separator:a51ed02ba58018e2f2dd6aec03f1ed58f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0651bdd72b6444efbc0bcacd6346b337"><td class="memItemLeft" align="right" valign="top"><a id="a0651bdd72b6444efbc0bcacd6346b337"></a>
+const int&#160;</td><td class="memItemRight" valign="bottom"><b>numberOfGroups</b> () const</td></tr>
+<tr class="separator:a0651bdd72b6444efbc0bcacd6346b337"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ff58783b24af0095cc16ad720a1a8f3"><td class="memItemLeft" align="right" valign="top"><a id="a6ff58783b24af0095cc16ad720a1a8f3"></a>
+const double&#160;</td><td class="memItemRight" valign="bottom"><b>penalty</b> () const</td></tr>
+<tr class="separator:a6ff58783b24af0095cc16ad720a1a8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8f4845477bd5dd937bc723f04ad54e7"><td class="memItemLeft" align="right" valign="top">const std::shared_ptr&lt; std::vector&lt; std::vector&lt; int &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_function_nonsmooth.html#ad8f4845477bd5dd937bc723f04ad54e7">groups</a> () const</td></tr>
+<tr class="memdesc:ad8f4845477bd5dd937bc723f04ad54e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a 2-d vector specifies the group structure.  <a href="class_fa_r_s_a_1_1_function_nonsmooth.html#ad8f4845477bd5dd937bc723f04ad54e7">More...</a><br /></td></tr>
+<tr class="separator:ad8f4845477bd5dd937bc723f04ad54e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a625621ef7e0845c5ca96575a62f38bb7"><td class="memItemLeft" align="right" valign="top"><a id="a625621ef7e0845c5ca96575a62f38bb7"></a>
+virtual const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>groupsFormat</b> () const =0</td></tr>
+<tr class="separator:a625621ef7e0845c5ca96575a62f38bb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">scale methods</div></td></tr>
 <tr class="memitem:ae6240f867eaf6a562525d18e3a4cbf46"><td class="memItemLeft" align="right" valign="top"><a id="ae6240f867eaf6a562525d18e3a4cbf46"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>scalePenalty</b> (double scale)=0</td></tr>
@@ -236,8 +239,8 @@ Private Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a51ed02ba58018e2f2dd6aec03f1ed58f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51ed02ba58018e2f2dd6aec03f1ed58f">&#9670;&nbsp;</a></span>groups()</h2>
+<a id="ad8f4845477bd5dd937bc723f04ad54e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8f4845477bd5dd937bc723f04ad54e7">&#9670;&nbsp;</a></span>groups()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -246,7 +249,7 @@ Private Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;std::vector&lt;std::vector&lt;int&gt; &gt; &gt; const FaRSA::FunctionNonsmooth::groups </td>
+          <td class="memname">const std::shared_ptr&lt;std::vector&lt;std::vector&lt;int&gt; &gt; &gt; FaRSA::FunctionNonsmooth::groups </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -311,7 +314,7 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>a vector of vector specifing the groups of variables For example, consider the following group structures: Non-overlapping: group1: [0,1]; group2: [2,3,4,5]; group3:[6] the groups_ is set as [[0,1], [2,5], [6,6]]. For i-th subvector, the first element is the statring position of the i-th group the second element is the ending position of the i-th group Overlapping: group1: [0,1,2]; group2: [2,3,4]; group3:[1,3] the groups_ is set as [[0,1,2], [2,3,4], [1,3]]. The smooth function's groups_ is determined by the nonmooth function's group_ </p>
+<p>a vector of vector specifing the groups of variables For example, consider the following group structures: Non-overlapping: group1: [0,1]; group2: [2,3,4,5]; group3:[6] the groups_ is set as [[0,1], [2,5], [6,6]]. For i-th subvector, the first element is the statring position of the i-th group the second element is the ending position of the i-th group Overlapping: group1: [0,1,3]; group2: [2,3,4]; group3:[0,2,4] the groups_ is set as [[0,1,3], [2,3,4], [0,2,4]]. Within each group, the indicies have to be ordered. The code doesn't check this. </p>
 
 </div>
 </div>

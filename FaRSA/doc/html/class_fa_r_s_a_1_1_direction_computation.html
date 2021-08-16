@@ -80,8 +80,9 @@ Inheritance diagram for FaRSA::DirectionComputation:</div>
  <div class="center">
   <img src="class_fa_r_s_a_1_1_direction_computation.png" usemap="#FaRSA::DirectionComputation_map" alt=""/>
   <map id="FaRSA::DirectionComputation_map" name="FaRSA::DirectionComputation_map">
-<area href="class_fa_r_s_a_1_1_strategy.html" alt="FaRSA::Strategy" shape="rect" coords="0,0,274,24"/>
-<area href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html" alt="FaRSA::DirectionComputationProximalGradient" shape="rect" coords="0,112,274,136"/>
+<area href="class_fa_r_s_a_1_1_strategy.html" alt="FaRSA::Strategy" shape="rect" coords="143,0,420,24"/>
+<area href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html" alt="FaRSA::DirectionComputationProximalGradient" shape="rect" coords="0,112,277,136"/>
+<area href="class_fa_r_s_a_1_1_direction_computation_truncated_newton.html" alt="FaRSA::DirectionComputationTruncatedNewton" shape="rect" coords="287,112,564,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -119,6 +120,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>performCompuation</b>
 <tr class="memitem:a2ab30fd001700e8531beed37c3bec60a"><td class="memItemLeft" align="right" valign="top"><a id="a2ab30fd001700e8531beed37c3bec60a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setPerformComputation</b> (bool perform_computation)</td></tr>
 <tr class="separator:a2ab30fd001700e8531beed37c3bec60a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0231d11856c75c1e4b9f5cea3df1d34a"><td class="memItemLeft" align="right" valign="top"><a id="a0231d11856c75c1e4b9f5cea3df1d34a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setVerbose</b> (bool verbose)</td></tr>
+<tr class="separator:a0231d11856c75c1e4b9f5cea3df1d34a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Direction computation method</div></td></tr>
 <tr class="memitem:af010136b12d4bfd27ece70bda2faa136"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_direction_computation.html#af010136b12d4bfd27ece70bda2faa136">computeDirection</a> (const <a class="el" href="class_fa_r_s_a_1_1_options.html">Options</a> *options, <a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> *quantities, const <a class="el" href="class_fa_r_s_a_1_1_reporter.html">Reporter</a> *reporter, <a class="el" href="class_fa_r_s_a_1_1_strategies.html">Strategies</a> *strategies)=0</td></tr>
 <tr class="separator:af010136b12d4bfd27ece70bda2faa136"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,6 +131,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setPerformComputation
 <tr class="separator:a0024791bbb80f497d9e7738556f94c6a inherit pub_methods_class_fa_r_s_a_1_1_strategy"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab705fbc6c4a57cd40a77f0941f540f46 inherit pub_methods_class_fa_r_s_a_1_1_strategy"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_strategy.html#ab705fbc6c4a57cd40a77f0941f540f46">~Strategy</a> ()</td></tr>
 <tr class="separator:ab705fbc6c4a57cd40a77f0941f540f46 inherit pub_methods_class_fa_r_s_a_1_1_strategy"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Protected members</div></td></tr>
+<tr class="memitem:a4b39de2b2dcec59a01e0c93701cb4f16"><td class="memItemLeft" align="right" valign="top"><a id="a4b39de2b2dcec59a01e0c93701cb4f16"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr>
+<tr class="separator:a4b39de2b2dcec59a01e0c93701cb4f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -273,7 +284,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>perform_computation_<
 
 <p>Implements <a class="el" href="class_fa_r_s_a_1_1_strategy.html#a1d41bfacdaf7c2b637ba9eaaa4506ed4">FaRSA::Strategy</a>.</p>
 
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a5f51ede986e3e4163a5e7c99f838b4c2">FaRSA::DirectionComputationProximalGradient</a>.</p>
+<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_truncated_newton.html#adcbbda7418f9644fd86e331fa732a3f1">FaRSA::DirectionComputationTruncatedNewton</a>, and <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a5f51ede986e3e4163a5e7c99f838b4c2">FaRSA::DirectionComputationProximalGradient</a>.</p>
 
 </div>
 </div>
@@ -332,7 +343,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>perform_computation_<
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a59a39ed071ff129c4bd6b91936eb8421">FaRSA::DirectionComputationProximalGradient</a>.</p>
+<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_truncated_newton.html#a28ce658c637a3b7e530c269159b56b28">FaRSA::DirectionComputationTruncatedNewton</a>, and <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a59a39ed071ff129c4bd6b91936eb8421">FaRSA::DirectionComputationProximalGradient</a>.</p>
 
 </div>
 </div>
@@ -379,7 +390,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>perform_computation_<
 
 <p>Implements <a class="el" href="class_fa_r_s_a_1_1_strategy.html#a00f9e79a4ffbe114faf425a4e1143382">FaRSA::Strategy</a>.</p>
 
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a7f09ddd53716f9e47f3d049833b33acd">FaRSA::DirectionComputationProximalGradient</a>.</p>
+<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_truncated_newton.html#a409f3932d8cc0896ccd6fc79196896c1">FaRSA::DirectionComputationTruncatedNewton</a>, and <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a7f09ddd53716f9e47f3d049833b33acd">FaRSA::DirectionComputationProximalGradient</a>.</p>
 
 </div>
 </div>
@@ -433,7 +444,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>perform_computation_<
 
 <p>Implements <a class="el" href="class_fa_r_s_a_1_1_strategy.html#a941fc6a28af628b24246ee2db46812db">FaRSA::Strategy</a>.</p>
 
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a3629e459b7771ae4dacceeb21bb131bf">FaRSA::DirectionComputationProximalGradient</a>.</p>
+<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_truncated_newton.html#af2aae7ffac6b5cda20bce240ffd11318">FaRSA::DirectionComputationTruncatedNewton</a>, and <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a3629e459b7771ae4dacceeb21bb131bf">FaRSA::DirectionComputationProximalGradient</a>.</p>
 
 </div>
 </div>
@@ -461,7 +472,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>perform_computation_<
 </div><div class="memdoc">
 <p>Get iteration header string </p><dl class="section return"><dt>Returns</dt><dd>string of header values </dd></dl>
 
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#ad43c006b923cc7f35a2ee5882ad812da">FaRSA::DirectionComputationProximalGradient</a>.</p>
+<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_truncated_newton.html#a179f02a73b2636e26ab18123362cdb51">FaRSA::DirectionComputationTruncatedNewton</a>, and <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#ad43c006b923cc7f35a2ee5882ad812da">FaRSA::DirectionComputationProximalGradient</a>.</p>
 
 </div>
 </div>
@@ -489,7 +500,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>perform_computation_<
 </div><div class="memdoc">
 <p>Get iteration null values string </p><dl class="section return"><dt>Returns</dt><dd>string of null values </dd></dl>
 
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a176953174a4aecd4843cd884af69ef6c">FaRSA::DirectionComputationProximalGradient</a>.</p>
+<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_truncated_newton.html#a33b7d8a6691f341bea572c7da662b006">FaRSA::DirectionComputationTruncatedNewton</a>, and <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a176953174a4aecd4843cd884af69ef6c">FaRSA::DirectionComputationProximalGradient</a>.</p>
 
 </div>
 </div>
@@ -519,7 +530,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>perform_computation_<
 
 <p>Implements <a class="el" href="class_fa_r_s_a_1_1_strategy.html#a53f34014f1ff984ba3d90a81e38cba51">FaRSA::Strategy</a>.</p>
 
-<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a899bf8803885a800c14ae881b7d8ca77">FaRSA::DirectionComputationProximalGradient</a>.</p>
+<p>Implemented in <a class="el" href="class_fa_r_s_a_1_1_direction_computation_truncated_newton.html#a0961ea3a2a7a4ce2a6cfcfccaad94604">FaRSA::DirectionComputationTruncatedNewton</a>, and <a class="el" href="class_fa_r_s_a_1_1_direction_computation_proximal_gradient.html#a899bf8803885a800c14ae881b7d8ca77">FaRSA::DirectionComputationProximalGradient</a>.</p>
 
 </div>
 </div>

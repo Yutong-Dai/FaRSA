@@ -109,14 +109,19 @@ class LineSearchBacktracking : public LineSearch
      * Get name of strategy
      * \return string with name of strategy
      */
-    std::string name() { return "Backtracking"; };
-
-    inline int const numberOfBacktrack() const { return number_of_backtrack_; };
+    std::string              name() { return "Backtracking"; };
+    inline std::string const iterationType() const { return iteration_type_; };
+    inline int const         numberOfBacktrack() const { return number_of_backtrack_; };
+    inline int const         numberOfProjection() const { return number_of_projection_; };
     //@}
 
     /** @name set methods */
     //@{
-    inline void reset() { number_of_backtrack_ = 0; };
+    void reset()
+    {
+        number_of_backtrack_ = 0;
+        number_of_projection_ = 0;
+    };
     //@}
 
     /** @name Line search method */
@@ -162,8 +167,11 @@ class LineSearchBacktracking : public LineSearch
     std::string method_pure_first_order_;
     std::string method_pure_second_order_;
     std::string method_hybrid_;
+    std::string iteration_type_;
     // int    max_backtrack_;
     int number_of_backtrack_;
+    // #attemps to projection
+    int number_of_projection_;
     //@}
 
 };  // end LineSearchBacktracking

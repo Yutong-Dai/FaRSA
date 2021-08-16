@@ -183,13 +183,6 @@ class Quantities
      */
     inline double const iterateNormTolerance() const { return iterate_norm_tolerance_; };
 
-    inline double const kappa1Max() const { return kappa1_max_; };
-    inline double const kappa1min() const { return kappa1_min_; };
-    inline double const kappa2Max() const { return kappa2_max_; };
-    inline double const kappa2min() const { return kappa2_min_; };
-    inline double const kappaIncreaseFactor() const { return kappa_increase_factor_; };
-    inline double const kappaDecreaseFactor() const { return kappa_decrease_factor_; };
-
     inline const std::shared_ptr<std::vector<std::vector<int>>> groups() const { return groups_; };
     inline const std::string                                    groupsFormat() const { return groups_format_; };
     inline const std::shared_ptr<std::vector<int>> groupsFirstOrder() const { return groups_first_order_; };
@@ -198,6 +191,12 @@ class Quantities
     inline const std::shared_ptr<std::vector<int>> indiciesWorking() const { return indicies_working_; };
     inline const int                               numberOfGroups() const { return number_of_groups_; };
     inline const double                            scaleApplied() const { return scale_applied_; };
+    inline const int firstOrderIterationCounter() const { return first_order_iteration_counter_; };
+    inline const int secondOrderIterationCounter() const { return second_order_iteration_counter_; };
+    inline const int consequtiveFirstOrderIterationCounter() const
+    {
+        return consequtive_first_order_iteration_counter_;
+    };
 
     //@}
 
@@ -277,6 +276,11 @@ class Quantities
      * Increment iteration counter
      */
     inline void incrementIterationCounter() { iteration_counter_++; };
+    inline void incrementFirstOrderIterationCounter() { first_order_iteration_counter_++; };
+    inline void incrementSecondOrderIterationCounter() { second_order_iteration_counter_++; };
+    inline void incrementConsequitiveFirstOrderIterationCounter() { consequtive_first_order_iteration_counter_++; };
+    inline void resetConsequitiveFirstOrderIterationCounter() { consequtive_first_order_iteration_counter_ = 0; };
+
     //@}
 
     /** @name Print methods */
@@ -357,6 +361,9 @@ class Quantities
     int                                            gradient_counter_;
     int                                            hessian_vector_counter_;
     int                                            iteration_counter_;
+    int                                            first_order_iteration_counter_;
+    int                                            second_order_iteration_counter_;
+    int                                            consequtive_first_order_iteration_counter_;
     int                                            number_of_variables_;
     int                                            number_of_groups_;
     int                                            number_of_datapoints_;
@@ -386,13 +393,7 @@ class Quantities
     int    gradient_evaluation_limit_;
     int    hessian_vector_product_evaluation_limit_;
     int    iteration_limit_;
-    // for space partition using (FaRSAGroup)
-    double kappa1_max_;
-    double kappa1_min_;
-    double kappa2_max_;
-    double kappa2_min_;
-    double kappa_increase_factor_;
-    double kappa_decrease_factor_;
+
     //@}
 
 };  // end Quantities

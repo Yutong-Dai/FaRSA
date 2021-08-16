@@ -29,7 +29,7 @@ void SpacePartitionGroupL1PGBased::addOptions(Options* options, const Reporter* 
                              "Default     : 1e-2.");
     options->addDoubleOption(
         reporter, "SPGL1_gamma", 1.0, 0.0, FARSA_DOUBLE_INFINITY,
-        "A factor to scale the optimlaity measuer over the second order variables. If it is "
+        "A factor to scale the optimlaity measure over the second order variables. If it is "
         "larger than 1.0, then algorithm tends to take more second order direction computation. Please refer "
         "to the FaRSA-Group paper for details.\n"
         "Default     : 1.0.");

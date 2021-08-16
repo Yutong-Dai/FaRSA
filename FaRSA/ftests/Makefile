@@ -16,6 +16,9 @@ sources = $(wildcard *.cpp)
 objects = $(sources:.cpp=.o)
 depends = $(sources:.cpp=.d)
 
+FaRSAHeaders = $(wildcard ../src/*.hpp)
+FaRSASource= $(wildcard ../src/*.cpp)
+
 # Executable(s)
 EXES = $(sources:.cpp=)
 
@@ -50,8 +53,8 @@ $(FaRSAFUNCTIONLIB): $(wildcard $(FARSADIR)/FaRSA/functions/*.hpp) $(wildcard $(
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 # Objects depend on headers and sources
-$(objects): $(headers)
-$(objects): $(sources)
+$(objects): $(headers) $(FaRSAHeaders)
+$(objects): $(sources) $(FaRSASource)
 
 # Clean
 clean:

@@ -159,14 +159,14 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
 {
     // Initialize values
     setStatus(LS_UNSET);
-    // set number_of_backtrack_ to zero;
+    // set number_of_backtrack_ and number_of_projection_ to zero;
     reset();
     // declare some variables for printing purpose
-    std::string iteration_type = "desc";
+    std::string iteration_flag = "desc";
     int         new_zero_groups = 0;
     double      directional_derivative = FARSA_DOUBLE_INFINITY;
-    int         projection_attemps = 0;
     std::string search_method = "UNKNOWN";
+    iteration_type_ = "UNKNOWN";
 
     // try line search, terminate on any exception
     try
@@ -211,6 +211,9 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
                 }
                 // determine the search  method
                 search_method = method_pure_first_order_;
+                quantities->incrementFirstOrderIterationCounter();
+                quantities->incrementConsequitiveFirstOrderIterationCounter();
+                iteration_type_ = "first_order";
             }
             else if ((strategies->directionComputationFirstOrder()->status() == DC_SKIPPED) and
                      (strategies->directionComputationSecondOrder()->status() == DC_SUCCESS))
@@ -227,12 +230,15 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
                 }
                 else
                 {
-                    std::string msg = "Invalid option for directional_derivative_first_order_type: " +
-                                      directional_derivative_first_order_type_ + "\n";
+                    std::string msg = "Invalid option for directional_derivative_second_order_type: " +
+                                      directional_derivative_second_order_type_ + "\n";
                     THROW_EXCEPTION(LS_EVALUATION_FAILURE_EXCEPTION, msg);
                 }
                 // determine the search  method
                 search_method = method_pure_second_order_;
+                quantities->incrementSecondOrderIterationCounter();
+                quantities->resetConsequitiveFirstOrderIterationCounter();
+                iteration_type_ = "second_order";
             }
             else
             {
@@ -402,7 +408,7 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
                 }
             }
             // begin backtracking
-            projection_attemps = 0;
+            number_of_projection_ = 0;
             new_zero_groups = 0;
 
             // form the gradient all in the full space and padding zero when necessary
@@ -444,7 +450,7 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
                         }
                     }
                 }
-                projection_attemps += 1;
+                number_of_projection_ += 1;
                 // Evaluate trial objective for both smooth and nonsmooth function
                 evaluation_success = quantities->trialIterate()->evaluateObjectiveAll(*quantities);
 
@@ -459,7 +465,7 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
                     // Check Armijo condition
                     if (non_increasing)
                     {
-                        iteration_type = "proj";
+                        iteration_flag = "proj";
                         // actual direction taken with unit-stepsize
                         auto search_direction = quantities->trialIterate()->vector()->makeNewLinearCombination(
                             1.0, -1.0, *(quantities->currentIterate()->vector()));
@@ -479,7 +485,7 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
             double ratio = fabs(directional_derivative) / (1 + fabs(quantities->currentIterate()->objectiveAll()));
             if (ratio < 1e-15)
             {
-                iteration_type = "npgs";
+                iteration_flag = "npgs";
                 quantities->setStepsizeLineSearch(1.0);
                 THROW_EXCEPTION(LS_NO_FURTHUR_PROGRESS_EXCEPTION,
                                 "No further progress can be made. Early termination.");
@@ -520,7 +526,7 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
                     // Check Armijo condition
                     if (sufficient_decrease)
                     {
-                        iteration_type = "desc";
+                        iteration_flag = "desc";
                         THROW_EXCEPTION(LS_SUCCESS_EXCEPTION, "Line search successful.");
                     }  // end if
 
@@ -545,7 +551,7 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
                         // Check for decrease
                         if (quantities->trialIterate()->objectiveAll() < quantities->currentIterate()->objectiveAll())
                         {
-                            iteration_type = "small";
+                            iteration_flag = "small";
                             THROW_EXCEPTION(LS_SUCCESS_EXCEPTION, "Line search successful.");
 
                         }  // end if
@@ -559,7 +565,7 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
                     quantities->setTrialIterateToCurrentIterate();
 
                     // Terminate
-                    iteration_type = "small";
+                    iteration_flag = "small";
                     THROW_EXCEPTION(LS_SUCCESS_EXCEPTION, "Line search successful.");
 
                 }  // end if
@@ -611,13 +617,13 @@ void LineSearchBacktracking::runLineSearch(const Options* options, Quantities* q
             if (search_method.compare("projected_armijo_groupl1") == 0)
             {
                 reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e  %s %6d %+.2e  %2d/%2d",
-                                 quantities->directionSecondOrder()->norm2(), iteration_type.c_str(), new_zero_groups,
-                                 directional_derivative, projection_attemps, number_of_backtrack_);
+                                 quantities->directionSecondOrder()->norm2(), iteration_flag.c_str(), new_zero_groups,
+                                 directional_derivative, number_of_projection_, number_of_backtrack_);
             }
             else
             {
                 reporter->printf(R_SOLVER, R_PER_ITERATION, " %+.2e  %s %s %+.2e  %s/%2d",
-                                 quantities->directionSearch()->norm2(), iteration_type.c_str(), "------",
+                                 quantities->directionSearch()->norm2(), iteration_flag.c_str(), "------",
                                  directional_derivative, "--", number_of_backtrack_);
             }
         }

@@ -24,6 +24,9 @@ Quantities::Quantities()
       gradient_counter_(0),
       hessian_vector_counter_(0),
       iteration_counter_(0),
+      first_order_iteration_counter_(0),
+      second_order_iteration_counter_(0),
+      consequtive_first_order_iteration_counter_(0),
       number_of_variables_(0),
       number_of_datapoints_(0),
       scaling_threshold_(1.0),
@@ -84,25 +87,6 @@ void Quantities::addOptions(Options* options, const Reporter* reporter)
                              "              terminates with a message of stationarity.\n"
                              "Default     : 1e-04.");
 
-    options->addDoubleOption(reporter, "kappa1_max", 1e+06, 0.0, FARSA_DOUBLE_INFINITY,
-                             "kappa1_max.\n"
-                             "Default     : 1e+06.");
-    options->addDoubleOption(reporter, "kappa1_min", 1e-05, 0.0, FARSA_DOUBLE_INFINITY,
-                             "kappa1_min.\n"
-                             "Default     : 1e-05.");
-    options->addDoubleOption(reporter, "kappa2_max", 1e+05, 0.0, FARSA_DOUBLE_INFINITY,
-                             "kappa2_max.\n"
-                             "Default     : 1e+05.");
-    options->addDoubleOption(reporter, "kappa2_min", 1e-06, 0.0, FARSA_DOUBLE_INFINITY,
-                             "kappa2_min.\n"
-                             "Default     : 1e-06.");
-    options->addDoubleOption(reporter, "kappa_increase_factor", 10.0, 1.0, FARSA_DOUBLE_INFINITY,
-                             "Factor to increase the kappa1 and kappa2.\n"
-                             "Default     : 10.");
-    options->addDoubleOption(reporter, "kappa_decrease_factor", 0.1, 0.0, 1.0,
-                             "Factor to decrease the kappa1 and kappa2.\n"
-                             "Default     : 0.1.");
-
     // Add integer options
     options->addIntegerOption(reporter, "function_evaluation_limit", 1e+05, 0, FARSA_INT_INFINITY,
                               "Limit on the number of function evaluations performed.\n"
@@ -133,13 +117,6 @@ void Quantities::getOptions(const Options* options, const Reporter* reporter)
     options->valueAsDouble(reporter, "iterate_norm_tolerance", iterate_norm_tolerance_);
     options->valueAsDouble(reporter, "stationarity_tolerance", stationarity_tolerance_);
     options->valueAsDouble(reporter, "scaling_threshold", scaling_threshold_);
-
-    options->valueAsDouble(reporter, "kappa1_max", kappa1_max_);
-    options->valueAsDouble(reporter, "kappa1_min", kappa1_min_);
-    options->valueAsDouble(reporter, "kappa2_max", kappa2_max_);
-    options->valueAsDouble(reporter, "kappa2_min", kappa2_min_);
-    options->valueAsDouble(reporter, "kappa_increase_factor", kappa_increase_factor_);
-    options->valueAsDouble(reporter, "kappa_decrease_factor", kappa_decrease_factor_);
 
     // Set integer options
     options->valueAsInteger(reporter, "function_evaluation_limit", function_evaluation_limit_);

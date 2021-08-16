@@ -102,6 +102,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acd3fd1cf9391e5d06cb5386e528ee25f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_space_partition_first_order.html#acd3fd1cf9391e5d06cb5386e528ee25f">initialize</a> (const <a class="el" href="class_fa_r_s_a_1_1_options.html">Options</a> *options, <a class="el" href="class_fa_r_s_a_1_1_quantities.html">Quantities</a> *quantities, const <a class="el" href="class_fa_r_s_a_1_1_reporter.html">Reporter</a> *reporter)</td></tr>
 <tr class="separator:acd3fd1cf9391e5d06cb5386e528ee25f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Get methods</div></td></tr>
+<tr class="memitem:ab468a1354650c1db5e2fa5232331cd26"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_space_partition_first_order.html#ab468a1354650c1db5e2fa5232331cd26">iterationHeader</a> ()</td></tr>
+<tr class="separator:ab468a1354650c1db5e2fa5232331cd26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f408be72362a543306588a3bf3489fb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_space_partition_first_order.html#a5f408be72362a543306588a3bf3489fb">iterationNullValues</a> ()</td></tr>
+<tr class="separator:a5f408be72362a543306588a3bf3489fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b47166a5532275b82a888ffa46cc87a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_fa_r_s_a_1_1_space_partition_first_order.html#a0b47166a5532275b82a888ffa46cc87a">name</a> ()</td></tr>
 <tr class="separator:a0b47166a5532275b82a888ffa46cc87a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Space Partition method</div></td></tr>
@@ -138,6 +142,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a1b5ce47e5e0deb806960012fb23bed7c"><td class="memItemLeft" align="right" valign="top"><a id="a1b5ce47e5e0deb806960012fb23bed7c"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_partitioned_</b></td></tr>
 <tr class="separator:a1b5ce47e5e0deb806960012fb23bed7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc7cc30ccca868f96a928fc9a28480f0"><td class="memItemLeft" align="right" valign="top"><a id="abc7cc30ccca868f96a928fc9a28480f0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr>
+<tr class="separator:abc7cc30ccca868f96a928fc9a28480f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_fa_r_s_a_1_1_space_partition.html">SpacePartition</a> class </p>
@@ -361,6 +368,62 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_partitioned_</b></
 </dl>
 
 <p>Implements <a class="el" href="class_fa_r_s_a_1_1_space_partition.html#a70ddd96037902046ea93668072a3ff17">FaRSA::SpacePartition</a>.</p>
+
+</div>
+</div>
+<a id="ab468a1354650c1db5e2fa5232331cd26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab468a1354650c1db5e2fa5232331cd26">&#9670;&nbsp;</a></span>iterationHeader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string FaRSA::SpacePartitionFirstOrder::iterationHeader </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get iteration header string </p><dl class="section return"><dt>Returns</dt><dd>string of header values </dd></dl>
+
+<p>Implements <a class="el" href="class_fa_r_s_a_1_1_space_partition.html#afb727c15fbac6ea26c340c2cba5bac5b">FaRSA::SpacePartition</a>.</p>
+
+</div>
+</div>
+<a id="a5f408be72362a543306588a3bf3489fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f408be72362a543306588a3bf3489fb">&#9670;&nbsp;</a></span>iterationNullValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string FaRSA::SpacePartitionFirstOrder::iterationNullValues </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get iteration null values string </p><dl class="section return"><dt>Returns</dt><dd>string of null values </dd></dl>
+
+<p>Implements <a class="el" href="class_fa_r_s_a_1_1_space_partition.html#a77a5c38595a52ee89ee36490195bf137">FaRSA::SpacePartition</a>.</p>
 
 </div>
 </div>
